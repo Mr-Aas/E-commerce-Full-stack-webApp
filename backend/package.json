@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "this is backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "node test backend",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "Aas Mohd",
+  "license": "ISC"
+}
