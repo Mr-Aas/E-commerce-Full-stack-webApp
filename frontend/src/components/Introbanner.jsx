@@ -43,7 +43,7 @@ export default function Introbanner() {
                         key={i}
                         src={img}
                         alt="slider"
-                        className="w-full flex-shrink-0 object-cover"
+                        className="w-full flex shrink-0 object-cover"
                     />
                 ))}
             </div>
