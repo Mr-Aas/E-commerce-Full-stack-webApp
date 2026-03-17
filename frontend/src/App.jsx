@@ -12,7 +12,7 @@ function App() {
     <>
       <Navbar />
       {/* <Card /> */}
-      <div className="grid grid-cols-4 gap-6 flex-col p-10">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 p-4 sm:p-6 lg:p-8">
 
         {products.map((product) => (
           <ProductCard

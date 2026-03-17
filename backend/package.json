@@ -4,12 +4,23 @@
   "description": "this is backend",
   "main": "server.js",
   "scripts": {
-    "test": "node test backend",
+    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "keywords": [
     "backend"
   ],
   "author": "Aas Mohd",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "mongoose": "^9.3.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
 }
