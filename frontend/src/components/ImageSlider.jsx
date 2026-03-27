@@ -3,77 +3,94 @@ import { useState, useEffect } from "react";
 function ImageSlider() {
   const slides = [
     {
-      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      url: "https://res.cloudinary.com/dcfpnfdgy/image/upload/v1774532706/cld-sample-4.jpg",
       title: "Mountain",
     },
     {
-      url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
+      url: "https://res.cloudinary.com/dcfpnfdgy/image/upload/v1774532706/main-sample.png",
       title: "Forest",
     },
     {
-      url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-      title: "Path",
+      url: "https://res.cloudinary.com/dcfpnfdgy/image/upload/v1774532814/Screenshot_2025-12-14_011710_qwl3km.png",
     },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // ⬅️ Previous
   const prevSlide = () => {
     setCurrentIndex((prev) =>
       prev === 0 ? slides.length - 1 : prev - 1
     );
   };
 
-  // ➡️ Next
   const nextSlide = () => {
     setCurrentIndex((prev) =>
       prev === slides.length - 1 ? 0 : prev + 1
     );
   };
 
-  // 🔁 Auto Slide
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000);
+    const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="relative w-full max-w-3xl h-[400px] mx-auto mt-10 overflow-hidden rounded-xl shadow-lg">
-      
-      {/* Image */}
-      <div
-        className="w-full h-full bg-center bg-cover transition-all duration-500"
-        style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-      ></div>
+    <div className="relative w-screen h-[70vh] ">
 
-      {/* Left Button */}
+      {/* 🔵 Background Gradient */}
+      <div className="absolute  "></div>
+
+      {/* 🖼️ Image Container */}
+      <div className="relative flex justify-center items-center w-full h-full">
+
+        {/* Image */}
+       <img
+  src={slides[currentIndex].url}
+  alt="slider"
+  className="h-full object-contain transition-all duration-700 
+  [mask-image:linear-gradient(to_right,transparent,black_10%,black_50%,transparent)]
+  [-webkit-mask-image:linear-gradient(to_right,transparent,black_5%,black_100%,transparent)]"
+/>
+
+        {/* 🌫️ Left Fade */}
+        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-teal-200 to-transparent"></div>
+
+        {/* 🌫️ Right Fade */}
+        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-violet-200 to-transparent"></div>
+      </div>
+
+      {/* ⬅️ Prev Button */}
       <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-3 -translate-y-1/2 bg-black/50 text-white px-3 py-2 rounded-full hover:bg-black"
+        className="absolute top-1/2 left-5 -translate-y-1/2 bg-black/40 text-white px-4 py-2 rounded-full hover:bg-black transition"
       >
         {"<"}
       </button>
 
-      {/* Right Button */}
+      {/* ➡️ Next Button */}
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-3 -translate-y-1/2 bg-black/50 text-white px-3 py-2 rounded-full hover:bg-black"
+        className="absolute top-1/2 right-5 -translate-y-1/2 bg-black/40 text-white px-4 py-2 rounded-full hover:bg-black transition"
       >
         {">"}
       </button>
 
-      {/* Dots */}
-      <div className="absolute bottom-3 w-full flex justify-center gap-2">
+      {/* 🔘 Dots */}
+      <div className="absolute bottom-5 w-full flex justify-center gap-3">
         {slides.map((_, index) => (
           <div
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full cursor-pointer ${
-              index === currentIndex ? "bg-white" : "bg-gray-400"
+            className={`w-3 h-3 rounded-full cursor-pointer transition ${
+              index === currentIndex ? "bg-white scale-110" : "bg-gray-300"
             }`}
           ></div>
         ))}
+      </div>
+
+      {/* 📝 Title */}
+      <div className="absolute bottom-16 w-full text-center text-white text-xl font-semibold">
+        {slides[currentIndex].title}
       </div>
     </div>
   );
