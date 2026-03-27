@@ -1,20 +1,7 @@
 import { useState, useEffect } from "react";
+import slides from "../data/addSlides/data";
 
 function ImageSlider() {
-  const slides = [
-    {
-      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
-      title: "Mountain",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
-      title: "Forest",
-    },
-    {
-      url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
-      title: "Path",
-    },
-  ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -36,28 +23,28 @@ function ImageSlider() {
   }, []);
 
   return (
-    <div className="relative w-screen h-[70vh] overflow-hidden">
+    <div className="relative w-screen h-[80vh] overflow-hidden">
 
       {/* 🔵 Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-pink-400 to-violet-400"></div>
+      <div className="absolute inset-0 "></div>
 
       {/* 🖼️ Image Container */}
       <div className="relative flex items-center justify-center w-full h-full">
 
         {/* Image */}
-       <img
-  src={slides[currentIndex].url}
-  alt="slider"
-  className="h-full object-contain transition-all duration-700 
+        <img
+          src={slides[currentIndex].url}
+          alt="slider"
+          className="h-full object-contain transition-all duration-700 
   [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]
   [-webkit-mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
-/>
+        />
 
         {/* 🌫️ Left Fade */}
-        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-blue-400 to-transparent"></div>
+        <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-r "></div>
 
         {/* 🌫️ Right Fade */}
-        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-violet-500 to-transparent"></div>
+        <div className="absolute right-0 top-0 h-full w-32  "></div>
       </div>
 
       {/* ⬅️ Prev Button */}
@@ -82,17 +69,13 @@ function ImageSlider() {
           <div
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full cursor-pointer transition ${
-              index === currentIndex ? "bg-white scale-110" : "bg-gray-300"
-            }`}
+            className={`w-3 h-3 rounded-full cursor-pointer transition ${index === currentIndex ? "bg-white scale-110" : "bg-gray-300"
+              }`}
           ></div>
         ))}
       </div>
 
-      {/* 📝 Title */}
-      <div className="absolute bottom-16 w-full text-center text-white text-xl font-semibold">
-        {slides[currentIndex].title}
-      </div>
+      
     </div>
   );
 }
