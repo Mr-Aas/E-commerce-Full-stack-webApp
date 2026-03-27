@@ -3,15 +3,16 @@ import { useState, useEffect } from "react";
 function ImageSlider() {
   const slides = [
     {
-      url: "https://res.cloudinary.com/dcfpnfdgy/image/upload/v1774532706/cld-sample-4.jpg",
+      url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
       title: "Mountain",
     },
     {
-      url: "https://res.cloudinary.com/dcfpnfdgy/image/upload/v1774532706/main-sample.png",
+      url: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05",
       title: "Forest",
     },
     {
-      url: "https://res.cloudinary.com/dcfpnfdgy/image/upload/v1774532814/Screenshot_2025-12-14_011710_qwl3km.png",
+      url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+      title: "Path",
     },
   ];
 
@@ -35,28 +36,28 @@ function ImageSlider() {
   }, []);
 
   return (
-    <div className="relative w-screen h-[70vh] ">
+    <div className="relative w-screen h-[70vh] overflow-hidden">
 
       {/* 🔵 Background Gradient */}
-      <div className="absolute  "></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-pink-400 to-violet-400"></div>
 
       {/* 🖼️ Image Container */}
-      <div className="relative flex justify-center items-center w-full h-full">
+      <div className="relative flex items-center justify-center w-full h-full">
 
         {/* Image */}
        <img
   src={slides[currentIndex].url}
   alt="slider"
   className="h-full object-contain transition-all duration-700 
-  [mask-image:linear-gradient(to_right,transparent,black_10%,black_50%,transparent)]
-  [-webkit-mask-image:linear-gradient(to_right,transparent,black_5%,black_100%,transparent)]"
+  [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]
+  [-webkit-mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
 />
 
         {/* 🌫️ Left Fade */}
-        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-teal-200 to-transparent"></div>
+        <div className="absolute left-0 top-0 h-full w-32 bg-gradient-to-r from-blue-400 to-transparent"></div>
 
         {/* 🌫️ Right Fade */}
-        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-violet-200 to-transparent"></div>
+        <div className="absolute right-0 top-0 h-full w-32 bg-gradient-to-l from-violet-500 to-transparent"></div>
       </div>
 
       {/* ⬅️ Prev Button */}

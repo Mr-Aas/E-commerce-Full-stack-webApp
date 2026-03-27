@@ -1,33 +1,28 @@
 import React from 'react'
-import data from '../data/data'
 
 
-function Itemcard() {
+
+function Itemcard({data}) {
     return (
-      <>
+        <div className="cards m-5 flex flex-wrap gap-4">
 
-  {data.map((product, index) => (
-    
-    <div className=" p-2 border-black rounded-2xl" key={index}>
-      
-      <div className="h-40 w-full overflow-hidden">
-        <img 
-          className="h-full w-full object-cover"
-          src={product.imageurl}
-          alt="image"
-        />
-      </div>
+            {data.map((product, index) =>
 
-      <div className="details mt-2">
-        <h2>{product.name}</h2>
-        <span>{product.price}</span>
-      </div>
+                <div key={product.id}
+                    className="card   flex h-[250px] w-[230px] flex-col justify-center rounded bg-red-100 overflow-hidden  relative">
+                    <div className="image top-0 w-[220px] overflow-hidden flex bg-red-300 ">
+                        <div className="aas">
+                            <img src="https://m.media-amazon.com/images/I/61jc7ybMbNL.jpg" alt="image" />
+                        </div>
 
-    </div>
-
-  ))}
-
-</>
+                    </div>
+                    <div className="info flex flex-col">
+                        <div className="ItemName  font-serif justify-between text-blue-950 text-2xl   px-"> {product.name}</div>
+                        <div className="itemDiscription font-serif text-sm  ">{product.price + " rupees"}</div>
+                    </div>
+                </div>
+            )
+            }</div >
     )
 }
 

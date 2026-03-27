@@ -8,7 +8,6 @@ function Navbar() {
 
 
         <div>
-            
             <nav className="flex justify-between bg-gradient-to-r from-teal-400 to-violet-400  text-white items-center w-full h-15">
                 <div className="logo flex text-2xl items-center  font-bold">
                     <div className="circle rounded-full w-15 flex items-center justify-center fill-amber-500 h-15 bg-violet-900 border-b-2">
