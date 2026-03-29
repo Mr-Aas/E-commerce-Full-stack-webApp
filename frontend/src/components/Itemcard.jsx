@@ -19,7 +19,9 @@ function Itemcard({ data }) {
         return (
             <div
                 onClick={onClick}
-                className={`h-12 w-12 flex cursor-pointer items-center justify-center bg-red-100 rounded-full ${position}`}
+                className={`h-12 w-12 flex cursor-pointer py-1 justify-center rounded-full ${position} -translate-y-1/2 bg-black/40 text-white rounded-full hover:bg-black transition`}
+
+                // absolute top-1/2 left-5 -translate-y-1/2 bg-black/40 text-white px-4 py-2 rounded-full hover:bg-black transition
             >
                 <div className="font-bold text-3xl">{arrow}</div>
             </div>

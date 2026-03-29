@@ -32,6 +32,8 @@ function App() {
       <section className="slider">
         <ImageSlider slides={slides} />
       </section>
+
+
       <section className="grocery my-3 bg-teal-100  rounded-2xl flex flex-col ">
         <div className="sectionNAME text-3xl font-medium m-3 bg-teal-200 px-10 rounded-full  h-[45px]">
           {grocery.dataname}

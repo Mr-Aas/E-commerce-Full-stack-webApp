@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+// import slides from "../data/addSlides/data";
 
 function ImageSlider({slides}) {
 
@@ -16,13 +17,15 @@ function ImageSlider({slides}) {
     );
   };
 
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval);
-  }, []);
+ useEffect(() => {
+  if (slides.length === 0) return;
+
+  const interval = setInterval(nextSlide, 4000);
+  return () => clearInterval(interval);
+}, [slides]);
 
   return (
-    <div className="relative w-screen h-[80vh] overflow-hidden">
+    <div className="relative w-screen h-[60vh] overflow-hidden">
 
       {/* 🔵 Background Gradient */}
       <div className="absolute inset-0 "></div>
@@ -32,11 +35,12 @@ function ImageSlider({slides}) {
 
         {/* Image */}
         <img
-          src={slides[currentIndex].url}
+          src={slides[currentIndex]?.url}
           alt="slider"
-          className="h-full object-contain transition-all duration-700 
-  [mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]
-  [-webkit-mask-image:linear-gradient(to_right,transparent,black_20%,black_80%,transparent)]"
+          className="
+h-full object-contain transition-all duration-700
+[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent),linear-gradient(to_bottom,transparent,black_5%,black_95%,transparent)]
+[mask-composite:intersect]"
         />
 
         {/* 🌫️ Left Fade */}
