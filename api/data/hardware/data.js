@@ -1,44 +1,47 @@
-const grocery = ["groceries and vegetables",
+const hardware = {
+  dataname: "hardware & materials",
+  items: [
     {
       "id": 1,
-      "name": "Milk",
+      "name": "nut",
       "price": 60
     },
     {
       "id": 2,
-      "name": "Bread",
+      "name": "bolt",
       "price": 40
     },
     {
       "id": 3,
-      "name": "Eggs (12 pcs)",
+      "name": "Eggs tap",
+
       "price": 90
     },
     {
       "id": 4,
-      "name": "Rice (1 kg)",
+      "name": "bib -cock",
       "price": 70
     },
     {
       "id": 5,
-      "name": "Wheat Flour (1 kg)",
+      "name": "pipes",
       "price": 55
     },
     {
       "id": 6,
-      "name": "Sugar (1 kg)",
+      "name": "glass ",
       "price": 45
     },
     {
       "id": 7,
-      "name": "Salt (1 kg)",
+      "name": "bolwal",
       "price": 20
     },
     {
       "id": 8,
-      "name": "Cooking Oil (1 L)",
+      "name": "naval wall",
       "price": 150
     },
-
   ]
-export default grocery;
+}
+export default hardware;

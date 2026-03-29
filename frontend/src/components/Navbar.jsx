@@ -1,4 +1,3 @@
-import logoSvg from "../../public/websitelogo.svg";
 import searchSvg from "/src/icons/user-icon.svg";
 import cartSvg from "/src/icons/add-to-cartl.svg";
 import profileSvg from "/src/icons/user-icon.svg";
@@ -13,7 +12,7 @@ function Navbar() {
             <nav className="flex justify-between items-center w-full gap-4 flex-col ">
                 <div className="head bg-teal-50 flex w-full justify-around">
                     <div className="logo  mx-9 w-60 h-13  overflow-hidden rounded-lg font-bold">
-                        <img src="../../public/websitelogo (1).jpg" alt="" />
+                        <img src="/websitelogo (1).jpg" alt="" />
 
                     </div>
 

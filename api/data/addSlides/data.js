@@ -1,4 +1,4 @@
-  const slides = [
+const slides =  [
     {
       url: "https://img.freepik.com/free-psd/black-friday-super-sale-facebook-cover-banner-template_120329-5177.jpg?semt=ais_incoming&w=740&q=80",
       title: "Mountain",
@@ -10,6 +10,5 @@
     {
       url: "https://img.freepik.com/free-psd/black-friday-super-sale-facebook-cover-template_106176-1581.jpg?semt=ais_incoming&w=740&q=80",
       title: "Path",
-    },
-  ];
+    },];
 export default slides;
