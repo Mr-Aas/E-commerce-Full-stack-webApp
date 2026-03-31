@@ -8,13 +8,13 @@ const productSchema = new mongoose.Schema({
     subcategory: String,
     brand: String,
     unitsAvailable: Number,
-    images: [String, String, String],
+    images: String,
     discription: String,
     isAvailable: Boolean,
     createdAt: Date,
     expiryDate: Date
 });
 
-const Product = mongoose.model("Product", productSchema,"grocery");
+const Product = mongoose.model("Product", productSchema,"items");
 
 export default Product;
