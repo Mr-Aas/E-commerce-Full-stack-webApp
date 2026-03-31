@@ -1,21 +1,21 @@
-import express from "express"
-import cors from "cors"
-import grocery from './data/grocery/data.js';
-import slides from './data/addSlides/data.js';
-import hardware from './data/hardware/data.js';
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import cors from "cors";
+import connectdb from "./config/db.js";
+import productRoutes from "./routes/productRoutes.js";
 
-const PORT = 5000
+const PORT = 5000;
 const app = express();
+
+app.use(express.json());
 app.use(cors());
 
+connectdb();
 
+app.use("/api", productRoutes);
 
 app.get('/', (req, res) => res.send('API is running...'));
-app.get('/api/slides', (req, res) => res.json(slides));
-app.get('/api/grocery', (req, res) => res.json(grocery));
-app.get('/api/hardware', (req, res) => res.json(hardware));
-
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
