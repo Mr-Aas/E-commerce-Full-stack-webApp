@@ -1,9 +1,10 @@
 import React from 'react'
+import TestHome from './components/testHome'
 
 function About() {
   return (
     <div>
-      i am about
+   
     </div>
   )
 }
