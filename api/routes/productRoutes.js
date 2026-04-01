@@ -11,7 +11,7 @@ import slides from "../data/addSlides/data.js";
 router.get('/slides', (req, res) => res.json(slides));
 
 
-router.get("/products", getProducts);
-router.post("/products", addProducts);
+router.get("/items/:category", getProducts);
+router.post("/items", addProducts);
 
 export default router;

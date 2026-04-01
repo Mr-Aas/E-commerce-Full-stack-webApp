@@ -1,9 +1,11 @@
 import Product from "../models/product.js";
 
 const getProducts = async (req, res) => {
+    const {category} = req.params;
     const products = await Product.find(
-        {category:"hardware"}
+        {category}
     );
+
     res.json(products);
 }
 const addProducts = async (req, res) => {

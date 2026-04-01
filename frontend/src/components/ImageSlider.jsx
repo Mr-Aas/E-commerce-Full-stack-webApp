@@ -1,9 +1,21 @@
 import { useState, useEffect } from "react";
 // import slides from "../data/addSlides/data";
 
-function ImageSlider({slides}) {
+function ImageSlider() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [slides, setslides] = useState([])
+
+  useEffect(() => {
+    Promise.all([
+      fetch('http://localhost:5000/products/slides').then(res => res.json())
+    ]).then(([slides]) => {
+      setslides(slides);
+  
+    });
+  }, []);
+
+
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>

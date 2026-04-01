@@ -1,5 +1,5 @@
 import React from 'react'
-import TestHome from './components/testHome'
+import TestHome from '../components/Catogorycard'
 
 function About() {
   return (
