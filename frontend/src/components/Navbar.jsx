@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import searchSvg from "/src/icons/user-icon.svg";
-import cartSvg from "/src/icons/add-to-cartl.svg";
-import profileSvg from "/src/icons/user-icon.svg";
+import searchIcon from "../assets/icons/search-svgrepo-com.svg";
+import cartSvg from "/src/assets/icons/add-to-cartl.svg";
+import profileSvg from "/src/assets/icons/user-icon.svg";
+import HomePage from "../pages/HomePage";
 
 
 
@@ -15,7 +16,9 @@ function Navbar() {
                 <div className="head flex w-full justify-around">
 
                     <div className="logo mx-9 w-60 h-16 overflow-hidden rounded-lg font-bold">
+                        <Link to="./">
                         <img src="/websitelogo.jpg" alt="logo" />
+                        </Link>
                     </div>
 
                     <ul className="flex gap-4 cursor-pointer items-center ">
@@ -26,8 +29,8 @@ function Navbar() {
                     </ul></div>
                 <div className="rightmost flex items-center gap-3 py-2 ">
                     <div className="serch relative ">
-                        <input type="text" placeholder='search items' className='border h-8 rounded-lg w-[70vw] px-2  ' /> <div className="image absolute top-0.5 right-1">
-                            <img src={searchSvg} alt="Search" width="26" className='invert' />
+                        <input type="text" placeholder='search items' className='border h-8 rounded-lg w-[70vw] px-2  ' /> <div className="image absolute top-1.5 right-4">
+                            <img src={searchIcon} alt="Search" width="20" className='' />
                         </div>
                     </div>
                     <div className="cart w-7">
