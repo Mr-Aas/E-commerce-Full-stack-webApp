@@ -5,7 +5,7 @@ const categoriesSchema = new mongoose.Schema({
     name: String,
     subcategory: String,
     unitsAvailable: Number,
-    images: String,
+    images: [String,String],
     discription: String,
     isAvailable: Boolean,
     createdAt: Date,
