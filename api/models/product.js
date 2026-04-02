@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
     subcategory: String,
     brand: String,
     unitsAvailable: Number,
-    images: String,
+    images:[ String],
     discription: String,
     isAvailable: Boolean,
     createdAt: Date,
