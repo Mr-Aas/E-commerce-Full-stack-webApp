@@ -8,9 +8,8 @@ const Categorycard = ({Categories}) => {
   if (!Categories) {
     return <div className="data">failed to get data</div>
   }
-  console.log(Categories.forEach(element => {
-    console.log(element.images)
-  }))
+ 
+
 
   return (
     <>
