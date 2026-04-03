@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link } from "react-router-dom";
+
+
 
 export default function MyProfile() {
 
     const { User, logout } = useContext(AuthContext);
     const user = useLoaderData()
+
 
     // console.log(user)
     return (
@@ -51,13 +54,12 @@ export default function MyProfile() {
                     <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                         Edit Profile
                     </button>
+                    <Link to="/" className="flex bg-red-500 text-white py-2 rounded-lg justify-center hover:bg-red-600 transition">
+                        <button onClick={logout}>
+                            Logout
 
-                    <button
-                        onClick={logout}
-                        className="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
-                    >
-                        Logout
-                    </button>
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
