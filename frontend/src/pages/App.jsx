@@ -1,41 +1,12 @@
 import React from "react";
 import {
-  createBrowserRouter, RouterProvider
+  RouterProvider
 } from "react-router-dom"
-import Layout from "./Layout";
-import ItemsPage from "./ItemsPage";
-import Contact from "./Contact"
-import About from "./About";
-import HomePage from "./HomePage";
+import { AuthProvider } from "../context/AuthContext";
+import router from "../routes/homepageRoutes";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [{
-      index: true,
-      element: <HomePage />,
-      loader: async () => {
-        return await fetch("http://localhost:5000/products/categories").then((res) => res.json())
-      }
 
-    }, {
-      path: "contact",
-      element: <Contact />,
-    }, {
-      path: "about",
-      element: <About />,
-    },
-     {
-      path: "items/:category",
-      element: <ItemsPage />,
-      loader: async ({ params }) => {
-        return await fetch(`http://localhost:5000/products/items/${params.category}`)
-          .then((res) => res.json());
-      }
-    }
 
-    ]}])
 
 function App() {
 
@@ -43,9 +14,11 @@ function App() {
 
   return (
     <>
-      <RouterProvider
-        router={router}
-        fallbackElement={<h1>Loading...</h1>} />
+      <AuthProvider>
+        <RouterProvider
+          router={router}
+          fallbackElement={<h1>Loading...</h1>} />
+      </AuthProvider>
     </>
   )
 }

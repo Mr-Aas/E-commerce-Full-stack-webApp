@@ -5,7 +5,7 @@ import { getCategories, addCategories } from "../controllers/categoriescontrolle
 
  
 
-router.get("/categories", getCategories);
-router.post("/categories", addCategories);
+router.get("/", getCategories);
+router.post("/", addCategories);
 
 export default router;

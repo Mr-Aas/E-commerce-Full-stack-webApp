@@ -5,6 +5,8 @@ import cors from "cors";
 import connectdb from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
+
 
 const PORT = 5000;
 const app = express();
@@ -15,7 +17,9 @@ app.use(cors());
 connectdb();
 
 app.use("/products", productRoutes);
-app.use("/products", categoryRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/auth", authRoutes)
+
 
 app.get('/', (req, res) => res.send('API is running...'));
 

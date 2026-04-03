@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import searchIcon from "../assets/icons/search-svgrepo-com.svg";
 import cartSvg from "/src/assets/icons/add-to-cartl.svg";
 import profileSvg from "/src/assets/icons/user-icon.svg";
-import HomePage from "../pages/HomePage";
+import logoutsvg from "../../public/LogOut.svg"
+import logInsvg from "../../public/LoginSvg.svg"
+
+
+// import HomePage from "../pages/HomePage";
+// import { handleMouseEnter, handleMouseLeave } from "../utils/OnHoverTextShow";
 
 
 
 function Navbar() {
+    const { User, logout, login } = useContext(AuthContext)
+    // console.log(User)
     return (
 
 
@@ -17,7 +26,8 @@ function Navbar() {
 
                     <div className="logo mx-9 w-60 h-16 overflow-hidden rounded-lg font-bold">
                         <Link to="./">
-                        <img src="/websitelogo.jpg" alt="logo" />
+                            <img src="/websitelogo.jpg" alt="logo" />
+
                         </Link>
                     </div>
 
@@ -33,14 +43,29 @@ function Navbar() {
                             <img src={searchIcon} alt="Search" width="20" className='' />
                         </div>
                     </div>
-                    <div className="cart w-7">
-                        <a href="/cart">
+                    <div className="cart w-7 ">
+                        <Link to="./cart">
                             <img src={cartSvg} alt="Cart" />
-                        </a></div>
+                        </Link>
+
+                    </div>
                     <div className="profile w-7 mx-2">
-                        <a href="/cart">
+                        <div className="relative  group ">
                             <img src={profileSvg} alt="Profile" />
-                        </a></div>
+                            <div className="ContextMenu absolute right-0 z-10 h-[50vh] w-[250px] bg-slate-100 rounded-2xl absolute hidden  group-hover:block">
+                                <Link to="./profile" className="myProfile   bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
+                                    <img src={profileSvg} alt="Profile" width={30} />
+                                    My Profile
+                                </Link>
+                                <div className="logstatus">
+                                    {User ? <Link onClick={logout} className="logIn bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
+                                        <img src={logoutsvg} alt="Profile" width={30} />LogOut</Link> : <Link to="/login" className="logOut bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
+                                        <img src={logInsvg} alt="Profile" width={30} />LogIn</Link>}
+                                </div>
+                            </div>
+
+
+                        </div></div>
 
 
                 </div>

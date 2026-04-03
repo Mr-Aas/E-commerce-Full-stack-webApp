@@ -11,7 +11,7 @@ function ItemsPage() {
   const items = useLoaderData()
   const { category } = useParams()
 
-  console.log(items)
+  
 
   if (!items) {
     return <div>Loading...</div>;
@@ -30,9 +30,7 @@ function ItemsPage() {
 
 
 
-  console.log(items.forEach(element => {
-    console.log(element.subcategory)
-  }))
+ 
 
   return (
     <>
