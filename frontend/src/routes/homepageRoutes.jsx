@@ -1,5 +1,6 @@
 import api from "../api/axios.js";
 import { createBrowserRouter } from "react-router-dom";
+import AdminRoute from "./AdminRoute.jsx";
 import PrivateRoute from "./PrivateRoutes.jsx";
 import Layout from "../pages/Layout.jsx"
 import ItemsPage from "../pages/ItemsPage.jsx";
@@ -11,6 +12,9 @@ import LoginPage from "../pages/LoginPage.jsx";
 import SignupPage from "../pages/SignUp.jsx";
 import MyProfile from "../pages/UserProfilePage.jsx";
 import profileLoader from "./profileloader.jsx";
+import AdminDashboard from "../pages/AdminDashboard.jsx";
+import AddProduct from "../pages/AddProduct.jsx";
+
 
 const router = createBrowserRouter([
     {
@@ -24,12 +28,30 @@ const router = createBrowserRouter([
                 return res.data;
             }
 
-        }, {
+        },
+        {
             path: "contact",
             element: <Contact />,
-        }, {
+        },
+        {
             path: "about",
             element: <About />,
+        },
+        {
+            path: "admin",
+            element: (
+                <AdminRoute>
+                    <AdminDashboard />
+                </AdminRoute>
+            )
+        },
+        {
+            path: "addproducts",
+            element: (
+                <AdminRoute>
+                    <AddProduct />
+                </AdminRoute>
+            )
         },
         {
             path: "items/:category",

@@ -49,6 +49,12 @@ function Navbar() {
                         </Link>
 
                     </div>
+                    <div className="cart w-7 ">
+                        <Link to="./admin">
+                            <img src={cartSvg} alt="Cart" className="bg-red-600" />
+                        </Link>
+
+                    </div>
                     <div className="profile w-7 mx-2">
                         <div className="relative  group ">
                             <img src={profileSvg} alt="Profile" />
