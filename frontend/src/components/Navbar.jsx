@@ -6,16 +6,20 @@ import cartSvg from "/src/assets/icons/add-to-cartl.svg";
 import profileSvg from "/src/assets/icons/user-icon.svg";
 import logoutsvg from "../../public/LogOut.svg"
 import logInsvg from "../../public/LoginSvg.svg"
+import { jwtDecode } from "jwt-decode"
 
 
-// import HomePage from "../pages/HomePage";
-// import { handleMouseEnter, handleMouseLeave } from "../utils/OnHoverTextShow";
+
 
 
 
 function Navbar() {
     const { User, logout, login } = useContext(AuthContext)
-    // console.log(User)
+    console.log(User)
+    const isAdmin = User?.token
+        ? jwtDecode(User.token).role === "admin"
+        : false;
+
     return (
 
 
@@ -49,20 +53,20 @@ function Navbar() {
                         </Link>
 
                     </div>
-                    <div className="cart w-7 ">
-                        <Link to="./admin">
-                            <img src={cartSvg} alt="Cart" className="bg-red-600" />
-                        </Link>
 
-                    </div>
                     <div className="profile w-7 mx-2">
                         <div className="relative  group ">
                             <img src={profileSvg} alt="Profile" />
-                            <div className="ContextMenu absolute right-0 z-10 h-[50vh] w-[250px] bg-slate-100 rounded-2xl absolute hidden  group-hover:block">
-                                <Link to="./profile" className="myProfile   bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
+                            <div className="ContextMenu absolute right-0 z-10 h-[50vh] w-[250px] bg-slate-100 rounded-2xl absolute hidden   group-hover:block">
+                                <div className="myProfile   bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
                                     <img src={profileSvg} alt="Profile" width={30} />
-                                    My Profile
-                                </Link>
+                                    <Link to="./profile" className="w-full h-full"> My Profile</Link>
+                                </div>
+                                {isAdmin && <div className="myProfile   bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
+                                    <img src={profileSvg} alt="Profile" width={30} />
+                                    <Link to="./admin" className="w-full h-full"> Admin Panel</Link>
+                                </div>}
+
                                 <div className="logstatus">
                                     {User ? <Link onClick={logout} className="logIn bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
                                         <img src={logoutsvg} alt="Profile" width={30} />LogOut</Link> : <Link to="/login" className="logOut bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">

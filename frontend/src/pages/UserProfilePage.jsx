@@ -50,16 +50,16 @@ export default function MyProfile() {
                 </div>
 
                 {/* Actions */}
-                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                <div className="mt-8 flex flex-col gap-4">
                     <button className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
                         Edit Profile
                     </button>
-                    <Link to="/" className="flex bg-red-500 text-white py-2 rounded-lg justify-center hover:bg-red-600 transition">
-                        <button onClick={logout}>
+                    <button className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        <Link to="/" onClick={logout} className="inline">
                             Logout
 
-                        </button>
-                    </Link>
+                        </Link>
+                    </button>
                 </div>
             </div>
         </div>
