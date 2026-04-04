@@ -20,8 +20,9 @@ const addProducts = async (req, res) => {
             category,
             categoryType,
             subcategory,
-            expiryDate,
             unitsAvailable,
+            expiryDate,
+            stock,
             images: [image], // or path
             description,
         });
