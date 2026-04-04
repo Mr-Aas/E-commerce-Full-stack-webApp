@@ -9,6 +9,7 @@ export const loginUser = async (req, res) => {
 
         // 1️⃣ Validate input
         if (!email || !password) {
+            console.log(`${email},${password} not avilable`)
             return res.status(400).json({ message: "All fields are required" })
         }
 
@@ -27,7 +28,7 @@ export const loginUser = async (req, res) => {
         }
 
         // 4️⃣ Generate token
-        const token = generateToken(User._id)
+        const token = generateToken(User._id, User.isAdmin)
 
         // 5️⃣ Send response
         res.status(200).json({

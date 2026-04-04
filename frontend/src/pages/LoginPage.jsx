@@ -2,12 +2,14 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [visible, setVisible] = useState(false)
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -24,7 +26,8 @@ export default function LoginPage() {
             });
 
             const { token } = res.data;
-            // console.log(token)
+            const user = jwtDecode(token)
+            console.log(user)
             login(token);
             navigate("/");
         } catch (err) {
@@ -61,15 +64,19 @@ export default function LoginPage() {
                     </div>
 
                     {/* Password */}
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Password</label>
+                    <div className="relative">
+                        <label className="block text-sm font-medium mb-1">Password
+
+                            <div className="visible absolute bottom-3 right-3" onClick={() => setVisible(!visible)}>{visible ? "hide" : "show"}</div>
+                        </label>
                         <input
-                            type="password"
+                            type={visible ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Enter your password"
+
                         />
                     </div>
 
