@@ -7,8 +7,10 @@ export default function AddProduct() {
         name: "",
         price: "",
         category: "",
+        categoryType: "",
         subcategory: "",
-        stock: "",
+        expiryDate: "",
+        unitsAvailable: "",
         image: "",
         description: "",
     });
@@ -20,10 +22,16 @@ export default function AddProduct() {
 
         setForm((prev) => {
             if (name === "category") {
+                const selectedCategory = value;
+
+                const subcategories =
+                    categoriesData[selectedCategory]?.subcategories || [];
+
                 return {
                     ...prev,
-                    category: value,
-                    subcategory: "" // 🔥 reset
+                    category: selectedCategory,
+                    categoryType: categoriesData[selectedCategory]?.type || "",
+                    subcategory: subcategories[0] || "" // ✅ FIXED
                 };
             }
 
@@ -50,7 +58,10 @@ export default function AddProduct() {
                 name: "",
                 price: "",
                 category: "",
-                stock: "",
+                categoryType: "",
+                subcategory: "",
+                expiryDate: "",
+                unitsAvailable: "",
                 image: "",
                 description: "",
             });
@@ -110,24 +121,36 @@ export default function AddProduct() {
                         name="subcategory"
                         value={form.subcategory}
                         onChange={handleChange}
+                        disabled={!form.category} 
                         className="w-full p-3 border rounded-xl"
                         required
                     >
                         <option value="">Select Subcategory</option>
 
                         {form.category &&
-                            categoriesData[form.category].map((sub) => (
+                            categoriesData[form.category].subcategories.map((sub) => (
                                 <option key={sub} value={sub}>
                                     {sub}
                                 </option>
                             ))}
                     </select>
 
+                    {form.categoryType === "perishable" && (
+                        <input
+                            type="date"
+                            name="expiryDate"
+                            value={form.expiryDate}
+                            onChange={handleChange}
+                            className="w-full p-3 border rounded-xl"
+                            required
+                        />
+                    )}
+
                     <input
                         type="number"
-                        name="stock"
-                        placeholder="Stock"
-                        value={form.stock}
+                        name="unitsAvailable"
+                        placeholder="unitsAvailable"
+                        value={form.unitsAvailable}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-xl"
                         required

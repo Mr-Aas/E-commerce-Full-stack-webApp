@@ -8,17 +8,20 @@ const getProducts = async (req, res) => {
 
     res.json(products);
 }
-const  addProducts = async (req, res) => {
+const addProducts = async (req, res) => {
     try {
-        console.log(req.body); 
+        console.log(req.body);
 
-        const { name, price, category, stock,image, description } = req.body;
+        const { name, price, category, categoryType, subcategory, expiryDate, unitsAvailable, image, description } = req.body;
 
         const newProduct = new Product({
             name,
             price,
             category,
-            stock,
+            categoryType,
+            subcategory,
+            expiryDate,
+            unitsAvailable,
             images: [image], // or path
             description,
         });
