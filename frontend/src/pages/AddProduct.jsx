@@ -1,26 +1,37 @@
 import { useState } from "react";
 import api from "../api/axios";
+import categoriesData from "../data/categoriesdata";
 
 export default function AddProduct() {
     const [form, setForm] = useState({
         name: "",
         price: "",
         category: "",
+        subcategory: "",
         stock: "",
-        image: null,
+        image: "",
         description: "",
     });
 
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
-        const { name, value, files } = e.target;
+        const { name, value } = e.target;
 
-        if (name === "image") {
-            setForm({ ...form, image: files[0] });
-        } else {
-            setForm({ ...form, [name]: value });
-        }
+        setForm((prev) => {
+            if (name === "category") {
+                return {
+                    ...prev,
+                    category: value,
+                    subcategory: "" // 🔥 reset
+                };
+            }
+
+            return {
+                ...prev,
+                [name]: value
+            };
+        });
     };
 
     const handleSubmit = async (e) => {
@@ -28,19 +39,9 @@ export default function AddProduct() {
         setLoading(true);
 
         try {
+            const res = await api.post("/products/addproduct", form)
 
-
-            const formData = new FormData();
-            formData.append("name", form.name);
-            formData.append("price", form.price);
-            formData.append("category", form.category);
-            formData.append("stock", form.stock);
-            formData.append("description", form.description);
-            formData.append("image", form.image);
-
-            const res = await api.post("/products/addproduct", formData)
-
-            const data = await res.json();
+            const data = res.data
             console.log(data);
 
             alert("Product added successfully");
@@ -50,7 +51,7 @@ export default function AddProduct() {
                 price: "",
                 category: "",
                 stock: "",
-                image: null,
+                image: "",
                 description: "",
             });
         } catch (err) {
@@ -89,15 +90,38 @@ export default function AddProduct() {
                         required
                     />
 
-                    <input
-                        type="text"
+                    <select
                         name="category"
-                        placeholder="Category"
                         value={form.category}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-xl"
                         required
-                    />
+                    >
+                        <option value="">Select Category</option>
+
+                        {Object.keys(categoriesData).map((cat) => (
+                            <option key={cat} value={cat}>
+                                {cat}
+                            </option>
+                        ))}
+                    </select>
+
+                    <select
+                        name="subcategory"
+                        value={form.subcategory}
+                        onChange={handleChange}
+                        className="w-full p-3 border rounded-xl"
+                        required
+                    >
+                        <option value="">Select Subcategory</option>
+
+                        {form.category &&
+                            categoriesData[form.category].map((sub) => (
+                                <option key={sub} value={sub}>
+                                    {sub}
+                                </option>
+                            ))}
+                    </select>
 
                     <input
                         type="number"
@@ -110,13 +134,15 @@ export default function AddProduct() {
                     />
 
                     <input
-                        type="file"
+                        type="text"
                         name="image"
-                        accept="image/*"
+                        placeholder="enter image URL"
+                        value={form.image}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-xl"
                         required
                     />
+
 
                     <textarea
                         name="description"

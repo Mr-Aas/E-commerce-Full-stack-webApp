@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useLoaderData, useParams } from 'react-router-dom'
 
+
 import Itemcard from '../components/Itemcard.jsx'
 import ImageSlider from "../components/ImageSlider.jsx"
 
