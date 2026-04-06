@@ -1,8 +1,12 @@
 import { useState } from "react";
 import api from "../api/axios";
-import categoriesData from "../data/categoriesdata";
+import { useLoaderData, useNavigate } from "react-router-dom";
+
 
 export default function AddProduct() {
+    const categoriesData = useLoaderData()
+    const Navigate = useNavigate();
+    console.log(categoriesData)
     const [form, setForm] = useState({
         name: "",
         price: "",
@@ -10,7 +14,7 @@ export default function AddProduct() {
         categoryType: "",
         subcategory: "",
         expiryDate: "",
-        unitsAvailable: "",
+        stock: "",
         image: "",
         description: "",
     });
@@ -22,16 +26,15 @@ export default function AddProduct() {
 
         setForm((prev) => {
             if (name === "category") {
-                const selectedCategory = value;
-
-                const subcategories =
-                    categoriesData[selectedCategory]?.subcategories || [];
+                const selectedCategoryObj = categoriesData.find(
+                    (cat) => cat.name === value
+                );
 
                 return {
                     ...prev,
-                    category: selectedCategory,
-                    categoryType: categoriesData[selectedCategory]?.type || "",
-                    subcategory: subcategories[0] || "" // ✅ FIXED
+                    category: value,
+                    categoryType: selectedCategoryObj?.categoryType || "",
+                    subcategory: selectedCategoryObj?.subcategory?.[0] || ""
                 };
             }
 
@@ -61,7 +64,7 @@ export default function AddProduct() {
                 categoryType: "",
                 subcategory: "",
                 expiryDate: "",
-                unitsAvailable: "",
+                stock: "",
                 image: "",
                 description: "",
             });
@@ -81,6 +84,48 @@ export default function AddProduct() {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="categoryselect flex gap-2">
+
+
+                    <select
+                        name="category"
+                        value={form.category}
+                        onChange={handleChange}
+                        className="w-full p-3 border rounded-xl"
+                        required
+                        >
+                        <option value="">Select Category</option>
+
+                        {categoriesData.map((cat) => (
+                            <option key={cat._id} value={cat.name}>
+                                {cat.name}
+                            </option>
+                        ))}
+
+                    </select>
+                    <select
+                        name="subcategory"
+                        value={form.subcategory}
+                        onChange={handleChange}
+                        disabled={!form.category}
+                        className="w-full p-3 border rounded-xl"
+                        required
+                    >
+                        <option value="">Select Subcategory</option>
+
+                        {form.category &&
+                            categoriesData
+                                .find((cat) => cat.name === form.category)
+                                ?.subcategory?.map((sub) => (
+                                    <option key={sub} value={sub}>
+                                        {sub}
+                                    </option>
+                                ))}
+                    </select>
+                        <button className="border w-[50px] rounded-full p-3 bg-slate-950 hover:bg-slate-600 text-white flex justify-around items-baseline" onClick={()=>Navigate("/addcategory")} >Add 
+                        </button>
+
+                        </div>
                     <input
                         type="text"
                         name="name"
@@ -92,7 +137,7 @@ export default function AddProduct() {
                     />
 
                     <input
-                        type="number"
+                        type="text"
                         name="price"
                         placeholder="Price"
                         value={form.price}
@@ -100,40 +145,6 @@ export default function AddProduct() {
                         className="w-full p-3 border rounded-xl"
                         required
                     />
-
-                    <select
-                        name="category"
-                        value={form.category}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    >
-                        <option value="">Select Category</option>
-
-                        {Object.keys(categoriesData).map((cat) => (
-                            <option key={cat} value={cat}>
-                                {cat}
-                            </option>
-                        ))}
-                    </select>
-
-                    <select
-                        name="subcategory"
-                        value={form.subcategory}
-                        onChange={handleChange}
-                        disabled={!form.category} 
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    >
-                        <option value="">Select Subcategory</option>
-
-                        {form.category &&
-                            categoriesData[form.category].subcategories.map((sub) => (
-                                <option key={sub} value={sub}>
-                                    {sub}
-                                </option>
-                            ))}
-                    </select>
 
                     {form.categoryType === "perishable" && (
                         <input
@@ -148,12 +159,11 @@ export default function AddProduct() {
 
                     <input
                         type="number"
-                        name="unitsAvailable"
-                        placeholder="unitsAvailable"
-                        value={form.unitsAvailable}
+                        name="stock"
+                        placeholder="stock (optional)"
+                        value={form.stock}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-xl"
-                        required
                     />
 
                     <input

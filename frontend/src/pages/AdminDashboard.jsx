@@ -72,11 +72,16 @@ function Products() {
     const navigate = useNavigate();
     return (
         <div>
-            <h2 className="text-2xl font-semibold mb-4">Manage Products</h2>
-
+            <h2 className="text-2xl font-semibold mb-4 ">Manage Products</h2>
+<div className="buttons flex gap-2">
+    
             <button className="mb-4 px-4 py-2 bg-black text-white rounded-xl" onClick={() => navigate("/addproducts")}>
                 + Add Product
             </button>
+            <button className="mb-4 px-4 py-2 bg-black text-white rounded-xl" onClick={() => navigate("/addcategory")}>
+                + Add Category
+            </button>
+</div>
 
             <div className="bg-white p-4 rounded-xl shadow">
                 <p>No products yet...</p>

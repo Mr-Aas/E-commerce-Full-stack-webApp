@@ -3,9 +3,9 @@ const router = express.Router();
 
 import { getCategories, addCategories } from "../controllers/categoriescontroller.js";
 
- 
+
 
 router.get("/", getCategories);
-router.post("/", addCategories);
+router.post("/addcategory", addCategories)
 
 export default router;
