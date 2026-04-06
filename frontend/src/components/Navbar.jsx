@@ -1,87 +1,162 @@
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import { Menu, X, Search } from "lucide-react";
+
 import searchIcon from "../assets/icons/search-svgrepo-com.svg";
 import cartSvg from "/src/assets/icons/add-to-cartl.svg";
 import profileSvg from "/src/assets/icons/user-icon.svg";
-import logoutsvg from "../../public/LogOut.svg"
-import logInsvg from "../../public/LoginSvg.svg"
-import { jwtDecode } from "jwt-decode"
-
-
-
-
-
+import logoutsvg from "../../public/LogOut.svg";
+import logInsvg from "../../public/LoginSvg.svg";
 
 function Navbar() {
-    const { User, logout, login } = useContext(AuthContext)
-    console.log(User)
+    const { User, logout } = useContext(AuthContext);
+
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [showprofile, setShowprofile] = useState(false);
+
     const isAdmin = User?.token
         ? jwtDecode(User.token).role === "admin"
         : false;
 
     return (
+        <nav className="w-full shadow-md bg-white">
 
+            {/* 🔹 TOP BAR */}
+            <div className="flex items-center justify-between px-4 py-2">
 
-        <div>
-            <nav className="flex justify-between items-center w-full gap-4 flex-col">
+                {/* LOGO */}
+                <Link to="/" className="w-32 h-12 overflow-hidden">
+                    <img src="/websitelogo.jpg" alt="logo" />
+                </Link>
 
-                <div className="head flex w-full justify-around">
+                {/* 🔹 DESKTOP MENU */}
+                <ul className="hidden lg:flex gap-6 items-center font-medium">
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
+                    <li><Link to="/about">About</Link></li>
+                </ul>
 
-                    <div className="logo mx-9 w-60 h-16 overflow-hidden rounded-lg font-bold">
-                        <Link to="./">
-                            <img src="/websitelogo.jpg" alt="logo" />
+                {/* 🔹 RIGHT ICONS (DESKTOP) */}
+                <div className="hidden lg:flex items-center gap-4">
 
-                        </Link>
+                    {/* SEARCH */}
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder="Search items"
+                            className="border h-9 rounded-lg px-3 w-64"
+                        />
+                        <Search className="absolute right-2 top-2 w-4" />
                     </div>
 
-                    <ul className="flex gap-4 cursor-pointer items-center ">
-                        <li><Link to="/">Home</Link></li>
+                    {/* CART */}
+                    <Link to="/cart">
+                        <img src={cartSvg} className="w-6" />
+                    </Link>
 
-                        <li><Link to="./contact">contact</Link></li>
-                        <li><Link to="./about">about us</Link></li>
-                    </ul></div>
-                <div className="rightmost flex items-center gap-3 py-2 ">
-                    <div className="serch relative ">
-                        <input type="text" placeholder='search items' className='border h-8 rounded-lg w-[70vw] px-2  ' /> <div className="image absolute top-1.5 right-4">
-                            <img src={searchIcon} alt="Search" width="20" className='' />
+                    {/* PROFILE */}
+                    <div className="relative">
+                        <img
+                            src={profileSvg}
+                            className="w-7 cursor-pointer"
+                            onClick={() => setShowprofile(!showprofile)}
+                        />
+
+                        {showprofile && (
+                            <div className="absolute right-0 top-10 w-60 bg-white shadow-lg rounded-xl p-2 z-20">
+
+                                <Link to="/profile" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                    <img src={profileSvg} width={20} />
+                                    My Profile
+                                </Link>
+
+                                {isAdmin && (
+                                    <Link to="/admin" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                        Admin Panel
+                                    </Link>
+                                )}
+
+                                {User ? (
+                                    <button onClick={logout} className="flex gap-2 p-2 hover:bg-gray-100 rounded w-full text-left">
+                                        <img src={logoutsvg} width={20} />
+                                        Logout
+                                    </button>
+                                ) : (
+                                    <Link to="/login" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                        <img src={logInsvg} width={20} />
+                                        Login
+                                    </Link>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* 🔹 HAMBURGER (MOBILE + TABLET) */}
+                <div className="lg:hidden flex items-center gap-3">
+
+                    <Link to="/cart">
+                        <img src={cartSvg} className="w-6" />
+                    </Link>
+
+                    <button onClick={() => setMenuOpen(true)}>
+                        <Menu size={28} />
+                    </button>
+                </div>
+            </div>
+
+            {/* 🔹 SEARCH BAR (FULL WIDTH MOBILE) */}
+            <div className="lg:hidden px-4 pb-2">
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        className="w-full border rounded-lg h-10 px-3"
+                    />
+                    <Search className="absolute right-3 top-3 w-5" />
+                </div>
+            </div>
+
+            {/* 🔹 MOBILE MENU OVERLAY */}
+            {menuOpen && (
+                <div className="fixed inset-0 bg-black/40 z-50">
+
+                    <div className="bg-white w-64 h-full p-4 shadow-lg">
+
+                        {/* CLOSE BUTTON */}
+                        <div className="flex justify-end">
+                            <X size={28} onClick={() => setMenuOpen(false)} />
+                        </div>
+
+                        {/* MENU ITEMS */}
+                        <div className="flex flex-col gap-4 mt-6 font-medium">
+
+                            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+                            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+                            <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+
+                            <Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>
+
+                            {isAdmin && (
+                                <Link to="/admin" onClick={() => setMenuOpen(false)}>
+                                    Admin Panel
+                                </Link>
+                            )}
+
+                            {User ? (
+                                <button onClick={logout}>Logout</button>
+                            ) : (
+                                <Link to="/login">Login</Link>
+                            )}
                         </div>
                     </div>
-                    <div className="cart w-7 ">
-                        <Link to="./cart">
-                            <img src={cartSvg} alt="Cart" />
-                        </Link>
-
-                    </div>
-
-                    <div className="profile w-7 mx-2">
-                        <div className="relative  group ">
-                            <img src={profileSvg} alt="Profile" />
-                            <div className="ContextMenu absolute right-0 z-10 h-[50vh] w-[250px] bg-slate-100 rounded-2xl absolute hidden   group-hover:block">
-                                <div className="myProfile   bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
-                                    <img src={profileSvg} alt="Profile" width={30} />
-                                    <Link to="./profile" className="w-full h-full"> My Profile</Link>
-                                </div>
-                                {isAdmin && <div className="myProfile   bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
-                                    <img src={profileSvg} alt="Profile" width={30} />
-                                    <Link to="./admin" className="w-full h-full"> Admin Panel</Link>
-                                </div>}
-
-                                <div className="logstatus">
-                                    {User ? <Link onClick={logout} className="logIn bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
-                                        <img src={logoutsvg} alt="Profile" width={30} />LogOut</Link> : <Link to="/login" className="logOut bg-slate-200 rounded-2xl my-1 w-full w-[40px] flex gap-2 p-3 font-semibold ">
-                                        <img src={logInsvg} alt="Profile" width={30} />LogIn</Link>}
-                                </div>
-                            </div>
-
-
-                        </div></div>
-
-
                 </div>
-            </nav>
-        </div>
-    )
+            )}
+
+        </nav>
+    );
 }
 
-export default Navbar
+export default Navbar;

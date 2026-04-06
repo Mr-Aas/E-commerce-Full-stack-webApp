@@ -14,6 +14,8 @@ import MyProfile from "../pages/UserProfilePage.jsx";
 import profileLoader from "./profileloader.jsx";
 import AdminDashboard from "../pages/AdminDashboard.jsx";
 import AddProduct from "../pages/AddProduct.jsx";
+import AddCategory from "../pages/AddCategory.jsx";
+import categoriesData from "./categoryloaderforprod.jsx";
 
 
 const router = createBrowserRouter([
@@ -49,7 +51,16 @@ const router = createBrowserRouter([
             path: "addproducts",
             element: (
                 <AdminRoute>
-                    <AddProduct/>
+                    <AddProduct />
+                </AdminRoute>
+            ),
+            loader: categoriesData
+        },
+        {
+            path: "addcategory",
+            element: (
+                <AdminRoute>
+                    <AddCategory />
                 </AdminRoute>
             )
         },

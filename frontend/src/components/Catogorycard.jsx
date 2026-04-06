@@ -1,6 +1,5 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import About from "../pages/About";
+
 
 const Categorycard = ({Categories}) => {
   
@@ -14,6 +13,7 @@ const Categorycard = ({Categories}) => {
   return (
     <>
       {Categories.map((items) => {
+        console.log(items.name,items.images)
 
         return ( 
 
@@ -22,8 +22,8 @@ const Categorycard = ({Categories}) => {
 
               {/* Background Image */}
               <img
-                src={items.images[0]}
-                alt="shoes"
+                src={items?.images[0]}
+                alt={items?.name} 
                 className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
               />
               {/* Gradient Overlay */}
