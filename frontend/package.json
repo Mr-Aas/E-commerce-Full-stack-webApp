@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "@vitejs/plugin-basic-ssl": "^2.3.0",
     "axios": "^1.14.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^1.7.0",

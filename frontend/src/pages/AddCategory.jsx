@@ -44,7 +44,7 @@ export default function AddCategory() {
                 description: "",
             });
             navigate("/addproducts")
-            
+
         } catch (err) {
             console.error(err);
             alert("Error adding product");

@@ -6,7 +6,8 @@ const getCategories = async (req, res) => {
 }
 const addCategories = async (req, res) => {
     try {
-        const { name, categoryType, subcategory, isAvailable, images, description } = req.body;
+        console.log(req.body)
+        const { name, categoryType, subcategory, isAvailable, image, description } = req.body;
 
         const existingCategory = await Categories.findOne({ name });
 
@@ -24,9 +25,9 @@ const addCategories = async (req, res) => {
         const newCategory = new Categories({
             name,
             categoryType,
-            subcategory: [subcategory], 
+            subcategory: [subcategory],
             isAvailable,
-            images: [images],
+            images: [image],
             description,
         });
 
