@@ -3,8 +3,6 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import { Menu, X, Search } from "lucide-react";
-
-import searchIcon from "../assets/icons/search-svgrepo-com.svg";
 import cartSvg from "/src/assets/icons/add-to-cartl.svg";
 import profileSvg from "/src/assets/icons/user-icon.svg";
 import logoutsvg from "../../public/LogOut.svg";
@@ -24,12 +22,15 @@ function Navbar() {
         <nav className="w-full shadow-md bg-white">
 
             {/* 🔹 TOP BAR */}
-            <div className="flex items-center justify-between px-4 py-2">
+            <div className="flex items-center justify-between px-4 py-2  ">
 
                 {/* LOGO */}
-                <Link to="/" className="w-32 h-12 overflow-hidden">
-                    <img src="/websitelogo.jpg" alt="logo" />
-                </Link>
+                <div className="logo w-42 h-12 overflow-hidden">
+
+                    <Link to="/" className=" object-contain">
+                        <img src="/websitelogo.jpg" alt="logo" />
+                    </Link>
+                </div>
 
                 {/* 🔹 DESKTOP MENU */}
                 <ul className="hidden lg:flex gap-6 items-center font-medium">
@@ -46,7 +47,7 @@ function Navbar() {
                         <input
                             type="text"
                             placeholder="Search items"
-                            className="border h-9 rounded-lg px-3 w-64"
+                            className="border h-9 rounded-xl px-3 w-64"
                         />
                         <Search className="absolute right-2 top-2 w-4" />
                     </div>

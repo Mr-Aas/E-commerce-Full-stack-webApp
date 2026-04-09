@@ -6,6 +6,8 @@ import connectdb from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js"
 import authRoutes from "./routes/authRoutes.js"
+import dashBoardRoutes from "./routes/dashBoardRoutes.js"
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 
 const PORT = 5000;
@@ -19,6 +21,8 @@ connectdb();
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/auth", authRoutes)
+app.use("/dashboard", dashBoardRoutes)
+app.use("/upload", uploadRoutes);
 
 
 app.get('/', (req, res) => res.send('API is running...'));

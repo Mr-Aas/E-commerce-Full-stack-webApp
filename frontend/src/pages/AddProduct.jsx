@@ -1,12 +1,15 @@
 import { useState } from "react";
 import api from "../api/axios";
 import { useLoaderData, useNavigate } from "react-router-dom";
-
+import CaptureImage from "../utils/CaptureImage";
 
 export default function AddProduct() {
-    const categoriesData = useLoaderData()
+    const categoriesData = useLoaderData();
     const Navigate = useNavigate();
-    console.log(categoriesData)
+
+    const [imageBlob, setImageBlob] = useState(null);
+    const [loading, setLoading] = useState(false);
+
     const [form, setForm] = useState({
         name: "",
         price: "",
@@ -15,11 +18,13 @@ export default function AddProduct() {
         subcategory: "",
         expiryDate: "",
         stock: "",
-        image: "",
+        image: [], // ✅ ARRAY
         description: "",
     });
 
-    const [loading, setLoading] = useState(false);
+    const handleCapture = (blob) => {
+        setImageBlob(blob);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -47,13 +52,32 @@ export default function AddProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!imageBlob) {
+            alert("Please capture image first");
+            return;
+        }
+
         setLoading(true);
 
         try {
-            const res = await api.post("/products/addproduct", form)
+            // 1️⃣ Upload image
+            const formData = new FormData();
+            formData.append("image", imageBlob);
 
-            const data = res.data
-            console.log(data);
+            const uploadRes = await api.post("/upload", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            const imageUrl = uploadRes.data.url;
+
+            // 2️⃣ Send product
+            await api.post("/products/addproduct", {
+                ...form,
+                image: imageUrl, 
+            });
 
             alert("Product added successfully");
 
@@ -65,9 +89,12 @@ export default function AddProduct() {
                 subcategory: "",
                 expiryDate: "",
                 stock: "",
-                image: "",
+                image: [],
                 description: "",
             });
+
+            setImageBlob(null);
+
         } catch (err) {
             console.error(err);
             alert("Error adding product");
@@ -84,113 +111,68 @@ export default function AddProduct() {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="categoryselect flex gap-2">
 
-
-                    <select
-                        name="category"
-                        value={form.category}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                        >
-                        <option value="">Select Category</option>
-
-                        {categoriesData.map((cat) => (
-                            <option key={cat._id} value={cat.name}>
-                                {cat.name}
-                            </option>
-                        ))}
-
-                    </select>
-                    <select
-                        name="subcategory"
-                        value={form.subcategory}
-                        onChange={handleChange}
-                        disabled={!form.category}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    >
-                        <option value="">Select Subcategory</option>
-
-                        {form.category &&
-                            categoriesData
-                                .find((cat) => cat.name === form.category)
-                                ?.subcategory?.map((sub) => (
-                                    <option key={sub} value={sub}>
-                                        {sub}
-                                    </option>
-                                ))}
-                    </select>
-                        <button className="border w-[50px] rounded-full p-3 bg-slate-950 hover:bg-slate-600 text-white flex justify-around items-baseline" onClick={()=>Navigate("/addcategory")} >Add 
-                        </button>
-
-                        </div>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Product Name"
-                        value={form.name}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        name="price"
-                        placeholder="Price"
-                        value={form.price}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    />
-
-                    {form.categoryType === "perishable" && (
-                        <input
-                            type="date"
-                            name="expiryDate"
-                            value={form.expiryDate}
+                    {/* Category + Subcategory */}
+                    <div className="flex gap-2">
+                        <select
+                            name="category"
+                            value={form.category}
                             onChange={handleChange}
                             className="w-full p-3 border rounded-xl"
                             required
-                        />
+                        >
+                            <option value="">Select Category</option>
+                            {categoriesData.map((cat) => (
+                                <option key={cat._id} value={cat.name}>
+                                    {cat.name}
+                                </option>
+                            ))}
+                        </select>
+
+                        <select
+                            name="subcategory"
+                            value={form.subcategory}
+                            onChange={handleChange}
+                            disabled={!form.category}
+                            className="w-full p-3 border rounded-xl"
+                            required
+                        >
+                            <option value="">Select Subcategory</option>
+                            {form.category &&
+                                categoriesData
+                                    .find((cat) => cat.name === form.category)
+                                    ?.subcategory?.map((sub) => (
+                                        <option key={sub} value={sub}>
+                                            {sub}
+                                        </option>
+                                    ))}
+                        </select>
+
+                        <button
+                            type="button"
+                            onClick={() => Navigate("/addcategory")}
+                            className="w-[200px] bg-black text-white rounded-xl"
+                        >
+                            Add New
+                        </button>
+                    </div>
+
+                    {/* Inputs */}
+                    <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
+                    <input name="price" placeholder="Price" value={form.price} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
+
+                    {form.categoryType === "perishable" && (
+                        <input type="date" name="expiryDate" value={form.expiryDate} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
                     )}
 
-                    <input
-                        type="number"
-                        name="stock"
-                        placeholder="stock (optional)"
-                        value={form.stock}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                    />
+                    <input type="number" name="stock" placeholder="Stock" value={form.stock} onChange={handleChange} className="w-full p-3 border rounded-xl" />
 
-                    <input
-                        type="text"
-                        name="image"
-                        placeholder="enter image URL"
-                        value={form.image}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    />
+                    {/* 📸 CAMERA */}
+                    <CaptureImage onCapture={handleCapture} />
 
+                    <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="w-full p-3 border rounded-xl" />
 
-                    <textarea
-                        name="description"
-                        placeholder="Description"
-                        value={form.description}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        rows="4"
-                    />
-
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full bg-black text-white py-3 rounded-xl"
-                    >
+                    <button className="w-full bg-black text-white py-3 rounded-xl">
                         {loading ? "Adding..." : "Add Product"}
                     </button>
                 </form>

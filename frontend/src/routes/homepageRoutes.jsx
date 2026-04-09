@@ -16,6 +16,8 @@ import AdminDashboard from "../pages/AdminDashboard.jsx";
 import AddProduct from "../pages/AddProduct.jsx";
 import AddCategory from "../pages/AddCategory.jsx";
 import categoriesData from "./categoryloaderforprod.jsx";
+import Dashboardloader from "./dashboardloader.jsx";
+
 
 
 const router = createBrowserRouter([
@@ -45,7 +47,9 @@ const router = createBrowserRouter([
                 <AdminRoute>
                     <AdminDashboard />
                 </AdminRoute>
-            )
+            ),
+            loader: Dashboardloader,
+
         },
         {
             path: "addproducts",
