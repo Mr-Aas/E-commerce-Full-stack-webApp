@@ -6,8 +6,7 @@ export default function AddCategory() {
     const [form, setForm] = useState({
         name: "",
         categoryType: "",
-        subcategory: "",
-        isAvailable: false,
+        isAvailable: true,
         image: "",
         description: "",
     });
@@ -28,18 +27,17 @@ export default function AddCategory() {
         setLoading(true);
 
         try {
-            const res = await api.post("/categories/addcategory", form)
+            const res = await api.post("/categories", form)
 
             const data = res.data
             console.log(data);
 
-            alert("Product added successfully");
+            alert("Category added successfully");
 
             setForm({
                 name: "",
                 categoryType: "",
-                subcategory: "",
-                isAvailable: false,
+                isAvailable: true,
                 image: "",
                 description: "",
             });
@@ -85,15 +83,7 @@ export default function AddCategory() {
 
                     </select>
 
-                    <input
-                        type="text"
-                        name="subcategory"
-                        placeholder="subCategory name"
-                        value={form.subcategory}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    />
+                    
                     <div className="isavailable w-full gap-2 flex item-center h-4 ">
 
                         <input
@@ -109,9 +99,9 @@ export default function AddCategory() {
                     </div>
                     <input
                         type="text"
-                        name="images"
+                        name="image"
                         placeholder="enter category-image URL"
-                        value={form.images}
+                        value={form.image}
                         onChange={handleChange}
                         className="w-full p-3 border rounded-xl"
                     />

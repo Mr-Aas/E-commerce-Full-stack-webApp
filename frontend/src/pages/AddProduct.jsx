@@ -39,10 +39,9 @@ export default function AddProduct() {
                     ...prev,
                     category: value,
                     categoryType: selectedCategoryObj?.categoryType || "",
-                    subcategory: selectedCategoryObj?.subcategory?.[0] || ""
+                    subcategory: selectedCategoryObj?.subcategory?.[0]?.name || ""
                 };
             }
-
             return {
                 ...prev,
                 [name]: value
@@ -76,7 +75,7 @@ export default function AddProduct() {
             // 2️⃣ Send product
             await api.post("/products/addproduct", {
                 ...form,
-                image: imageUrl, 
+                image: imageUrl,
             });
 
             alert("Product added successfully");
@@ -142,8 +141,8 @@ export default function AddProduct() {
                                 categoriesData
                                     .find((cat) => cat.name === form.category)
                                     ?.subcategory?.map((sub) => (
-                                        <option key={sub} value={sub}>
-                                            {sub}
+                                        <option key={sub._id} value={sub.name}>
+                                            {sub.name}
                                         </option>
                                     ))}
                         </select>
@@ -161,7 +160,7 @@ export default function AddProduct() {
                     <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
                     <input name="price" placeholder="Price" value={form.price} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
 
-                    {form.categoryType === "perishable" && (
+                    {form.categoryType === "Perishable" && (
                         <input type="date" name="expiryDate" value={form.expiryDate} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
                     )}
 

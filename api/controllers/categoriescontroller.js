@@ -1,46 +1,88 @@
 import Categories from "../models/categories.js";
+import mongoose from "mongoose";
 
 const getCategories = async (req, res) => {
     const categories = await Categories.find();
     res.json(categories);
 }
-const addCategories = async (req, res) => {
+const addCategory = async (req, res) => {
     try {
-        console.log(req.body)
-        const { name, categoryType, subcategory, isAvailable, image, description } = req.body;
-
-        const existingCategory = await Categories.findOne({ name });
-
-        if (existingCategory) {
-
-            if (!existingCategory.subcategory.includes(subcategory)) {
-                existingCategory.subcategory.push(subcategory);
-            }
-
-            await existingCategory.save();
-
-            return res.status(200).json(existingCategory);
-        }
+        const { name, categoryType, image, isAvailable, description } = req.body;
 
         const newCategory = new Categories({
             name,
             categoryType,
-            subcategory: [subcategory],
-            isAvailable,
             images: [image],
             description,
+            isAvailable,
         });
-
         await newCategory.save();
-
         res.status(201).json(newCategory);
 
-    } catch (error) {
-        console.log(error);
+    } catch (err) {
         res.status(500).json({ message: "Error adding category" });
+    }
+};
+// categoryType: {
+//         type: String,
+//         required: true
+//     },
+
+const addSubCategory = async (req, res) => {
+    try {
+        const { categoryId } = req.params;
+        const { subcategory, subCategoryImages, subcategoryType, subcategoryDescription } = req.body;
+
+        console.log("BODY:", req.body);
+        console.log("PARAMS:", req.params);
+
+        // ✅ validate id
+        if (!mongoose.Types.ObjectId.isValid(categoryId)) {
+            return res.status(400).json({ message: "Invalid categoryId" });
+        }
+
+        if (!subcategory) {
+            return res.status(400).json({ message: "Subcategory required" });
+        }
+
+        const category = await Categories.findById(categoryId);
+
+        if (!category) {
+            return res.status(404).json({ message: "Category not found" });
+        }
+
+        if (!category.subcategory) {
+            category.subcategory = [];
+        }
+
+        const exists = category.subcategory.find(
+            (sub) => sub.name === subcategory
+        );
+
+        if (exists) {
+            return res.status(400).json({ message: "Subcategory already exists" });
+        }
+
+        category.subcategory.push({
+            name: subcategory,
+            images: subCategoryImages
+                ? (Array.isArray(subCategoryImages)
+                    ? subCategoryImages
+                    : [subCategoryImages])
+                : [],
+            description: subcategoryDescription,
+            categoryType: subcategoryType,
+        });
+
+        await category.save();
+
+        res.status(200).json(category);
+
+    } catch (err) {
+        console.error("FULL ERROR:", err);   // 🔥 THIS IS KEY
+        res.status(500).json({ message: err.message });
     }
 };
 
 
-
-export { getCategories, addCategories };
+export { getCategories, addCategory, addSubCategory };

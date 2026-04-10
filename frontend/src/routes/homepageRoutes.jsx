@@ -17,6 +17,7 @@ import AddProduct from "../pages/AddProduct.jsx";
 import AddCategory from "../pages/AddCategory.jsx";
 import categoriesData from "./categoryloaderforprod.jsx";
 import Dashboardloader from "./dashboardloader.jsx";
+import AddSubCategory from "../pages/AddSubCategory.jsx";
 
 
 
@@ -67,6 +68,15 @@ const router = createBrowserRouter([
                     <AddCategory />
                 </AdminRoute>
             )
+        },
+        {
+            path: "addsubcategory",
+            element: (
+                <AdminRoute>
+                    <AddSubCategory />
+                </AdminRoute>
+            ),
+            loader: categoriesData
         },
         {
             path: "items/:category",
