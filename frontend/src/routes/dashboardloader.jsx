@@ -6,7 +6,8 @@ const Dashboardloader = async () => {
         const sales = await api.get("/dashboard/sales")
         const products = await api.get("/dashboard/products")
         const users = await api.get("/dashboard/users")
-        const data = [sales.data, products.data, users.data]
+        const categories = await api.get("/categories")
+        const data = [sales.data, products.data, users.data, categories.data]
         console.log(data)
         return data
 

@@ -7,7 +7,6 @@ import router from "../routes/homepageRoutes";
 
 
 
-
 function App() {
 
 

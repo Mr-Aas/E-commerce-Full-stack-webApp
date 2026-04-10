@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
 import { Menu, X, Search } from "lucide-react";
@@ -7,16 +7,19 @@ import cartSvg from "/src/assets/icons/add-to-cartl.svg";
 import profileSvg from "/src/assets/icons/user-icon.svg";
 import logoutsvg from "../../public/LogOut.svg";
 import logInsvg from "../../public/LoginSvg.svg";
+import LanguageSelector from "./LanguageSelector.jsx";
+
 
 function Navbar() {
     const { User, logout } = useContext(AuthContext);
-
     const [menuOpen, setMenuOpen] = useState(false);
     const [showprofile, setShowprofile] = useState(false);
+
 
     const isAdmin = User?.token
         ? jwtDecode(User.token).role === "admin"
         : false;
+
 
     return (
         <nav className="w-full shadow-md bg-white">
@@ -32,6 +35,7 @@ function Navbar() {
                     </Link>
                 </div>
 
+
                 {/* 🔹 DESKTOP MENU */}
                 <ul className="hidden lg:flex gap-6 items-center font-medium">
                     <li><Link to="/">Home</Link></li>
@@ -42,16 +46,10 @@ function Navbar() {
                 {/* 🔹 RIGHT ICONS (DESKTOP) */}
                 <div className="hidden lg:flex items-center gap-4">
 
-                    {/* SEARCH */}
-                    <div className="relative">
-                        <input
-                            type="text"
-                            placeholder="Search items"
-                            className="border h-9 rounded-xl px-3 w-64"
-                        />
-                        <Search className="absolute right-2 top-2 w-4" />
-                    </div>
 
+
+                    {/* language selector */}
+                    <LanguageSelector />
                     {/* CART */}
                     <Link to="/cart">
                         <img src={cartSvg} className="w-6" />
@@ -96,8 +94,10 @@ function Navbar() {
                 </div>
 
                 {/* 🔹 HAMBURGER (MOBILE + TABLET) */}
+
                 <div className="lg:hidden flex items-center gap-3">
 
+                    <LanguageSelector />
                     <Link to="/cart">
                         <img src={cartSvg} className="w-6" />
                     </Link>
@@ -108,17 +108,7 @@ function Navbar() {
                 </div>
             </div>
 
-            {/* 🔹 SEARCH BAR (FULL WIDTH MOBILE) */}
-            <div className="lg:hidden px-4 pb-2">
-                <div className="relative">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-full border rounded-lg h-10 px-3"
-                    />
-                    <Search className="absolute right-3 top-3 w-5" />
-                </div>
-            </div>
+
 
             {/* 🔹 MOBILE MENU OVERLAY */}
             {menuOpen && (

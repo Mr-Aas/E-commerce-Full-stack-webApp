@@ -11,7 +11,7 @@ export default function AdminDashboard() {
     const [isOpen, setIsOpen] = useState(false);
     const [sales, products, users] = useLoaderData()
     console.log(sales, products, users)
-    console.log(typeof (sales), typeof (products), typeof (users))
+    // console.log(typeof (sales), typeof (products), typeof (users))
 
     const menu = [
         { name: "Dashboard", icon: Home, key: "dashboard" },
@@ -48,13 +48,19 @@ export default function AdminDashboard() {
                         className="mb-4 px-4 py-2 bg-black text-white rounded-xl"
                         onClick={() => navigate("/addproducts")}
                     >
-                        + Add Product
+                        + Add New Product
+                    </button>
+                    <button
+                        className="mb-4 px-4 py-2 bg-black text-white rounded-xl"
+                        onClick={() => navigate("/addsubcategory")}
+                    >
+                        + Add New subcategory
                     </button>
                     <button
                         className="mb-4 px-4 py-2 bg-black text-white rounded-xl"
                         onClick={() => navigate("/addcategory")}
                     >
-                        + Add Category
+                        + Add New Category
                     </button>
                 </div>
 
