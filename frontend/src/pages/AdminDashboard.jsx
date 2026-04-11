@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import { Home, Package, Users, Settings, LogOut, ChevronRight, ChevronLeft, User } from "lucide-react";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import ProductRow from "../components/ProductRow";
+import { deleteProduct } from "../api/productApi";
 
 
 
@@ -39,40 +41,56 @@ export default function AdminDashboard() {
     }
 
     function Products() {
-        const navigate = useNavigate();
-        return (
-            <div>
-                <h2 className="text-2xl font-semibold mb-4">Manage Products</h2>
-                <div className="flex gap-2">
-                    <button
-                        className="mb-4 px-4 py-2 bg-black text-white rounded-xl"
-                        onClick={() => navigate("/addproducts")}
-                    >
-                        + Add New Product
-                    </button>
-                    <button
-                        className="mb-4 px-4 py-2 bg-black text-white rounded-xl"
-                        onClick={() => navigate("/addsubcategory")}
-                    >
-                        + Add New subcategory
-                    </button>
-                    <button
-                        className="mb-4 px-4 py-2 bg-black text-white rounded-xl"
-                        onClick={() => navigate("/addcategory")}
-                    >
-                        + Add New Category
-                    </button>
-                </div>
+    const navigate = useNavigate();
+    const [productList, setProductList] = useState(products);
 
-                {products.map((product) => (
-                    <div className="bg-white p-4 flex flex-col gap-4 rounded-xl shadow">
-                        <p>{product?.name?.en}</p>
-                    </div>
-                ))}
+    // 🔴 DELETE HANDLER
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+        if (!confirmDelete) return;
+
+        try {
+            await deleteProduct(id);
+
+            // remove from UI
+            setProductList((prev) => prev.filter((p) => p._id !== id));
+
+            alert("Product deleted");
+        } catch (err) {
+            console.error(err);
+            alert("Delete failed");
+        }
+    };
+
+    return (
+        <div>
+            <h2 className="text-2xl font-semibold mb-4">Manage Products</h2>
+
+            <div className="flex gap-2">
+                <button onClick={() => navigate("/addproducts")} className="mb-4 px-4 py-2 bg-black text-white rounded-xl">
+                    + Add Product
+                </button>
+
+                <button onClick={() => navigate("/addsubcategory")} className="mb-4 px-4 py-2 bg-black text-white rounded-xl">
+                    + Add Subcategory
+                </button>
+
+                <button onClick={() => navigate("/addcategory")} className="mb-4 px-4 py-2 bg-black text-white rounded-xl">
+                    + Add Category
+                </button>
             </div>
-        );
-    }
 
+            {/* PRODUCT LIST */}
+            {productList.map((product) => (
+                <ProductRow
+                    key={product._id}
+                    product={product}
+                    onDelete={handleDelete}
+                />
+            ))}
+        </div>
+    );
+}
     function UsersPage() {
         return (
             <div>

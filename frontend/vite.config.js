@@ -9,6 +9,6 @@ export default defineConfig({
   plugins: [tailwindcss(), react(), basicSsl()],
   server: {
     host: true,
-    https: true, // allow phone access
+    // https: true, 
   }
 })

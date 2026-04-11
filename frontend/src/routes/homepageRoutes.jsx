@@ -18,6 +18,7 @@ import AddCategory from "../pages/AddCategory.jsx";
 import categoriesData from "./categoryloaderforprod.jsx";
 import Dashboardloader from "./dashboardloader.jsx";
 import AddSubCategory from "../pages/AddSubCategory.jsx";
+import EditProduct from "../pages/EditProduct.jsx";
 
 
 
@@ -116,6 +117,11 @@ const router = createBrowserRouter([
             loader: profileLoader
 
 
+        },
+        {
+            path: "/editproduct/:id",
+            element: <EditProduct />,
+            loader: categoriesData
         },
 
         ]
