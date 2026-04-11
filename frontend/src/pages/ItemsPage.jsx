@@ -1,6 +1,6 @@
 
 import { useLoaderData, useParams } from 'react-router-dom'
-
+import Backbutton from '../utils/Backbutton.jsx'
 
 import Itemcard from '../components/Itemcard.jsx'
 // import ImageSlider from "../components/ImageSlider.jsx"
@@ -35,13 +35,14 @@ function ItemsPage() {
 
   return (
     <>
+      {/* <Backbutton /> */}
       <section className="slider">
         {/* <ImageSlider /> */}
       </section>
       {Object.keys(groupedItems).map((subcat) => {
         return (
           <>
-            <section className="grocery my-3 bg-teal-50  rounded-2xl flex flex-col " key={subcat} >
+            <section className="grocery bg-teal-50  rounded-2xl flex flex-col " key={subcat} >
               <div className="sectionNAME text-3xl font-medium m-3 bg-teal-100 px-10 rounded-lg border-2 border-teal-300  h-[45px]">
                 {subcat}
               </div>
