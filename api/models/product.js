@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
 
-    subcategoryType: { 
+    subcategoryType: {
         type: String,
         enum: ["Perishable", "NonPerishable"],
         required: true
@@ -33,12 +33,11 @@ const productSchema = new mongoose.Schema({
 
     stock: Number,
 
-    images: [
-        {
-            type: String,
-            required: true
-        }
-    ],
+    images: {
+        type: [String],
+        default: []
+    }
+    ,
 
     description: String,
 
@@ -50,7 +49,7 @@ const productSchema = new mongoose.Schema({
     expiryDate: {
         type: Date,
         required: function () {
-            return this.subcategoryType === "Perishable"; 
+            return this.subcategoryType === "Perishable";
         }
     }
 
