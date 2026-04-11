@@ -8,11 +8,5 @@ import { getCategories, addCategory, addSubCategory } from "../controllers/categ
 router.get("/", getCategories);
 router.post("/", addCategory)
 router.post("/:categoryId/subcategory", addSubCategory)
-// setForm({
-//                 categoryId: "",
-//                 subcategory: "",
-//                 subcategoryType: "",
-//                 subCategoryImages: "",
-//                 subcategoryDescription: ""
-//             });
+
 export default router;

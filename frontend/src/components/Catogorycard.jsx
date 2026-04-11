@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { LanguageContext } from "../context/languageContext";
 
 
 const Categorycard = ({ Categories }) => {
-
+  const { lang } = useContext(LanguageContext);
 
   if (!Categories) {
     return <div className="data">failed to get data</div>
@@ -13,17 +15,17 @@ const Categorycard = ({ Categories }) => {
   return (
     <>
       {Categories.map((items) => {
-        console.log(items.name, items.images)
+        console.log(items)
 
         return (
 
           <div className="group  relative w-72 h-96 rounded-2xl overflow-hidden cursor-pointer shadow-lg" key={items._id}>
-            <Link to={`/items/${items.name}`}>
+            <Link to={`/items/${items.name?.en}`}>
 
               {/* Background Image */}
               <img
                 src={items?.images?.[0] || "/fallback.jpg"}
-                alt={items?.name}
+                alt={items?.name?.[lang]}
                 className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
               />
               {/* Gradient Overlay */}
@@ -32,11 +34,11 @@ const Categorycard = ({ Categories }) => {
               {/* Content */}
               <div className="absolute bottom-0 p-5 text-white">
                 <h2 className="text-2xl font-bold group-hover:translate-y-[-5px] transition duration-300">
-                  {items.name}
+                  {items?.name?.[lang]}
                 </h2>
                 <p className="text-sm opacity-80">
                   {items.subcategory?.length
-                    ? items.subcategory.map(sub => sub.name).join(", ")
+                    ? items.subcategory.map(sub => sub.name?.[lang]).join(", ")
                     : "No subcategories"}
                 </p>
 

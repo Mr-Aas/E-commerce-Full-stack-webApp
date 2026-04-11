@@ -8,7 +8,11 @@ export default function AddSubCategory() {
     const categoriesData = useLoaderData()
     const [form, setForm] = useState({
         categoryId: "",
-        subcategory: "",
+        subcategory: {
+            en: "",
+            hi: "",
+            desi: ""
+        },
         subcategoryType: "",
         subCategoryImages: "",
         subcategoryDescription: ""
@@ -44,7 +48,11 @@ export default function AddSubCategory() {
 
             setForm({
                 categoryId: "",
-                subcategory: "",
+                subcategory: {
+                    en: "",
+                    hi: "",
+                    desi: ""
+                },
                 subcategoryType: "",
                 subCategoryImages: "",
                 subcategoryDescription: ""
@@ -78,7 +86,7 @@ export default function AddSubCategory() {
                         <option value="">Select Category</option>
                         {categoriesData.map((cat) => (
                             <option key={cat._id} value={cat._id}>
-                                {cat.name}
+                                {cat.name?.en}
                             </option>
                         ))}
                     </select>
@@ -96,15 +104,56 @@ export default function AddSubCategory() {
 
                     </select>
 
-                    <input
-                        type="text"
-                        name="subcategory"
-                        placeholder="subCategory name"
-                        value={form.subcategory}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
-                        required
-                    />
+                    <div className="grid grid-cols-3 gap-2">
+
+                        <input
+                            placeholder="Name (English)"
+                            value={form.subcategory.en}
+                            className="w-full p-3  border rounded-xl "
+                            required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    subcategory: {
+                                        ...prev.subcategory,
+                                        en: e.target.value
+                                    }
+                                }))
+                            }
+                        />
+
+                        <input
+                            placeholder="Name (Hindi)"
+                            value={form.subcategory.hi}
+                            className="w-full p-3  border rounded-xl "
+                            required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    subcategory: {
+                                        ...prev.subcategory,
+                                        hi: e.target.value
+                                    }
+                                }))
+                            }
+                        />
+
+                        <input
+                            placeholder="Name (Desi)"
+                            value={form.subcategory.desi}
+                            className="w-full p-3  border rounded-xl "
+                            required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    subcategory: {
+                                        ...prev.subcategory,
+                                        desi: e.target.value
+                                    }
+                                }))
+                            }
+                        />
+                    </div>
 
                     <input
                         type="text"

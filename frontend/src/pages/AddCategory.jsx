@@ -4,7 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function AddCategory() {
     const [form, setForm] = useState({
-        name: "",
+        name: {
+            en: "",
+            hi: "",
+            desi: ""
+        },
         categoryType: "",
         isAvailable: true,
         image: "",
@@ -35,7 +39,11 @@ export default function AddCategory() {
             alert("Category added successfully");
 
             setForm({
-                name: "",
+                name: {
+                    en: "",
+                    hi: "",
+                    desi: ""
+                },
                 categoryType: "",
                 isAvailable: true,
                 image: "",
@@ -59,16 +67,47 @@ export default function AddCategory() {
                 </h2>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-3 gap-2">
 
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Category name"
-                        value={form.name}
-                        onChange={handleChange}
-                        className="w-full p-3 border rounded-xl"
+                        <input
+                            placeholder="Name (English)"
+                            value={form.name.en}
+                            className="w-full p-3  border rounded-xl "
                         required
-                    />
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    name: { ...prev.name, en: e.target.value }
+                                }))
+                            }
+                        />
+
+                        <input
+                            placeholder="Name (Hindi)"
+                            value={form.name.hi}
+                            className="w-full p-3  border rounded-xl "
+                        required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    name: { ...prev.name, hi: e.target.value }
+                                }))
+                            }
+                        />
+
+                        <input
+                            placeholder="Name (Desi)"
+                            value={form.name.desi}
+                            className="w-full p-3  border rounded-xl "
+                        required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    name: { ...prev.name, desi: e.target.value }
+                                }))
+                            }
+                        />
+                    </div>
 
                     <select
                         name="categoryType"
@@ -83,7 +122,7 @@ export default function AddCategory() {
 
                     </select>
 
-                    
+
                     <div className="isavailable w-full gap-2 flex item-center h-4 ">
 
                         <input
