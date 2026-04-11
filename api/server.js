@@ -10,7 +10,7 @@ import dashBoardRoutes from "./routes/dashBoardRoutes.js"
 import uploadRoutes from "./routes/uploadRoutes.js";
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(express.json());
