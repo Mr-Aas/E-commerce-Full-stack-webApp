@@ -13,14 +13,18 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-app.use(express.json());
+
 app.use(cors({
   origin: [
-    "http://localhost:5173",
-    "https://your-frontend.vercel.app"
+    "http://localhost:5173",          // local frontend
+    "https://your-vercel-app.vercel.app" // later production frontend
   ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
+
+// IMPORTANT: handle preflight
+app.options("*", cors());
 
 connectdb();
 
