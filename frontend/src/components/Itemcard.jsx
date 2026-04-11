@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useContext } from "react";
+import { LanguageContext } from "../context/languageContext";
 
 function Itemcard({ data }) {
-
+    const { lang } = useContext(LanguageContext);
     const [index, setIndex] = useState(0);
     const [itemsPerView, setItemsPerView] = useState(6);
 
@@ -81,7 +83,7 @@ function Itemcard({ data }) {
                         <div className="h-[160px] flex items-center justify-center bg-gray-50 overflow-hidden">
                             <img
                                 src={product.images?.[0]}
-                                alt={`${product.name} photo`}
+                                alt={`${product.name?.[lang]} photo`}
                                 className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
                             />
                         </div>
@@ -89,7 +91,7 @@ function Itemcard({ data }) {
                         {/* CONTENT */}
                         <div className="flex flex-col justify-between flex-1 p-3">
                             <div className="text-sm font-medium text-gray-800 line-clamp-2">
-                                {product.name}
+                                {product.name?.[lang]}
                             </div>
 
                             <div className="text-lg font-semibold text-gray-900 mt-1">

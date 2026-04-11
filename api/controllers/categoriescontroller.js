@@ -23,10 +23,6 @@ const addCategory = async (req, res) => {
         res.status(500).json({ message: "Error adding category" });
     }
 };
-// categoryType: {
-//         type: String,
-//         required: true
-//     },
 
 const addSubCategory = async (req, res) => {
     try {

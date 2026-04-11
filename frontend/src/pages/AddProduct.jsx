@@ -2,16 +2,23 @@ import { useState } from "react";
 import api from "../api/axios";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import CaptureImage from "../utils/CaptureImage";
+import { useContext } from "react";
+import { LanguageContext } from "../context/languageContext";
 
 export default function AddProduct() {
     const categoriesData = useLoaderData();
+    const { lang } = useContext(LanguageContext);
     const Navigate = useNavigate();
 
     const [imageBlob, setImageBlob] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
-        name: "",
+        name: {
+            en: "",
+            hi: "",
+            desi: ""
+        },
         price: "",
         category: "",
         categoryType: "",
@@ -32,14 +39,14 @@ export default function AddProduct() {
         setForm((prev) => {
             if (name === "category") {
                 const selectedCategoryObj = categoriesData.find(
-                    (cat) => cat.name === value
+                    (cat) => cat.name.en === value
                 );
 
                 return {
                     ...prev,
                     category: value,
                     categoryType: selectedCategoryObj?.categoryType || "",
-                    subcategory: selectedCategoryObj?.subcategory?.[0]?.name || ""
+                    subcategory: selectedCategoryObj?.subcategory?.[0]?.name?.en || ""
                 };
             }
             return {
@@ -81,7 +88,11 @@ export default function AddProduct() {
             alert("Product added successfully");
 
             setForm({
-                name: "",
+                name: {
+                    en: "",
+                    hi: "",
+                    desi: ""
+                },
                 price: "",
                 category: "",
                 categoryType: "",
@@ -122,8 +133,8 @@ export default function AddProduct() {
                         >
                             <option value="">Select Category</option>
                             {categoriesData.map((cat) => (
-                                <option key={cat._id} value={cat.name}>
-                                    {cat.name}
+                                <option key={cat._id} value={cat.name.en}>
+                                    {cat.name?.[lang] || cat.name?.en}
                                 </option>
                             ))}
                         </select>
@@ -139,10 +150,10 @@ export default function AddProduct() {
                             <option value="">Select Subcategory</option>
                             {form.category &&
                                 categoriesData
-                                    .find((cat) => cat.name === form.category)
+                                    .find((cat) => cat.name?.en === form.category)
                                     ?.subcategory?.map((sub) => (
-                                        <option key={sub._id} value={sub.name}>
-                                            {sub.name}
+                                        <option key={sub._id} value={sub.name.en}>
+                                            {sub.name?.[lang] || sub.name?.en}
                                         </option>
                                     ))}
                         </select>
@@ -157,7 +168,44 @@ export default function AddProduct() {
                     </div>
 
                     {/* Inputs */}
-                    <input name="name" placeholder="Product Name" value={form.name} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
+                    <div className="grid grid-cols-3 gap-2">
+
+                        <input
+                            placeholder="Name (English)"
+                            value={form.name.en}
+                            className="w-full p-3 border rounded-xl" required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    name: { ...prev.name, en: e.target.value }
+                                }))
+                            }
+                        />
+
+                        <input
+                            placeholder="Name (Hindi)"
+                            value={form.name.hi}
+                            className="w-full p-3 border rounded-xl" required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    name: { ...prev.name, hi: e.target.value }
+                                }))
+                            }
+                        />
+
+                        <input
+                            placeholder="Name (Desi)"
+                            value={form.name.desi}
+                            className="w-full p-3 border rounded-xl" required
+                            onChange={(e) =>
+                                setForm(prev => ({
+                                    ...prev,
+                                    name: { ...prev.name, desi: e.target.value }
+                                }))
+                            }
+                        />
+                    </div>
                     <input name="price" placeholder="Price" value={form.price} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
 
                     {form.categoryType === "Perishable" && (

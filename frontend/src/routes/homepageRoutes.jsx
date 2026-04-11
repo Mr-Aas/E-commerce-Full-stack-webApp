@@ -82,8 +82,12 @@ const router = createBrowserRouter([
             path: "items/:category",
             element: <ItemsPage />,
             loader: async ({ params }) => {
-                const res = await api.get(`/products/items/${params.category}`)
-                return res.data;
+                const product = await api.get(`/products/items/${params.category}`)
+                const products = product.data
+                const category = await api.get("/categories")
+                const categories = category.data
+                return { products, categories };
+
             }
         },
         {

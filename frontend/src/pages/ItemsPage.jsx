@@ -1,6 +1,7 @@
 
 import { useLoaderData, useParams } from 'react-router-dom'
-import Backbutton from '../utils/Backbutton.jsx'
+import { useContext } from "react";
+import { LanguageContext } from "../context/languageContext";
 
 import Itemcard from '../components/Itemcard.jsx'
 // import ImageSlider from "../components/ImageSlider.jsx"
@@ -9,17 +10,36 @@ import Itemcard from '../components/Itemcard.jsx'
 
 
 function ItemsPage() {
-  const items = useLoaderData()
+  const { products, categories } = useLoaderData()
+  const { lang } = useContext(LanguageContext);
   const { category } = useParams()
+  console.log(categories[0].subcategory[0].name?.[lang])
+
+  const selectedCategory = categories.find(
+    (cat) => cat.name?.en === category
+  );
+
+  const subcategoryMap = {};
+
+  selectedCategory?.subcategory?.forEach((sub) => {
+    subcategoryMap[sub.name.en] = sub.name;
+  });
 
 
-
-  if (!items) {
+  if (!products) {
     return <div>Loading...</div>;
   }
+  products.map((e) => console.log(e))
 
-  const groupedItems = items.reduce((acc, item) => {
-    const key = item.subcategory;
+
+  const groupedproducts = products.reduce((acc, item) => {
+    const subcatObj = subcategoryMap[item.subcategory];
+
+    const key =
+      subcatObj?.[lang] ||   // translated
+      subcatObj?.en ||       // fallback
+      item.subcategory ||    // raw
+      "Unknown";
 
     if (!acc[key]) {
       acc[key] = [];
@@ -32,22 +52,22 @@ function ItemsPage() {
 
 
 
-
   return (
     <>
       {/* <Backbutton /> */}
       <section className="slider">
         {/* <ImageSlider /> */}
       </section>
-      {Object.keys(groupedItems).map((subcat) => {
+      {Object.keys(groupedproducts).map((subcat) => {
+        console.log(Object.keys(groupedproducts))
         return (
           <>
-            <section className="grocery bg-teal-50  rounded-2xl flex flex-col " key={subcat} >
+            <section key={subcat} className="grocery bg-teal-50  rounded-2xl flex flex-col "  >
               <div className="sectionNAME text-3xl font-medium m-3 bg-teal-100 px-10 rounded-lg border-2 border-teal-300  h-[45px]">
                 {subcat}
               </div>
               <div className="datacards overflow-hidden ">
-                <Itemcard data={groupedItems[subcat]} /></div>
+                <Itemcard data={groupedproducts[subcat]} /></div>
             </section>
           </>)
       })}
