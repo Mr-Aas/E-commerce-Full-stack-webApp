@@ -66,7 +66,7 @@ export default function AdminDashboard() {
 
                 {products.map((product) => (
                     <div className="bg-white p-4 flex flex-col gap-4 rounded-xl shadow">
-                        <p>{product?.name}</p>
+                        <p>{product?.name?.en}</p>
                     </div>
                 ))}
             </div>
