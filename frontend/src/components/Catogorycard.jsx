@@ -12,11 +12,13 @@ const Categorycard = ({ Categories }) => {
   }
 
 
-
+  console.log("Categories:", Categories);
+  if (!Array.isArray(Categories)) {
+    return <div>Loading or invalid data...</div>;
+  }
   return (
     <>
       {Categories.map((items) => {
-        console.log(items)
 
         return (
 
