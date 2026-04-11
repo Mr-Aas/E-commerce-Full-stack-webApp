@@ -101,7 +101,7 @@ function Itemcard({ data }) {
                             <div className="text-xs mt-1">
                                 {product.isAvailable > 0 ? (
                                     <span className="text-green-600 font-medium">
-                                        In stock {product.stock}
+                                        In stock 
                                     </span>
                                 ) : (
                                     <span className="text-red-500 font-medium">

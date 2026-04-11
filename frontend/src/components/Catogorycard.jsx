@@ -37,11 +37,12 @@ const Categorycard = ({ Categories }) => {
                 <h2 className="text-2xl font-bold group-hover:translate-y-[-5px] transition duration-300">
                   {items?.name?.[lang]}
                 </h2>
-                <p className="text-sm opacity-80">
-                  {items.subcategory?.length
-                    ? items.subcategory.map(sub => sub.name?.[lang]).join(", ")
-                    : "No subcategories"}
-                </p>
+                <span className="text-sm  opacity-80">
+                  {t("Types of products in this shop : ")}
+                </span>
+                <span className="text-sm opacity-80">
+                  {items.subcategory?.length}
+                </span>
 
                 {/* Button */}
                 <button className="mt-3 px-4 py-2 bg-white text-black text-sm rounded-full opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition duration-300">

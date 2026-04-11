@@ -21,11 +21,11 @@ export default function AddProduct() {
         },
         price: "",
         category: "",
-        categoryType: "",
         subcategory: "",
+        subcategoryType: "",
         expiryDate: "",
         stock: "",
-        image: [], // ✅ ARRAY
+        image: [],
         description: "",
     });
 
@@ -37,6 +37,7 @@ export default function AddProduct() {
         const { name, value } = e.target;
 
         setForm((prev) => {
+            // 🔹 When category changes
             if (name === "category") {
                 const selectedCategoryObj = categoriesData.find(
                     (cat) => cat.name.en === value
@@ -45,10 +46,28 @@ export default function AddProduct() {
                 return {
                     ...prev,
                     category: value,
-                    categoryType: selectedCategoryObj?.categoryType || "",
-                    subcategory: selectedCategoryObj?.subcategory?.[0]?.name?.en || ""
+                    subcategory: "",
+                    subcategoryType: "" // reset
                 };
             }
+
+            // 🔹 When subcategory changes
+            if (name === "subcategory") {
+                const selectedCategoryObj = categoriesData.find(
+                    (cat) => cat.name.en === prev.category
+                );
+
+                const selectedSub = selectedCategoryObj?.subcategory?.find(
+                    (sub) => sub.name.en === value
+                );
+
+                return {
+                    ...prev,
+                    subcategory: value,
+                    subcategoryType: selectedSub?.categoryType?.trim() || ""
+                };
+            }
+
             return {
                 ...prev,
                 [name]: value
@@ -67,7 +86,7 @@ export default function AddProduct() {
         setLoading(true);
 
         try {
-            // 1️⃣ Upload image
+            // upload image
             const formData = new FormData();
             formData.append("image", imageBlob);
 
@@ -79,7 +98,7 @@ export default function AddProduct() {
 
             const imageUrl = uploadRes.data.url;
 
-            // 2️⃣ Send product
+            // send product
             await api.post("/products/addproduct", {
                 ...form,
                 image: imageUrl,
@@ -88,15 +107,11 @@ export default function AddProduct() {
             alert("Product added successfully");
 
             setForm({
-                name: {
-                    en: "",
-                    hi: "",
-                    desi: ""
-                },
+                name: { en: "", hi: "", desi: "" },
                 price: "",
                 category: "",
-                categoryType: "",
                 subcategory: "",
+                subcategoryType: "",
                 expiryDate: "",
                 stock: "",
                 image: [],
@@ -158,14 +173,14 @@ export default function AddProduct() {
                                     ))}
                         </select>
 
-                        <button
-                            type="button"
-                            onClick={() => Navigate("/addcategory")}
-                            className="w-[200px] bg-black text-white rounded-xl"
-                        >
-                            Add New
-                        </button>
                     </div>
+                    <button
+                        type="button"
+                        onClick={() => Navigate("/addsubcategory")}
+                        className="w-full h-7 bg-black text-white rounded-full"
+                    >
+                        Add New Subcategory
+                    </button>
 
                     {/* Inputs */}
                     <div className="grid grid-cols-3 gap-2">
@@ -206,15 +221,26 @@ export default function AddProduct() {
                             }
                         />
                     </div>
+
                     <input name="price" placeholder="Price" value={form.price} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
 
-                    {form.categoryType === "Perishable" && (
-                        <input type="date" name="expiryDate" value={form.expiryDate} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
+                    {/* ✅ NOW BASED ON SUBCATEGORY */}
+                    {form.subcategoryType?.toLowerCase() === "perishable" && (
+                        <div>
+                            <label htmlFor="expiryDate">Select Expiry Date</label>
+                            <input
+                                type="date"
+                                name="expiryDate"
+                                value={form.expiryDate}
+                                onChange={handleChange}
+
+                                className="w-full p-3 border rounded-xl"
+                                required
+                            /></div>
                     )}
 
                     <input type="number" name="stock" placeholder="Stock" value={form.stock} onChange={handleChange} className="w-full p-3 border rounded-xl" />
 
-                    {/* 📸 CAMERA */}
                     <CaptureImage onCapture={handleCapture} />
 
                     <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} className="w-full p-3 border rounded-xl" />

@@ -12,13 +12,13 @@ const addProducts = async (req, res) => {
     try {
         console.log(req.body);
 
-        const { name, price, category, categoryType, subcategory, expiryDate, stock, image, description } = req.body;
+        const { name, price, category, subcategoryType, subcategory, expiryDate, stock, image, description } = req.body;
 
         const newProduct = new Product({
             name,
             price,
             category,
-            categoryType,
+            subcategoryType,
             subcategory,
             expiryDate,
             stock,

@@ -7,11 +7,10 @@ const getCategories = async (req, res) => {
 }
 const addCategory = async (req, res) => {
     try {
-        const { name, categoryType, image, isAvailable, description } = req.body;
+        const { name, image, isAvailable, description } = req.body;
 
         const newCategory = new Categories({
             name,
-            categoryType,
             images: [image],
             description,
             isAvailable,

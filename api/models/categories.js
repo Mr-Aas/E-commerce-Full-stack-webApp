@@ -25,10 +25,10 @@ const categoriesSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    categoryType: {
-        type: String,
-        required: true
-    },
+    // categoryType: {
+    //     type: String,
+    //     required: true
+    // },
     isAvailable: {
         type: Boolean,
         default: true
