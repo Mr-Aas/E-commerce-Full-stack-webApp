@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const productSchema = new mongoose.Schema({
 
     name: {
@@ -8,24 +7,31 @@ const productSchema = new mongoose.Schema({
         hi: { type: String, required: true },
         desi: { type: String, required: true }
     },
+
     price: {
         type: String,
         required: true
     },
+
     category: {
         type: String,
         required: true
     },
+
     subcategory: {
         type: String,
         required: true
     },
-    brand: {
+
+    subcategoryType: { 
         type: String,
+        enum: ["Perishable", "NonPerishable"],
+        required: true
     },
-    stock: {
-        type: Number,
-    },
+
+    brand: String,
+
+    stock: Number,
 
     images: [
         {
@@ -33,28 +39,23 @@ const productSchema = new mongoose.Schema({
             required: true
         }
     ],
-    description: {
-        type: String,
-    },
+
+    description: String,
+
     isAvailable: {
         type: Boolean,
         default: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
+
     expiryDate: {
         type: Date,
         required: function () {
-            return this.categoryType === "perishable";
+            return this.subcategoryType === "Perishable"; 
         }
     }
 
-},
-    { timestamps: true }
-);
+}, { timestamps: true });
 
-const Product = mongoose.model("Product", productSchema, "items");
+const Product = mongoose.model("Product", productSchema, "products");
 
 export default Product;

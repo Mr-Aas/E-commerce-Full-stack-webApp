@@ -14,7 +14,7 @@ function Layout() {
             <SearchBar />
             {/* <TestHome/> */}
 
-            <div className="middlepart flex-1 relative">
+            <div className="middlepart flex-1  relative">
                 <Backbutton />
                 <Outlet />
             </div>

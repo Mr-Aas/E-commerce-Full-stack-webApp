@@ -9,7 +9,6 @@ export default function AddCategory() {
             hi: "",
             desi: ""
         },
-        categoryType: "",
         isAvailable: true,
         image: "",
         description: "",
@@ -44,7 +43,6 @@ export default function AddCategory() {
                     hi: "",
                     desi: ""
                 },
-                categoryType: "",
                 isAvailable: true,
                 image: "",
                 description: "",
@@ -60,7 +58,7 @@ export default function AddCategory() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+        <div className=" bg-gray-100 flex items-center justify-center p-4">
             <div className="w-full max-w-2xl bg-white p-6 rounded-2xl shadow">
                 <h2 className="text-2xl font-semibold mb-6 text-center">
                     Add New Category
@@ -108,20 +106,6 @@ export default function AddCategory() {
                             }
                         />
                     </div>
-
-                    <select
-                        name="categoryType"
-                        value={form.categoryType}
-                        onChange={handleChange}
-                        className="w-full p-3  border rounded-xl "
-                        required
-                    >
-                        <option value="">Select CategoryType</option>
-                        <option value="Perishable">Perishable</option>
-                        <option value="nonPerishable">Non Perishable</option>
-
-                    </select>
-
 
                     <div className="isavailable w-full gap-2 flex item-center h-4 ">
 

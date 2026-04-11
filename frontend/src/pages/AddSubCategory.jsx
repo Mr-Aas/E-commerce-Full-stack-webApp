@@ -90,7 +90,13 @@ export default function AddSubCategory() {
                             </option>
                         ))}
                     </select>
-
+                    <button
+                        type="button"
+                        onClick={() => Navigate("/addcategory")}
+                        className="w-full h-7 bg-black text-white rounded-full"
+                    >
+                        Add New category
+                    </button>
                     <select
                         name="subcategoryType"
                         value={form.subcategoryType}
@@ -100,7 +106,7 @@ export default function AddSubCategory() {
                     >
                         <option value="">Select CategoryType</option>
                         <option value="Perishable">Perishable</option>
-                        <option value="nonPerishable">Non Perishable</option>
+                        <option value="NonPerishable">Non Perishable</option>
 
                     </select>
 
