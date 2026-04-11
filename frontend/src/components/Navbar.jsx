@@ -8,9 +8,11 @@ import profileSvg from "/src/assets/icons/user-icon.svg";
 import logoutsvg from "../../public/LogOut.svg";
 import logInsvg from "../../public/LoginSvg.svg";
 import LanguageSelector from "./LanguageSelector.jsx";
+import { useTranslation } from "react-i18next";
 
 
 function Navbar() {
+    const { t } = useTranslation();
     const { User, logout } = useContext(AuthContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [showprofile, setShowprofile] = useState(false);
@@ -38,9 +40,9 @@ function Navbar() {
 
                 {/* 🔹 DESKTOP MENU */}
                 <ul className="hidden lg:flex gap-6 items-center font-medium">
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/contact">Contact</Link></li>
-                    <li><Link to="/about">About</Link></li>
+                    <li><Link to="/">{t("Home")}</Link></li>
+                    <li><Link to="/contact">{t("Contact")}</Link></li>
+                    <li><Link to="/about">{t("About")}</Link></li>
                 </ul>
 
                 {/* 🔹 RIGHT ICONS (DESKTOP) */}
@@ -68,12 +70,12 @@ function Navbar() {
 
                                 <Link to="/profile" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
                                     <img src={profileSvg} width={20} />
-                                    My Profile
+                                    {t("My Profile")}
                                 </Link>
 
                                 {isAdmin && (
                                     <Link to="/admin" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
-                                        Admin Panel
+                                        {t("Admin Panel")}
                                     </Link>
                                 )}
 
@@ -124,15 +126,15 @@ function Navbar() {
                         {/* MENU ITEMS */}
                         <div className="flex flex-col gap-4 mt-6 font-medium">
 
-                            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
-                            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
-                            <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+                            <Link to="/" onClick={() => setMenuOpen(false)}>{t("Home")}</Link>
+                            <Link to="/contact" onClick={() => setMenuOpen(false)}>{t("Contact")}</Link>
+                            <Link to="/about" onClick={() => setMenuOpen(false)}>{t("About")}</Link>
 
-                            <Link to="/profile" onClick={() => setMenuOpen(false)}>Profile</Link>
+                            <Link to="/profile" onClick={() => setMenuOpen(false)}>{t("Profile")}</Link>
 
                             {isAdmin && (
                                 <Link to="/admin" onClick={() => setMenuOpen(false)}>
-                                    Admin Panel
+                                    {t("Admin Panel")}
                                 </Link>
                             )}
 

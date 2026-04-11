@@ -4,7 +4,7 @@ import { LanguageContext } from "../context/languageContext";
 const options = [
     { value: "desi", label: "Desi Bhasha" },
     { value: "en", label: "English" },
-    { value: "hi", label: "Hindi" },
+    { value: "hi", label: "हिन्दी" },
 ];
 
 function LanguageSelector() {

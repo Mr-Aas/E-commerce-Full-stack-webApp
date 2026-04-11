@@ -1,5 +1,6 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { LanguageContext } from "../context/languageContext.jsx";
+import { useTranslation } from "react-i18next"; // ✅ NEW
 
 const options = [
     { value: "desi", label: "Desi Bhasha" },
@@ -9,6 +10,7 @@ const options = [
 
 function LanguageSelector() {
     const { lang, changeLanguage } = useContext(LanguageContext);
+    const { i18n } = useTranslation(); // ✅ NEW
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
 
@@ -21,6 +23,12 @@ function LanguageSelector() {
         document.addEventListener("mousedown", handleClick);
         return () => document.removeEventListener("mousedown", handleClick);
     }, []);
+
+    const handleLangChange = (lng) => {
+        changeLanguage(lng);       // ✅ your existing context
+        i18n.changeLanguage(lng);  // ✅ sync with i18next
+        setOpen(false);
+    };
 
     return (
         <div ref={ref} className="relative inline-block min-w-[120px]">
@@ -53,10 +61,7 @@ function LanguageSelector() {
                     {options.map((opt) => (
                         <li
                             key={opt.value}
-                            onClick={() => {
-                                changeLanguage(opt.value);
-                                setOpen(false);
-                            }}
+                            onClick={() => handleLangChange(opt.value)} // ✅ UPDATED
                             className="px-4 py-2.5 text-sm cursor-pointer transition-colors duration-150"
                             style={{
                                 color: opt.value === lang ? "#e6d2bd" : "#a89279",

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { LanguageContext } from "../context/languageContext";
+import { useTranslation } from "react-i18next";
 
 
 const Categorycard = ({ Categories }) => {
   const { lang } = useContext(LanguageContext);
-
+  const { t } = useTranslation();
   if (!Categories) {
     return <div className="data">failed to get data</div>
   }

@@ -49,7 +49,7 @@ export default function AddCategory() {
                 image: "",
                 description: "",
             });
-            navigate("/addproducts")
+            navigate("/addsubcategory")
 
         } catch (err) {
             console.error(err);
