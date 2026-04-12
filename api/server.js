@@ -16,14 +16,13 @@ const app = express();
 
 app.use(cors({
   origin: [
-    "http://localhost:5173",          // local frontend
-    "https://your-vercel-app.vercel.app" // later production frontend
+    "http://localhost:5173",          
+    "https://sarasaamaancom.vercel.app" 
   ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
   credentials: true
 }));
 
-// IMPORTANT: handle preflight
 
 
 connectdb();
