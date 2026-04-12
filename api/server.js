@@ -24,7 +24,7 @@ app.use(cors({
 }));
 
 // IMPORTANT: handle preflight
-app.options("*", cors());
+
 
 connectdb();
 
