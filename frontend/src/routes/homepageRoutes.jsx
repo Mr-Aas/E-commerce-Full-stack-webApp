@@ -24,6 +24,8 @@ import AddAddress from "../pages/AddAddress.jsx";
 import Payment from "../pages/Payment.jsx";
 import Success from "../pages/Success.jsx";
 import EditAddress from "../pages/EditAddress.jsx";
+import EditProduct from "../pages/EditProduct.jsx";
+
 
 
 
@@ -146,8 +148,13 @@ const router = createBrowserRouter([
             element: <Cart />,
         },
         {
-            path: "//checkout/address/edit/:id",
+            path: "/checkout/address/edit/:id",
             element: <EditAddress />,
+        },
+        {
+            path: "/editproduct/:id",
+            element: <EditProduct />,
+             loader: categoriesData
         }
 
 
