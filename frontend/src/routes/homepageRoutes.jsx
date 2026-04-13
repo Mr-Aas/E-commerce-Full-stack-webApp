@@ -25,6 +25,7 @@ import Payment from "../pages/Payment.jsx";
 import Success from "../pages/Success.jsx";
 import EditAddress from "../pages/EditAddress.jsx";
 import EditProduct from "../pages/EditProduct.jsx";
+import MyOrders from "../pages/MyOrders.jsx";
 
 
 
@@ -155,6 +156,11 @@ const router = createBrowserRouter([
             path: "/editproduct/:id",
             element: <EditProduct />,
              loader: categoriesData
+        },
+        {
+            path: "/my-orders",
+            element: <MyOrders />,
+
         }
 
 

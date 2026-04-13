@@ -22,3 +22,11 @@ export const getSales = async () => {
     const res = await api.get("/orders/sales");
     return res.data;
 };
+
+// api/orderApi.js
+
+export const getMyOrders = async () => {
+  const res = await api.get("/orders/my-orders");
+
+  return res.data;
+};
