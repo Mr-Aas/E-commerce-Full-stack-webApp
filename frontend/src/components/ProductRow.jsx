@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { LanguageContext } from "../context/languageContext";
 
 export default function ProductRow({ product, onDelete }) {
     const navigate = useNavigate();
+    const {lang } = useContext(LanguageContext)
 
     return (
         <div className="bg-white p-4 flex justify-between items-center rounded-xl shadow mb-2">
 
             <div>
-                <p className="font-semibold">{product?.name?.en}</p>
+                <p className="font-semibold">{product?.name?.[lang]}</p>
                 <p className="text-sm text-gray-500">
                     ₹{product.price} | {product.category} → {product.subcategory}
                 </p>
