@@ -72,7 +72,7 @@ const router = createBrowserRouter([
             loader: categoriesData
         },
         {
-            path: "addcategory",
+            path: "/addcategory",
             element: (
                 <AdminRoute>
                     <AddCategory />
