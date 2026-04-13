@@ -2,102 +2,77 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
 
-  user: {
+  // 👤 USER
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
   },
 
+  // 🛒 ITEMS SNAPSHOT (IMPORTANT: NEVER TRUST PRODUCT LATER)
   items: [
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true
+        ref: "Product"
       },
-
-      name: String, // snapshot
-      image: String, // snapshot
-
-      quantity: {
-        type: Number,
-        required: true
+      name: {
+        en: { type: String },
+        hi: { type: String },
+        desi: { type: String }
       },
-
-      priceAtPurchase: {
-        type: Number,
-        required: true
-      },
-
-      totalPrice: {
-        type: Number,
-        required: true
-      }
+      image: String,
+      price: Number,
+      quantity: Number
     }
   ],
 
-  // 💰 Pricing
-  subtotal: Number,
-  discount: {
-    type: Number,
-    default: 0
-  },
-  shippingCharge: {
-    type: Number,
-    default: 0
-  },
-  totalAmount: Number,
-
-  // 💳 Payment
-  paymentStatus: {
-    type: String,
-    enum: ["pending", "paid", "failed", "refunded"],
-    default: "pending"
-  },
-
-  paymentMethod: {
-    type: String,
-    enum: ["COD", "UPI", "CARD"]
-  },
-
-  paymentId: String, // Razorpay / Stripe ID
-
-  // 📦 Order Status
-  orderStatus: {
-    type: String,
-    enum: [
-      "placed",
-      "confirmed",
-      "shipped",
-      "out_for_delivery",
-      "delivered",
-      "cancelled",
-      "returned"
-    ],
-    default: "placed"
-  },
-
-  // 📍 Shipping Address (snapshot)
+  // 📍 SHIPPING ADDRESS SNAPSHOT
   shippingAddress: {
-    name: String,
+    fullName: String,
     phone: String,
-    address: String,
+    addressLine1: String,
+    addressLine2: String,
+    landmark: String,
     city: String,
     state: String,
-    pincode: String
+    postalCode: String,
+    country: String
   },
 
-  // 🕒 Tracking
-  placedAt: {
-    type: Date,
-    default: Date.now
+  // 💰 PRICING BREAKDOWN
+  pricing: {
+    subtotal: Number,
+    shipping: { type: Number, default: 0 },
+    tax: { type: Number, default: 0 },
+    total: Number
   },
 
+  // 💳 PAYMENT
+  paymentMethod: {
+    type: String,
+    enum: ["COD", "UPI", "CARD"],
+    default: "COD"
+  },
+
+  paymentStatus: {
+    type: String,
+    enum: ["PENDING", "PAID", "FAILED"],
+    default: "PENDING"
+  },
+
+  isPaid: { type: Boolean, default: false },
   paidAt: Date,
+
+  // 🚚 ORDER STATUS
+  orderStatus: {
+    type: String,
+    enum: ["PLACED", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"],
+    default: "PLACED"
+  },
+
   deliveredAt: Date,
-  cancelledAt: Date
 
 }, { timestamps: true });
 
-const Order = mongoose.model("Order", orderSchema, "orders");
-export default Order
+export default mongoose.model("Order", orderSchema, "orders");
