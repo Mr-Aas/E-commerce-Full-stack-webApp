@@ -71,17 +71,26 @@ function Navbar() {
                         />
 
                         {showprofile && (
-                            <div
-                                className="absolute right-0 top-10 w-60 bg-white shadow-lg rounded-xl p-2 z-20"
-                                onClick={(e) => e.stopPropagation()}
-                            >
+                            <div className="absolute right-0 top-10 w-60 bg-white shadow-lg rounded-xl p-2 z-20">
 
-                                {!User && (
-                                    <Link
-                                        to="/login"
-                                        onClick={() => setShowprofile(false)}
-                                        className="flex items-center gap-2 p-2 my-1 bg-gray-200 hover:bg-gray-100 rounded cursor-pointer"
-                                    >
+                                <Link to="/profile" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                    <img src={profileSvg} width={20} />
+                                    {t("My Profile")}
+                                </Link>
+
+                                {isAdmin && (
+                                    <Link to="/admin" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                        {t("Admin Panel")}
+                                    </Link>
+                                )}
+
+                                {User ? (
+                                    <button onClick={logout} className="flex gap-2 p-2 hover:bg-gray-100 rounded w-full text-left">
+                                        <img src={logoutsvg} width={20} />
+                                        Logout
+                                    </button>
+                                ) : (
+                                    <Link to="/login" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
                                         <img src={logInsvg} width={20} />
                                         Login
                                     </Link>
@@ -89,6 +98,7 @@ function Navbar() {
 
                             </div>
                         )}
+                    
                     </div>
                 </div>
 
