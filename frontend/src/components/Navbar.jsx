@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, ListOrdered, ShoppingCart } from "lucide-react";
 import cartSvg from "/src/assets/icons/add-to-cartl.svg";
 import profileSvg from "/src/assets/icons/user-icon.svg";
 import logoutsvg from "../../public/LogOut.svg";
@@ -18,6 +19,18 @@ function Navbar() {
     const { User, logout } = useContext(AuthContext);
     const [menuOpen, setMenuOpen] = useState(false);
     const [showprofile, setShowprofile] = useState(false);
+    const { items } = useSelector((state) => state.cart);
+
+    const cartCount = items.reduce((total, item) => total + item.quantity, 0);
+    const [animateCart, setAnimateCart] = useState(false);
+    useEffect(() => {
+        if (cartCount > 0) {
+            setAnimateCart(true);
+
+            const timer = setTimeout(() => setAnimateCart(false), 300);
+            return () => clearTimeout(timer);
+        }
+    }, [cartCount]);
 
 
     const isAdmin = User?.token
@@ -55,8 +68,24 @@ function Navbar() {
                     {/* language selector */}
                     <LanguageSelector />
                     {/* CART */}
-                    <Link to="/cart">
-                        <img src={cartSvg} className="w-6" />
+                    {/* CART */}
+                    <Link to="/cart" className="relative group">
+
+                        <ShoppingCart className="w-7 h-7 text-gray-800 group-hover:scale-110 transition" />
+
+                        <span
+                            className={`
+            absolute -top-2 -right-2 
+            min-w-[18px] h-[18px] px-1 
+            flex items-center justify-center
+            text-[10px] font-bold text-white 
+            bg-red-500 rounded-full shadow-md
+            transition-all duration-200
+            ${animateCart ? "scale-125 animate-bounce" : "scale-100"}
+        `}
+                        >
+                            {cartCount > 99 ? "99+" : cartCount}
+                        </span>
                     </Link>
 
                     {/* PROFILE */}
@@ -73,24 +102,28 @@ function Navbar() {
                         {showprofile && (
                             <div className="absolute right-0 top-10 w-60 bg-white shadow-lg rounded-xl p-2 z-20">
 
-                                <Link to="/profile" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                <Link to="/profile" className="flex gap-2 p-2 hover:bg-green-100 rounded">
                                     <img src={profileSvg} width={20} />
                                     {t("My Profile")}
                                 </Link>
+                                <Link to="/my-orders" className="flex gap-2 p-2  hover:bg-green-100 rounded">
+                                    <ListOrdered width={20} />
+                                    {t("My Orders")}
+                                </Link>
 
                                 {isAdmin && (
-                                    <Link to="/admin" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                    <Link to="/admin" className="flex gap-2 p-2 hover:bg-green-100 rounded">
                                         {t("Admin Panel")}
                                     </Link>
                                 )}
 
                                 {User ? (
-                                    <button onClick={logout} className="flex gap-2 p-2 hover:bg-gray-100 rounded w-full text-left">
+                                    <button onClick={logout} className="flex gap-2 p-2 hover:bg-green-100 rounded w-full text-left">
                                         <img src={logoutsvg} width={20} />
                                         Logout
                                     </button>
                                 ) : (
-                                    <Link to="/login" className="flex gap-2 p-2 hover:bg-gray-100 rounded">
+                                    <Link to="/login" className="flex gap-2 p-2 hover:bg-green-100 rounded">
                                         <img src={logInsvg} width={20} />
                                         Login
                                     </Link>
@@ -98,7 +131,7 @@ function Navbar() {
 
                             </div>
                         )}
-                    
+
                     </div>
                 </div>
 
@@ -107,8 +140,21 @@ function Navbar() {
                 <div className="lg:hidden flex items-center gap-3">
 
                     <LanguageSelector />
-                    <Link to="/cart">
-                        <img src={cartSvg} className="w-6" />
+                    <Link to="/cart" className="relative">
+
+                        <ShoppingCart className="w-6 h-6 text-gray-800" />
+
+                        <span
+                            className={`
+            absolute -top-2 -right-2 
+            min-w-[16px] h-[16px] text-[9px]
+            flex items-center justify-center
+            bg-red-500 text-white rounded-full
+            ${animateCart ? "scale-125 animate-bounce" : ""}
+        `}
+                        >
+                            {cartCount}
+                        </span>
                     </Link>
 
                     <button onClick={() => setMenuOpen(true)}>
@@ -134,6 +180,7 @@ function Navbar() {
                         <div className="flex flex-col gap-4 mt-6 font-medium">
 
                             <Link to="/" onClick={() => setMenuOpen(false)}>{t("Home")}</Link>
+                            <Link to="/my-orders" onClick={() => setMenuOpen(false)}>{t("My Orders")}</Link>
                             <Link to="/contact" onClick={() => setMenuOpen(false)}>{t("Contact")}</Link>
                             <Link to="/about" onClick={() => setMenuOpen(false)}>{t("About")}</Link>
 

@@ -175,6 +175,20 @@ export const markAsDelivered = async (req, res) => {
   }
 };
 
+export const getMyOrders = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const orders = await Order.find({ userId })
+      .sort({ createdAt: -1 });
+
+    res.json(orders);
+  } catch (err) {
+    console.error("MY ORDERS ERROR:", err);
+    res.status(500).json({ message: "Failed to fetch orders" });
+  }
+};
+
 
 
 // ==============================
