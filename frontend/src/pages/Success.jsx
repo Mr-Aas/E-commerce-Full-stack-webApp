@@ -1,6 +1,4 @@
-// pages/Success.jsx
-import { useNavigate } from "react-router-dom";
-const navigate = useNavigate()
+
 const Success = () => (
   <>
     <div className="h-screen flex flex-col items-center justify-center text-2xl">
