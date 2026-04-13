@@ -18,7 +18,13 @@ import AddCategory from "../pages/AddCategory.jsx";
 import categoriesData from "./categoryloaderforprod.jsx";
 import Dashboardloader from "./dashboardloader.jsx";
 import AddSubCategory from "../pages/AddSubCategory.jsx";
-import EditProduct from "../pages/EditProduct.jsx";
+import Cart from "../pages/Cart.jsx";
+import SelectAddress from "../pages/SelectAddress.jsx";
+import AddAddress from "../pages/AddAddress.jsx";
+import Payment from "../pages/Payment.jsx";
+import Success from "../pages/Success.jsx";
+import EditAddress from "../pages/EditAddress.jsx";
+
 
 
 
@@ -119,10 +125,31 @@ const router = createBrowserRouter([
 
         },
         {
-            path: "/editproduct/:id",
-            element: <EditProduct />,
-            loader: categoriesData
+            path: "/checkout/address",
+            element: <SelectAddress />,
         },
+            ,
+        {
+            path: "/checkout/address/new",
+            element: <AddAddress />,
+        },
+        {
+            path: "/checkout/payment",
+            element: <Payment />,
+        },
+        {
+            path: "/success",
+            element: <Success />,
+        },
+        {
+            path: "/cart",
+            element: <Cart />,
+        },
+        {
+            path: "//checkout/address/edit/:id",
+            element: <EditAddress />,
+        }
+
 
         ]
     }])

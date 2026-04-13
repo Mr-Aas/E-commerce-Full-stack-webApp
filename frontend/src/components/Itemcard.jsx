@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useContext } from "react";
 import { LanguageContext } from "../context/languageContext";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/Cart/CartSlice";
+import { useNavigate } from "react-router-dom";
 
 function Itemcard({ data }) {
     const { lang } = useContext(LanguageContext);
     const [index, setIndex] = useState(0);
     const [itemsPerView, setItemsPerView] = useState(6);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // ✅ Handle responsiveness
     useEffect(() => {
@@ -36,6 +41,19 @@ function Itemcard({ data }) {
         if (index > 0) {
             setIndex(index - 1);
         }
+    };
+
+    const handleAddToCart = (product) => {
+        dispatch(addToCart({
+            productId: product._id || product.id,
+            name: product.name?.[lang],
+            price: product.price,
+            image: product.images?.[0],
+            quantity: 1
+        }));
+
+        // optional: redirect to cart page
+
     };
 
     function Button({ arrow, position, onClick }) {
@@ -101,7 +119,7 @@ function Itemcard({ data }) {
                             <div className="text-xs mt-1">
                                 {product.isAvailable > 0 ? (
                                     <span className="text-green-600 font-medium">
-                                        In stock 
+                                        In stock
                                     </span>
                                 ) : (
                                     <span className="text-red-500 font-medium">
@@ -110,7 +128,10 @@ function Itemcard({ data }) {
                                 )}
                             </div>
 
-                            <button className="mt-2 bg-blue-600 text-white text-sm py-1.5 rounded-md hover:bg-blue-700 transition">
+                            <button
+                                onClick={() => handleAddToCart(product)}
+                                className="mt-2 bg-blue-600 text-white text-sm py-1.5 rounded-md hover:bg-blue-700 transition"
+                            >
                                 Add to Cart
                             </button>
                         </div>

@@ -7,12 +7,15 @@ import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js"
 import authRoutes from "./routes/authRoutes.js"
 import dashBoardRoutes from "./routes/dashBoardRoutes.js"
-import uploadRoutes from "./routes/uploadRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js"
+import addressRoutes from "./routes/addressRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+app.use(express.json());
 
 app.use(cors({
   origin: [
@@ -22,6 +25,7 @@ app.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
   credentials: true
 }));
+// app.use(cors())
 
 
 
@@ -32,6 +36,8 @@ app.use("/categories", categoryRoutes);
 app.use("/auth", authRoutes)
 app.use("/dashboard", dashBoardRoutes)
 app.use("/upload", uploadRoutes);
+app.use("/address",addressRoutes)
+app.use("/orders",orderRoutes)
 
 
 app.get('/', (req, res) => res.send('API is running...'));
