@@ -8,9 +8,9 @@ import {
 import { useNavigate } from "react-router-dom";
 
 /* ───────────────────────── Constants ───────────────────────── */
-const SHIPPING_THRESHOLD = 499;
-const SHIPPING_COST = 0;
-const TAX_RATE = 0; // 18% GST
+const SHIPPING_THRESHOLD = 100;
+const SHIPPING_COST = 20;
+const TAX_RATE = 18; // 18% GST
 
 /* ───────────────────────── Sub-components ───────────────────── */
 
@@ -131,6 +131,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const { items } = useSelector((state) => state.cart);
 
+
   /* Memoised calculations */
   const totalItems = useMemo(
     () => items.reduce((sum, i) => sum + i.quantity, 0),
@@ -142,9 +143,17 @@ const Cart = () => {
     [items]
   );
 
+  // const shippingcost = useMemo(
+  //   () => items.reduce((acc, i) => subtotal * 0.18, 0),
+  //   [items]
+  // );
+  // console.log(subtotal)
+
   const shipping = subtotal >= SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
-  const tax = Math.round(subtotal * TAX_RATE);
-  const total = subtotal + shipping + tax;
+
+  const tax = subtotal * (TAX_RATE / 100);
+
+  const total = subtotal + shipping;
 
   /* Stable callbacks */
   const handleRemove = useCallback(
@@ -223,8 +232,8 @@ const Cart = () => {
               highlight={shipping === 0 ? "text-green-600 font-medium" : ""}
             />
             <SummaryRow
-              label="GST (18%)"
-              value={`₹${tax.toLocaleString("en-IN")}`}
+              label="GST (18% Included)"
+              value={`₹${(tax.toLocaleString("en-IN"))}`}
             />
           </div>
 

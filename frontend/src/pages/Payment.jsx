@@ -16,6 +16,7 @@ const Payment = () => {
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+  const shippingcost = totalPrice >= 100 ? 0 : 20;
 
   // 🚀 PLACE ORDER
   const placeOrder = async () => {
@@ -159,7 +160,7 @@ const Payment = () => {
               <span>Shipping</span>
               <span className="text-green-600">
                 {/* TODO: Dynamic shipping logic */}
-                Free
+                {shippingcost}
               </span>
             </div>
           </div>
@@ -168,7 +169,7 @@ const Payment = () => {
 
           <div className="flex justify-between text-lg font-bold">
             <span>Total</span>
-            <span>₹{totalPrice}</span>
+            <span>₹{totalPrice + shippingcost}</span>
           </div>
 
           {/* 🚀 PLACE ORDER */}

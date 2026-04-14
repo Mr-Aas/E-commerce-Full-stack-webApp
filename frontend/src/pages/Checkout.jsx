@@ -32,6 +32,7 @@ const Checkout = () => {
       alert("Order placed successfully");
     } catch (err) {
       console.error(err);
+      alert(err);
     }
   };
 
