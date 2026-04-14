@@ -48,9 +48,9 @@ export const createOrder = async (req, res) => {
     );
 
     // 💰 Pricing
-    const shipping = subtotal > 500 ? 0 : 50;
-    const tax = 0;
-    const total = subtotal + shipping + tax;
+    const shipping = subtotal > 100 ? 0 : 20;
+    const tax = 0.18 * subtotal;
+    const total = subtotal + shipping ;
 
     console.log("💰 Pricing:", { subtotal, shipping, tax, total });
 

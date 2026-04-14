@@ -7,7 +7,6 @@ import ItemsPage from "../pages/ItemsPage.jsx";
 import Contact from "../pages/Contact.jsx"
 import About from "../pages/About.jsx";
 import HomePage from "../pages/HomePage.jsx";
-import Checkout from "../pages/Checkout.jsx";
 import LoginPage from "../pages/LoginPage.jsx";
 import SignupPage from "../pages/SignUp.jsx";
 import MyProfile from "../pages/UserProfilePage.jsx";
@@ -101,14 +100,6 @@ const router = createBrowserRouter([
             }
         },
         {
-            path: "checkout",
-            element: (
-                <PrivateRoute>
-                    <Checkout />
-                </PrivateRoute>
-            )
-        },
-        {
             path: "login",
             element: <LoginPage />
         },
@@ -155,7 +146,7 @@ const router = createBrowserRouter([
         {
             path: "/editproduct/:id",
             element: <EditProduct />,
-             loader: categoriesData
+            loader: categoriesData
         },
         {
             path: "/my-orders",
