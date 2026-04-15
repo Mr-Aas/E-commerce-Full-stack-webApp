@@ -21,22 +21,32 @@ const limiter = rateLimit({
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+const allowedOrigins = [
+  "https://smartgrahak.in",
+  "https://www.smartgrahak.in",
+  "https://sarasaamaan.smartgrahak.in",
+  "http://localhost:5173",
+];
 
 
 app.use(limiter)
 app.use(helmet())
 app.use(express.json());
 
+
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://sarasaamaancom.vercel.app",
-    "https://sarasaamaancom.smartgrahak.in"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  origin: function (origin, callback) {
+    // allow requests with no origin (Postman, mobile apps)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
-// app.use(cors())
 
 
 
