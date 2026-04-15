@@ -30,7 +30,8 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://sarasaamaancom.vercel.app"
+    "https://sarasaamaancom.vercel.app",
+    "https://sarasaamaancom.smartgrahak.in"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true
