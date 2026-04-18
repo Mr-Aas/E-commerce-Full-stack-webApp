@@ -1,7 +1,7 @@
 import cloudinary from "../config/cloudinary.js"
 
 
-
+console.log("Cloudinary config:", process.env.CLOUD_NAME);
 export const uploadImage = async (req, res) => {
   try {
     console.log("body:", req.body); // debug
