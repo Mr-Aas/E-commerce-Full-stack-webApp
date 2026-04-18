@@ -29,11 +29,6 @@ const allowedOrigins = [
 ];
 
 
-app.use(limiter)
-app.use(helmet())
-app.use(express.json());
-
-
 app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (Postman, mobile apps)
@@ -47,6 +42,11 @@ app.use(cors({
   },
   credentials: true
 }));
+app.use(helmet())
+app.use(express.json());
+app.use(limiter)
+
+
 
 
 
