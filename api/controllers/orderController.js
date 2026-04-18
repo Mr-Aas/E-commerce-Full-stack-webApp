@@ -26,7 +26,16 @@ export const createOrder = async (req, res) => {
       items.map(async (item) => {
         console.log(`🔍 Checking product: ${item.productId}`);
 
-        const product = await Product.findById(item.productId);
+        const product = await Product.findOneAndUpdate(
+          {
+            _id: item.productId,
+            stock: { $gte: item.quantity }, // ✅ prevents overselling
+          },
+          {
+            $inc: { stock: -item.quantity }, // ✅ reduce safely
+          },
+          { new: true }
+        );
 
         if (!product) throw new Error("Product not found");
 
@@ -50,7 +59,7 @@ export const createOrder = async (req, res) => {
     // 💰 Pricing
     const shipping = subtotal > 100 ? 0 : 20;
     const tax = 0.18 * subtotal;
-    const total = subtotal + shipping ;
+    const total = subtotal + shipping;
 
     console.log("💰 Pricing:", { subtotal, shipping, tax, total });
 

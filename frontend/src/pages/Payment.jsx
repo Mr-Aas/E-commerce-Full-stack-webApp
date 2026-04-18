@@ -140,7 +140,7 @@ const Payment = () => {
                 className="flex justify-between"
               >
                 <span>
-                  {item.name} × {item.quantity}
+                  {item.name?.en} × {item.quantity}
                 </span>
                 <span>₹{item.price * item.quantity}</span>
               </div>

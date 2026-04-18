@@ -41,13 +41,13 @@ const QuantityControl = ({ quantity, onIncrease, onDecrease, maxQty = 10 }) => (
 const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
   <article
     className="flex gap-4 sm:gap-5 bg-white border border-gray-100 shadow-sm rounded-2xl p-4 sm:p-5 hover:shadow-md transition-shadow duration-200"
-    aria-label={`Cart item: ${item.name}`}
+    aria-label={`Cart item: ${item.name?.en}`}
   >
     {/* Image */}
     <div className="flex-shrink-0">
       <img
         src={item.image}
-        alt={item.name}
+        alt={item.name?.en}
         className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-gray-100"
         loading="lazy"
         onError={(e) => {
@@ -62,7 +62,7 @@ const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
       <div className="flex justify-between items-start gap-2">
         <div className="min-w-0">
           <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
-            {item.name}
+            {item.name?.en}
           </h3>
           <p className="text-sm text-gray-500 mt-0.5">
             ₹{item.price.toLocaleString("en-IN")} / unit
@@ -71,7 +71,7 @@ const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
 
         <button
           onClick={() => onRemove(item.productId)}
-          aria-label={`Remove ${item.name} from cart`}
+          aria-label={`Remove ${item.name?.en} from cart`}
           className="flex-shrink-0 text-sm text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded-md transition-colors"
         >
           Remove
@@ -82,6 +82,7 @@ const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
       <div className="flex items-center justify-between mt-3 flex-wrap gap-2">
         <QuantityControl
           quantity={item.quantity}
+          maxQty={item.stock}
           onIncrease={() => onIncrease(item.productId)}
           onDecrease={() => onDecrease(item.productId)}
         />
