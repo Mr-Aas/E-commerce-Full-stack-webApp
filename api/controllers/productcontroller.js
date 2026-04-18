@@ -75,4 +75,31 @@ const updateProduct = async (req, res) => {
     }
 };
 
-export { getProducts, addProducts, getProductById, deleteProduct, updateProduct };
+const searchProducts = async (req, res) => {
+    try {
+        const { q } = req.query;
+
+        if (!q || q.trim() === "") {
+            return res.json([]);
+        }
+
+        const products = await Product.find(
+            { $text: { $search: q } },
+            {
+                score: { $meta: "textScore" }
+            }
+        )
+            .sort({ score: { $meta: "textScore" } }) // 🔥 relevance
+            .limit(10) // 🚀 limit results
+            .select("name price images stock isAvailable");
+
+        res.json(products);
+
+    } catch (error) {
+        console.log("SEARCH ERROR:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+export { getProducts, addProducts, getProductById, deleteProduct, updateProduct ,searchProducts};

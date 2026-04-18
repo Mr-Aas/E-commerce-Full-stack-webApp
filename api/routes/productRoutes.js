@@ -9,13 +9,15 @@ import {
     addProducts,
     getProductById,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    searchProducts
 } from "../controllers/productcontroller.js";
 
 import slides from "../data/addSlides/data.js";
 
 // STATIC
-router.get("/slides", (req, res) => res.json(slides));
+// router.get("/slides", (req, res) => res.json(slides));
+router.get("/search", searchProducts);
 
 // PRODUCTS
 router.get("/items/:category", getProducts);

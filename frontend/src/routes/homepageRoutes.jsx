@@ -25,7 +25,8 @@ import Success from "../pages/Success.jsx";
 import EditAddress from "../pages/EditAddress.jsx";
 import EditProduct from "../pages/EditProduct.jsx";
 import MyOrders from "../pages/MyOrders.jsx";
-
+import SearchPage from "../pages/SearchPage.jsx";
+import ProductDetailsPage from "../pages/ProductDetail.jsx";
 
 
 
@@ -152,7 +153,15 @@ const router = createBrowserRouter([
             path: "/my-orders",
             element: <MyOrders />,
 
-        }
+        },
+        {
+            path: "search",
+            element: <SearchPage />,
+        },
+        {
+            path: "product/:id",
+            element: <ProductDetailsPage />, // 🔥 THIS MUST EXIST
+        },
 
 
         ]
