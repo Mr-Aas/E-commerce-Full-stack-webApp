@@ -47,8 +47,8 @@ function Navbar() {
                 {/* LOGO */}
                 <div className="logo w-42 h-12 overflow-hidden">
 
-                    <Link to="/" className=" object-contain">
-                        <img src="/websitelogo.jpg" alt="logo" />
+                    <Link to="/" className=" object-cover">
+                        <img src="./public/websitelogo (3).jpg" alt="logo"/>
                     </Link>
                 </div>
 

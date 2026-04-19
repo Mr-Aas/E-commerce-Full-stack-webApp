@@ -2,7 +2,7 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { LanguageContext } from "../context/languageContext";
 
 const options = [
-    { value: "desi", label: "Desi Bhasha" },
+    { value: "desi", label: "Aam Bhasha" },
     { value: "en", label: "English" },
     { value: "hi", label: "हिन्दी" },
 ];
@@ -26,11 +26,12 @@ function LanguageSelector() {
         <div ref={ref} className="relative inline-block min-w-[120px]">
             <button
                 onClick={() => setOpen(!open)}
-                className="w-full flex items-center justify-between gap-2 px-4 py-2 rounded-lg text-sm font-medium shadow-sm border transition-all duration-200 hover:shadow-md"
+                className="w-full flex 
+                items-center justify-between gap-2 px-4 py-2 rounded-xl text-sm font-medium shadow-sm   transition-all duration-200 hover:shadow-md"
                 style={{
-                    background: "linear-gradient(135deg, #4CA6D6, #3CD6D6)",
+                    background: "linear-gradient(90deg, #2dd4bf, #14b8a6)",
                     borderColor: "#5a4222",
-                    color: "black",
+                    color: "white",
                 }}
             >
                 <span>{selected.label}</span>
