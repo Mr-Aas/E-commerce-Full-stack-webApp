@@ -12,7 +12,7 @@ export default function ProductRow({ product, onDelete }) {
             <div>
                 <p className="font-semibold">{product?.name?.[lang]}</p>
                 <p className="text-sm text-gray-500">
-                    ₹{product.price} | {product.category} → {product.subcategory}
+                    ₹{product.price} / {product.unitType} | {product.category} → {product.subcategory}
                 </p>
             </div>
 

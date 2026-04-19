@@ -50,7 +50,15 @@ function ItemsPage() {
   }, {});
 
 
-
+  if (!products || products.length === 0) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <p className="text-xl font-semibold text-gray-600 text-center">
+          Items will be Available Soon 🤞
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -60,6 +68,7 @@ function ItemsPage() {
       </section>
       {Object.keys(groupedproducts).map((subcat) => {
         console.log(Object.keys(groupedproducts))
+
         return (
           <>
             <section key={subcat} className="grocery bg-teal-50  rounded-2xl flex flex-col "  >

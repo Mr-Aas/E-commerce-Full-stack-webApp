@@ -16,8 +16,8 @@ export default function AdminDashboard() {
     const [active, setActive] = useState("dashboard");
     const [isOpen, setIsOpen] = useState(false);
 
-    const [Orders,products,users,category] = useLoaderData()
-    console.log(Orders,products,users,category)
+    const [Orders, products, users, category] = useLoaderData()
+    console.log(Orders, products, users, category)
     const { lang } = useContext(LanguageContext)
 
     // NEW STATE
@@ -145,16 +145,18 @@ export default function AdminDashboard() {
                                 <p className="text-sm text-gray-500">Products</p>
                                 <p className="font-semibold text-gray-800">
                                     {order.items
-                                        .map(
-                                            (i) =>
-                                                i.name?.[lang] || i.name?.en ||
-                                                i.name
-                                        )
-                                        .join(", ")}
+                                        .map((i) => {
+                                            const productName =
+                                                i.name?.[lang] || i.name?.en || i.name;
+
+                                            return `${productName} x ${i.quantity}`;
+                                        })
+                                        .join(", ")
+                                    }
                                 </p>
 
                                 {/* ADDRESS */}
-                                <p className="text-sm text-gray-500 mt-2">Shipping</p>
+                                <p className="text-sm text-gray-500 mt-2">Shipping Address</p>
                                 <p className="text-sm text-gray-700">
                                     {order.shippingAddress?.fullName},{" "}
                                     {order.shippingAddress?.addressLine1},{" "}
@@ -248,17 +250,19 @@ export default function AdminDashboard() {
                                 <p className="text-sm text-gray-500">Products</p>
                                 <p className="font-semibold text-gray-800">
                                     {sale.items
-                                        .map(
-                                            (i) =>
-                                                i.name?.[lang] ||
-                                                i.name?.en ||
-                                                i.name
-                                        )
-                                        .join(", ")}
+                                        .map((i) => {
+                                            const productName =
+                                                i.name?.[lang] || i.name?.en || i.name;
+
+                                            return `${productName} x ${i.quantity}`;
+                                        })
+                                        .join(", ")
+                                    }
                                 </p>
 
+
                                 {/* ADDRESS */}
-                                <p className="text-sm text-gray-500 mt-2">Shipping</p>
+                                <p className="text-sm text-gray-500 mt-2">Shipping Address</p>
                                 <p className="text-sm text-gray-700">
                                     {sale.shippingAddress?.fullName},{" "}
                                     {sale.shippingAddress?.city},{" "}

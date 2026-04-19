@@ -20,6 +20,7 @@ export default function AddProduct() {
             desi: ""
         },
         price: "",
+        unitType: "",
         category: "",
         subcategory: "",
         subcategoryType: "",
@@ -109,6 +110,7 @@ export default function AddProduct() {
             setForm({
                 name: { en: "", hi: "", desi: "" },
                 price: "",
+                unitType: "",
                 category: "",
                 subcategory: "",
                 subcategoryType: "",
@@ -223,6 +225,7 @@ export default function AddProduct() {
                     </div>
 
                     <input name="price" placeholder="Price" value={form.price} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
+                    <input name="unitType" placeholder="unitType" value={form.unitType} onChange={handleChange} className="w-full p-3 border rounded-xl" required />
 
                     {/* ✅ NOW BASED ON SUBCATEGORY */}
                     {form.subcategoryType?.toLowerCase() === "perishable" && (

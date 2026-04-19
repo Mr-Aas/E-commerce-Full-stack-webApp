@@ -229,7 +229,7 @@ function ProductDetailsPage(
                         {/* Price */}
                         <div className="mt-5 flex items-end gap-3">
                             <span className="text-4xl font-bold text-gray-900">
-                                ₹{Number(p.price ?? 0).toLocaleString()}
+                                ₹{Number(p.price ?? 0).toLocaleString()} / {p.unitType}
                             </span>
                         </div>
                         <p className="mt-1 text-xs text-gray-500">Inclusive of all taxes</p>
@@ -305,6 +305,7 @@ function ProductDetailsPage(
                                     dispatch(addToCart({
                                         productId: p._id,
                                         name: p.name,
+                                        unitType: p.unitType || "unit",
                                         price: Number(p.price),
                                         image: p.images?.[0] || "",
                                         quantity: qty,
@@ -334,6 +335,7 @@ function ProductDetailsPage(
                                     dispatch(addToCart({
                                         productId: p._id,
                                         name: p.name,
+                                        unitType: p.unitType || "unit",
                                         price: Number(p.price),
                                         image: p.images?.[0] || "",
                                         quantity: qty,

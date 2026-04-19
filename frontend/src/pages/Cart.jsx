@@ -65,7 +65,7 @@ const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
             {item.name?.en}
           </h3>
           <p className="text-sm text-gray-500 mt-0.5">
-            ₹{item.price.toLocaleString("en-IN")} / unit
+            {`₹${item.price.toLocaleString("en-IN")} / ${item.unitType.toLocaleString("en-IN")}`}
           </p>
         </div>
 
