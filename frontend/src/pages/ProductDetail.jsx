@@ -164,7 +164,7 @@ function ProductDetailsPage(
                         {/* Main image */}
                         <div className="relative flex-1 overflow-hidden rounded-2xl border border-gray-200 bg-white ">
                             {isPerishable && (
-                                <span className="absolute left-4 top-4 z-10 rounded-full bg-amber-500 px-3 py-1 text-xs font-bold text-white shadow">
+                                <span className="absolute left-4 top-4 z-10 rounded-full bg-teal-600 px-3 py-1 text-xs font-bold text-white shadow">
                                     Perishable
                                 </span>
                             )}
@@ -240,7 +240,7 @@ function ProductDetailsPage(
                                 <span className="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-3 py-1 text-sm font-medium text-green-700">
                                     <span className="h-2 w-2 rounded-full bg-green-500" />
                                     In stock
-                                    {typeof p.stock === "number" ? ` · ${p.stock} left` : ""}
+                                    {typeof p.stock === "number" ? ` · ${p.stock} ${p.unitType} left` : ""}
                                 </span>
                             ) : (
                                 <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-3 py-1 text-sm font-medium text-red-700">
@@ -254,7 +254,7 @@ function ProductDetailsPage(
                                 <span
                                     className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${expired
                                         ? "bg-red-50 text-red-700"
-                                        : "bg-amber-50 text-amber-700"
+                                        : "bg-amber-50 text-green-500 border"
                                         }`}
                                 >
                                     <svg
@@ -343,7 +343,7 @@ function ProductDetailsPage(
                                     }));
                                     navigate("/cart")
                                 }}
-                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:from-orange-600 hover:to-orange-700 disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-300"
+                                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-teal-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition hover:from-teal-800 hover:to-teal-900 disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-300"
                             >
                                 <svg
                                     className="h-5 w-5"

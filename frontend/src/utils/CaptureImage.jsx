@@ -70,12 +70,12 @@ export default function CaptureImage({ onCapture }) {
             ref={videoRef}
             autoPlay
             playsInline
-            className="w-full h-48 bg-black rounded-xl"
+            className="w-full h-full bg-black rounded-xl"
           />
           <button
             type="button"
             onClick={captureImage}
-            className="bg-blue-600 text-white p-2 rounded"
+            className="bg-blue-600 w-full text-white p-2 rounded"
           >
             Capture Image
           </button>
@@ -84,7 +84,7 @@ export default function CaptureImage({ onCapture }) {
         <>
           <img
             src={preview}
-            className="w-full h-[160px] object-cover rounded"
+            className="w-full h-full object-cover rounded"
           />
           <button
             type="button"

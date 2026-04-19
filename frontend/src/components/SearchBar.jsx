@@ -102,29 +102,26 @@ function SearchBar() {
     return (
         <div
             ref={wrapperRef}
-            className="sticky top-0 z-30 w-full border-b border-slate-200/60 bg-white/80 backdrop-blur-xl"
+            className="sticky top-0 z-30 w-full border-b border-teal-200/60 bg-white/80 backdrop-blur-xl"
         >
             <div className="mx-auto flex max-w-5xl items-center px-4 py-3">
                 <div className="relative w-full">
                     {/* Glow ring on focus */}
                     <div
-                        className={`pointer-events-none absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-indigo-500 via-fuchsia-500 to-pink-500 opacity-0 blur transition duration-300 ${
-                            focused ? "opacity-40" : ""
-                        }`}
+                        className={`pointer-events-none absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-teal-400 via-teal-300 to-teal-300 opacity-0 blur transition duration-300 ${focused ? "opacity-30" : ""
+                            }`}
                     />
 
                     {/* INPUT */}
                     <div
-                        className={`relative flex items-center gap-2 rounded-2xl border bg-white pl-4 pr-2 transition-all duration-200 ${
-                            focused
+                        className={`relative flex items-center gap-2 rounded-2xl border bg-white pl-4 pr-2 transition-all duration-200 ${focused
                                 ? "border-indigo-300 shadow-lg shadow-indigo-500/10"
                                 : "border-slate-200 shadow-sm hover:border-slate-300"
-                        }`}
+                            }`}
                     >
                         <Search
-                            className={`h-5 w-5 shrink-0 transition ${
-                                focused ? "text-indigo-600" : "text-slate-400"
-                            }`}
+                            className={`h-5 w-5 shrink-0 transition ${focused ? "text-teal-600" : "text-slate-400"
+                                }`}
                         />
                         <input
                             ref={inputRef}
@@ -169,7 +166,7 @@ function SearchBar() {
                         <button
                             onClick={handleSearch}
                             disabled={!query.trim()}
-                            className="hidden items-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-fuchsia-600 px-4 py-2 text-xs font-bold text-white shadow-md transition hover:shadow-lg hover:shadow-indigo-500/30 disabled:cursor-not-allowed disabled:opacity-40 sm:inline-flex"
+                            className="hidden items-center gap-1.5 rounded-xl bg-gradient-to-r from-teal-500 to-teal-500 px-4 py-2 text-xs font-bold text-white shadow-md transition hover:shadow-lg hover:shadow-indigo-500/30 disabled:cursor-not-allowed disabled:opacity-40 sm:inline-flex"
                         >
                             Search
                             <ArrowRight className="h-3.5 w-3.5" />
@@ -186,8 +183,8 @@ function SearchBar() {
                                     {loading
                                         ? "Searching…"
                                         : results.length > 0
-                                        ? `${results.length} suggestion${results.length === 1 ? "" : "s"}`
-                                        : "No matches"}
+                                            ? `${results.length} suggestion${results.length === 1 ? "" : "s"}`
+                                            : "No matches"}
                                 </div>
                                 <div className="hidden items-center gap-1 text-[10px] text-slate-400 sm:flex">
                                     <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5">↑</kbd>
@@ -239,11 +236,10 @@ function SearchBar() {
                                                     navigate(`/product/${item._id}`);
                                                     setFocused(false);
                                                 }}
-                                                className={`group flex w-full items-center gap-3 px-4 py-3 text-left transition ${
-                                                    activeIndex === idx
+                                                className={`group flex w-full items-center gap-3 px-4 py-3 text-left transition ${activeIndex === idx
                                                         ? "bg-gradient-to-r from-indigo-50 to-fuchsia-50"
                                                         : "hover:bg-slate-50"
-                                                }`}
+                                                    }`}
                                             >
                                                 <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200">
                                                     {item.images?.[0] ? (
@@ -270,7 +266,7 @@ function SearchBar() {
                                                     </p>
                                                     <div className="mt-0.5 flex items-center gap-2">
                                                         <p className="text-xs font-bold text-slate-700">
-                                                            {formatPrice(item.price)}
+                                                            {formatPrice(item.price)} / {item.unitType}
                                                         </p>
                                                         {item.category && (
                                                             <span className="rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600">
@@ -286,11 +282,10 @@ function SearchBar() {
                                                 </div>
 
                                                 <ArrowRight
-                                                    className={`h-4 w-4 shrink-0 transition ${
-                                                        activeIndex === idx
+                                                    className={`h-4 w-4 shrink-0 transition ${activeIndex === idx
                                                             ? "translate-x-0 text-indigo-600 opacity-100"
                                                             : "-translate-x-1 text-slate-400 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
-                                                    }`}
+                                                        }`}
                                                 />
                                             </button>
                                         </li>

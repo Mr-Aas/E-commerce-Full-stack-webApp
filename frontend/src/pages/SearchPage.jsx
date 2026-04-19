@@ -133,13 +133,13 @@ const SearchPage = () => {
 
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 px-3 py-1 text-xs font-semibold text-white shadow-sm shadow-indigo-500/20">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-teal-500 to-teal-500 px-3 py-1 text-xs font-semibold text-white shadow-sm shadow-indigo-500/20">
                 <Sparkles className="h-3 w-3" />
                 Smart search
               </span>
-              <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              <h1 className="mt-3 text-3xl font-bold tracking-tight text-teal-500 sm:text-4xl">
                 Results for{" "}
-                <span className="bg-gradient-to-r from-indigo-600 to-fuchsia-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text text-transparent">
                   "{query}"
                 </span>
               </h1>
@@ -213,7 +213,7 @@ const SearchPage = () => {
               <div className="rounded-2xl border border-slate-200/70 bg-white/80 p-5 shadow-sm shadow-slate-200/40 backdrop-blur">
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className="flex items-center gap-2 text-sm font-bold text-slate-900">
-                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-teal-500 text-white">
                       <Tag className="h-3.5 w-3.5" />
                     </span>
                     Categories
@@ -232,7 +232,7 @@ const SearchPage = () => {
                   <button
                     onClick={() => setActiveCategory("all")}
                     className={`group flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm transition ${activeCategory === "all"
-                      ? "bg-gradient-to-r from-indigo-500 to-fuchsia-500 font-semibold text-white shadow-md shadow-indigo-500/30"
+                      ? "bg-gradient-to-r from-teal-500 to-teal-500 font-semibold text-white shadow-md shadow-indigo-500/30"
                       : "text-slate-600 hover:bg-slate-100"
                       }`}
                   >
@@ -275,7 +275,7 @@ const SearchPage = () => {
               </div>
 
               {/* Stats card */}
-              <div className="overflow-hidden rounded-2xl border border-slate-200/70 bg-gradient-to-br from-slate-900 to-indigo-900 p-5 text-white shadow-lg shadow-indigo-900/20">
+              <div className="overflow-hidden rounded-2xl border border-slate-200/70 bg-gradient-to-br from-teal-500 to-teal-500 p-5 text-white shadow-lg shadow-indigo-900/20">
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-indigo-200">
                   <Flame className="h-3.5 w-3.5" />
                   Catalog snapshot
@@ -491,7 +491,7 @@ const SearchPage = () => {
                             <p className="text-[10px] uppercase tracking-wider text-slate-400">
                               Price
                             </p>
-                            <p className="bg-gradient-to-r from-slate-900 to-indigo-700 bg-clip-text text-xl font-extrabold text-transparent">
+                            <p className="bg-gradient-to-r from-teal-500 to-teal-500 bg-clip-text text-xl font-extrabold text-transparent">
                               {formatPrice(p.price)}
                               {` / ${p.unitType}`}
                             </p>
