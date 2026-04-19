@@ -421,6 +421,7 @@ const SearchPage = () => {
                                 productId: p._id,          // ✅ REQUIRED
                                 name: p.name,              // keep object (we'll handle in UI)
                                 price: Number(p.price),    // ✅ ensure number
+                                unitType: p.unitType || "unit",
                                 image: p.images?.[0] || "",// ✅ match cart field
                                 quantity: 1,
                                 stock: p.stock || 1           // ✅ correct key
@@ -492,6 +493,7 @@ const SearchPage = () => {
                             </p>
                             <p className="bg-gradient-to-r from-slate-900 to-indigo-700 bg-clip-text text-xl font-extrabold text-transparent">
                               {formatPrice(p.price)}
+                              {` / ${p.unitType}`}
                             </p>
                           </div>
                           <button
@@ -501,6 +503,7 @@ const SearchPage = () => {
                                 productId: p._id,          // ✅ REQUIRED
                                 name: p.name,              // keep object (we'll handle in UI)
                                 price: Number(p.price),    // ✅ ensure number
+                                unitType: p.unitType || "unit",
                                 image: p.images?.[0] || "",// ✅ match cart field
                                 quantity: 1              // ✅ correct key
                               }));

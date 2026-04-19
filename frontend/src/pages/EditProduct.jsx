@@ -200,6 +200,12 @@ export default function EditProduct() {
                         onChange={handleChange}
                         className="w-full p-3 border rounded-xl"
                     />
+                    <input
+                        name="unitType"
+                        value={form.unitType}
+                        onChange={handleChange}
+                        className="w-full p-3 border rounded-xl"
+                    />
 
                     {/* EXPIRY */}
                     {form.subcategoryType?.toLowerCase() === "perishable" && (

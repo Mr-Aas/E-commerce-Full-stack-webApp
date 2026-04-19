@@ -48,6 +48,8 @@ function Itemcard({ data }) {
             productId: product._id || product.id,
             name: product.name?.[lang],
             price: product.price,
+            unitType: product.unitType,
+            unitType: product.unitType,
             image: product.images?.[0],
             quantity: 1
         }));
@@ -113,8 +115,7 @@ function Itemcard({ data }) {
                             </div>
 
                             <div className="text-lg font-semibold text-gray-900 mt-1">
-                                ₹{product.price}
-                            </div>
+                                {`₹${product.price} / ${product.unitType}`}                            </div>
 
                             <div className="text-xs mt-1">
                                 {product.isAvailable > 0 ? (

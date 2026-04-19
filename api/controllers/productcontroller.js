@@ -13,11 +13,12 @@ const addProducts = async (req, res) => {
     try {
         console.log(req.body);
 
-        const { name, price, category, subcategoryType, subcategory, expiryDate, stock, image, description } = req.body;
+        const { name, price,unitType, category, subcategoryType, subcategory, expiryDate, stock, image, description } = req.body;
 
         const newProduct = new Product({
             name,
             price,
+            unitType,
             category,
             subcategoryType,
             subcategory,
@@ -91,7 +92,7 @@ const searchProducts = async (req, res) => {
         )
             .sort({ score: { $meta: "textScore" } }) // 🔥 relevance
             .limit(10) // 🚀 limit results
-            .select("name price images stock isAvailable");
+            .select("name price unitType images stock isAvailable");
 
         res.json(products);
 
