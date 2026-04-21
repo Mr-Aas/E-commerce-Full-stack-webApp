@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
 
         password: {
             type: String,
-            required: true
+            required: false
         },
 
         phone: {
@@ -47,7 +47,9 @@ const userSchema = new mongoose.Schema(
                 },
                 quantity: Number
             }
-        ]
+        ],
+        googleId: String,
+        facebookId: String,
     },
     { timestamps: true }
 )

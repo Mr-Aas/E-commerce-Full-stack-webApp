@@ -33,10 +33,10 @@ function Navbar() {
     }, [cartCount]);
 
 
-    const isAdmin = User?.token
-        ? jwtDecode(User.token).role === "admin"
-        : false;
-
+    // console.log(User?.isAdmin)
+    // const isAdmin = User?.isAdmin
+    //     ? "admin"
+    //     : false;
 
     return (
         <nav className="w-full shadow-md bg-white">
@@ -48,7 +48,7 @@ function Navbar() {
                 <div className="logo w-42 h-12 overflow-hidden">
 
                     <Link to="/" className=" object-cover">
-                        <img src="./public/websitelogo (3).jpg" alt="logo"/>
+                        <img src="./public/websitelogo (3).jpg" alt="logo" />
                     </Link>
                 </div>
 
@@ -110,8 +110,8 @@ function Navbar() {
                                     <ListOrdered width={20} />
                                     {t("My Orders")}
                                 </Link>
-
-                                {isAdmin && (
+  
+                                {User?.isAdmin && (
                                     <Link to="/admin" className="flex gap-2 p-2 hover:bg-green-100 rounded">
                                         {t("Admin Panel")}
                                     </Link>
@@ -123,7 +123,7 @@ function Navbar() {
                                         Logout
                                     </button>
                                 ) : (
-                                    <Link to="/login" className="flex gap-2 p-2 hover:bg-green-100 rounded">
+                                    <Link to="/loginchoice" className="flex gap-2 p-2 hover:bg-green-100 rounded">
                                         <img src={logInsvg} width={20} />
                                         Login
                                     </Link>
@@ -186,7 +186,7 @@ function Navbar() {
 
                             <Link to="/profile" onClick={() => setMenuOpen(false)}>{t("Profile")}</Link>
 
-                            {isAdmin && (
+                            {User?.isAdmin && (
                                 <Link to="/admin" onClick={() => setMenuOpen(false)}>
                                     {t("Admin Panel")}
                                 </Link>
@@ -195,7 +195,7 @@ function Navbar() {
                             {User ? (
                                 <button onClick={logout}>Logout</button>
                             ) : (
-                                <Link to="/login">Login</Link>
+                                <Link to="/loginchoice">Login</Link>
                             )}
                         </div>
                     </div>
