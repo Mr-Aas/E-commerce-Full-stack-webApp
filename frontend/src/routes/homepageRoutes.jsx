@@ -27,7 +27,8 @@ import EditProduct from "../pages/EditProduct.jsx";
 import MyOrders from "../pages/MyOrders.jsx";
 import SearchPage from "../pages/SearchPage.jsx";
 import ProductDetailsPage from "../pages/ProductDetail.jsx";
-
+import AuthChoice from "../pages/AuthChoicePage.jsx";
+import OAuthSuccess from "../components/OauthSuccess.jsx";
 
 
 
@@ -161,6 +162,14 @@ const router = createBrowserRouter([
         {
             path: "product/:id",
             element: <ProductDetailsPage />, // 🔥 THIS MUST EXIST
+        },
+        {
+            path: "loginchoice",
+            element: <AuthChoice />, // 🔥 THIS MUST EXIST
+        },
+        {
+            path: "oauth-success",
+            element: <OAuthSuccess />, // 🔥 THIS MUST EXIST
         },
 
 

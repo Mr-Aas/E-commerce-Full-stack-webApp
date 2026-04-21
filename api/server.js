@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import passport from "./config/passport.js";
+import session from "express-session";
 import cors from "cors";
 import helmet from "helmet"
 import connectdb from "./config/db.js";
@@ -49,6 +51,16 @@ app.use(limiter)
 
 
 
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 connectdb();
 

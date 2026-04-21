@@ -13,7 +13,13 @@ export default function LoginPage() {
 
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+    const handleGoogleLogin = () => {
+        window.location.href = "BACKEND_OAUTH_URL";
+    };
 
+    const handleFacebookLogin = () => {
+        window.location.href = "BACKEND_OAUTH_URL";
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
