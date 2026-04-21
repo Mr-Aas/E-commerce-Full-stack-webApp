@@ -48,7 +48,7 @@ function Navbar() {
                 <div className="logo w-42 h-12 overflow-hidden">
 
                     <Link to="/" className=" object-cover">
-                        <img src="./public/websitelogo (3).jpg" alt="logo" />
+                        <img src="../../public/websitelogoimage.jpg" alt="logo" />
                     </Link>
                 </div>
 
