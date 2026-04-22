@@ -10,7 +10,7 @@ const authlimiter = rateLimit({
     max: 10, // limit each IP to 100 requests
     message: "Too many requests, try again later"
 });
-
+ 
 
 router.post("/login", authlimiter, loginUser)
 router.post("/signup", authlimiter, signupUser)

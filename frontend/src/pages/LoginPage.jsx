@@ -14,11 +14,11 @@ export default function LoginPage() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleGoogleLogin = () => {
-        window.location.href = "BACKEND_OAUTH_URL";
+        window.location.href = process.env.VITE_URL;
     };
 
     const handleFacebookLogin = () => {
-        window.location.href = "BACKEND_OAUTH_URL";
+        window.location.href = process.env.VITE_URL;
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
