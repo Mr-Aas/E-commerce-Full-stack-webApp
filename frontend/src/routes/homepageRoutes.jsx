@@ -121,37 +121,37 @@ const router = createBrowserRouter([
 
         },
         {
-            path: "/checkout/address",
+            path: "checkout/address",
             element: <SelectAddress />,
         },
             ,
         {
-            path: "/checkout/address/new",
+            path: "checkout/address/new",
             element: <AddAddress />,
         },
         {
-            path: "/checkout/payment",
+            path: "checkout/payment",
             element: <Payment />,
         },
         {
-            path: "/success",
+            path: "success",
             element: <Success />,
         },
         {
-            path: "/cart",
+            path: "cart",
             element: <Cart />,
         },
         {
-            path: "/checkout/address/edit/:id",
+            path: "checkout/address/edit/:id",
             element: <EditAddress />,
         },
         {
-            path: "/editproduct/:id",
+            path: "editproduct/:id",
             element: <EditProduct />,
             loader: categoriesData
         },
         {
-            path: "/my-orders",
+            path: "my-orders",
             element: <MyOrders />,
 
         },

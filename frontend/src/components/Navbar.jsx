@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/websitelogoimage.jpg";
 import { useContext, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
@@ -48,7 +49,7 @@ function Navbar() {
                 <div className="logo w-42 h-12 overflow-hidden">
 
                     <Link to="/" className=" object-cover">
-                        <img src="../../public/websitelogoimage.jpg" alt="logo" />
+                        <img src={logo} alt="logo" />
                     </Link>
                 </div>
 
@@ -110,7 +111,7 @@ function Navbar() {
                                     <ListOrdered width={20} />
                                     {t("My Orders")}
                                 </Link>
-  
+
                                 {User?.isAdmin && (
                                     <Link to="/admin" className="flex gap-2 p-2 hover:bg-green-100 rounded">
                                         {t("Admin Panel")}
