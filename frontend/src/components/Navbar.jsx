@@ -49,7 +49,7 @@ function Navbar() {
                 <div className="logo w-42 h-12 overflow-hidden">
 
                     <Link to="/" className=" object-cover">
-                        <img src={logo} alt="logo" />
+                        <img src="https://res.cloudinary.com/dcfpnfdgy/image/upload/v1776843352/websitelogoimage_uzsnbu.jpg" alt="logo" />
                     </Link>
                 </div>
 
