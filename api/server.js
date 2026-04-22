@@ -77,6 +77,11 @@ app.use("/orders", orderRoutes)
 
 
 app.get('/', (req, res) => res.send('API is running...'));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("dist/index.html"));
+});
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
