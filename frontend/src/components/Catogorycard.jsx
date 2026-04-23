@@ -22,7 +22,7 @@ const Categorycard = ({ Categories }) => {
 
         return (
 
-          <div className="group  relative w-72 h-96 rounded-2xl overflow-hidden cursor-pointer shadow-lg" key={items._id}>
+          <div className="group  relative w-40 h-58 sm:w-72 md:h-96 rounded-2xl overflow-hidden cursor-pointer shadow-lg" key={items._id}>
             <Link to={`/items/${items.name?.en}`}>
 
               {/* Background Image */}
