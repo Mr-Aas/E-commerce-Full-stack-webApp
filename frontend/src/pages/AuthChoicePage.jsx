@@ -20,13 +20,13 @@ const AuthChoice = () => {
         {/* Logo */}
         <div className="flex justify-center mb-4">
           <div className="w-14 h-14 rounded-full bg-teal-400 flex items-center justify-center text-white font-bold">
-            SS
+            SG
           </div>
         </div>
 
         {/* Heading */}
         <h1 className="text-2xl font-bold text-center text-brown-800">
-          Welcome to saraSaamaan
+          Welcome to SmartGrahak.in
         </h1>
         <p className="text-center text-gray-500 mb-6">
           Make Your Shopping Experience Unforgettable
