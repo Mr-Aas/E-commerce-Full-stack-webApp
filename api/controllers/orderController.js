@@ -1,7 +1,7 @@
 // controllers/ordersController.js
 
 import Order from "../models/Orders.js";
-import Product from "../models/product.js";
+import Product from "../models/Item.js";
 
 
 // ==============================

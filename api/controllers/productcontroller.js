@@ -1,4 +1,4 @@
-import Product from "../models/product.js";
+import Product from "../models/Item.js";
 
 const getProducts = async (req, res) => {
     try {
@@ -13,7 +13,7 @@ const addProducts = async (req, res) => {
     try {
         console.log(req.body);
 
-        const { name, price,unitType, category, subcategoryType, subcategory, expiryDate, stock, image, description } = req.body;
+        const { name, price, unitType, category, subcategoryType, subcategory, expiryDate, stock, image, description } = req.body;
 
         const newProduct = new Product({
             name,
@@ -103,4 +103,4 @@ const searchProducts = async (req, res) => {
 };
 
 
-export { getProducts, addProducts, getProductById, deleteProduct, updateProduct ,searchProducts};
+export { getProducts, addProducts, getProductById, deleteProduct, updateProduct, searchProducts };
