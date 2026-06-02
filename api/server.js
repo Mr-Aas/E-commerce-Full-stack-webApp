@@ -5,7 +5,8 @@ import passport from "./config/passport.js";
 import session from "express-session";
 import cors from "cors";
 import helmet from "helmet"
-import connectdb from "./config/db.js";
+import connectDB from "./config/db.js";
+import { seedDatabase } from './config/seed.js';
 import productRoutes from "./routes/productRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js"
 import authRoutes from "./routes/authRoutes.js"
@@ -14,6 +15,8 @@ import uploadRoutes from "./routes/uploadRoutes.js"
 import addressRoutes from "./routes/addressRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import rateLimit from "express-rate-limit";
+import itemRoutes from './routes/itemRoutes.js';
+import billRoutes from './routes/billRoutes.js';
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -21,13 +24,14 @@ const limiter = rateLimit({
   message: "Too many requests, try again later"
 });
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 const app = express();
 const allowedOrigins = [
   "https://smartgrahak.in",
   "https://www.smartgrahak.in",
   "https://sarasaamaan.smartgrahak.in",
   "http://localhost:5173",
+  "http://localhost:3000",
 ];
 
 
@@ -62,11 +66,16 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-connectdb();
+const initApp = async () => {
+  await connectDB();
+  await seedDatabase();
+};
+initApp();
 
 
 
-
+app.use('/api/items', itemRoutes);
+app.use('/api/bills', billRoutes);
 app.use("/products", productRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/auth", authRoutes)
@@ -74,10 +83,33 @@ app.use("/dashboard", dashBoardRoutes)
 app.use("/upload", uploadRoutes);
 app.use("/address", addressRoutes)
 app.use("/orders", orderRoutes)
+app.post('/api/admin/verify-pin', (req, res) => {
+  const { pin } = req.body;
+  const officialPin = process.env.ADMIN_PIN || '2026';
+
+  if (pin === officialPin) {
+    res.json({ success: true, token: 'mock-admin-token-2026' }); // Return a simple mock token
+  } else {
+    res.status(401).json({ success: false, message: 'Invalid passcode PIN' });
+  }
+});
+
+// Root Route
+app.get('/calculator', (req, res) => {
+  res.send('Supermarket Billing System API is running...');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong on the server' });
+});
+
+const PORT = process.env.PORT || 5000;
 
 
 app.get('/', (req, res) => res.send('API is running...'));
-app.get("*", (req, res) => {
+app.use((req, res) => {
   res.sendFile(path.resolve("dist/index.html"));
 });
 

@@ -1,5 +1,5 @@
 import Order from "../models/Orders.js"
-import Product from "../models/product.js"
+import Product from "../models/Item.js"
 import Sale from "../models/user.js"
 
 const getAllProducts = async (req, res) => {
