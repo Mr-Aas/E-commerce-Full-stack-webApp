@@ -45,13 +45,20 @@ function Navbar() {
             {/* 🔹 TOP BAR */}
             <div className="flex items-center justify-between px-4 py-2  ">
 
-                {/* LOGO */}
-                <div className="logo w-42 h-12 overflow-hidden">
-
-                    <Link to="/" className=" object-cover">
-                        <img src="https://res.cloudinary.com/dcfpnfdgy/image/upload/v1776843352/websitelogoimage_uzsnbu.jpg" alt="logo" />
-                    </Link>
-                </div>
+               {/* LOGO */}
+<div className="logo w-56 h-12 overflow-hidden">
+    <Link to="/" className="block w-full h-full">
+        <img
+            src="https://res.cloudinary.com/dcfpnfdgy/image/upload/v1780423041/websitelogo_6_onbt3x.jpg"
+            alt="logo"
+            className="w-full h-full object-cover
+            [mask-image:linear-gradient(to_right,transparent_0px,black_4px,black_calc(100%-4px),transparent_100%),linear-gradient(to_bottom,transparent_0px,black_4px,black_calc(100%-4px),transparent_100%)]
+            [mask-composite:intersect]
+            [-webkit-mask-image:linear-gradient(to_right,transparent_0px,black_4px,black_calc(100%-4px),transparent_100%),linear-gradient(to_bottom,transparent_0px,black_4px,black_calc(100%-4px),transparent_100%)]
+            [-webkit-mask-composite:source-in]"
+        />
+    </Link>
+</div>
 
 
                 {/* 🔹 DESKTOP MENU */}
