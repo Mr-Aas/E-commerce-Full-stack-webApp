@@ -97,19 +97,19 @@ function Itemcard({ data }) {
                 {data.map((product) => (
                     <div
                         key={product.id}
-                        className="group shrink-0 basis-1/2 sm:basis-1/3 lg:basis-1/6 flex flex-col h-[280px] bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden" 
+                        className="group shrink-0 basis-1/2 sm:basis-1/3 lg:basis-1/6 flex flex-col h-[190px] md:h-[280px] bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden " 
                     >
                         {/* IMAGE */}
-                        < div className="h-full w-full flex items-center justify-center bg-gray-50 overflow-hidden" onClick={() => navigate(`/product/${product._id}`)} >
+                        < div className="flex items-center justify-center bg-gray-50 overflow-hidden " onClick={() => navigate(`/product/${product._id}`)} >
                             <img
                                 src={product.images?.[0]}
                                 alt={`${product.name?.[lang]} photo`}
-                                className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-110"
+                                className="md:w-[80%] transition-transform duration-300 group-hover:scale-110"
                             />
                         </div>
 
                         {/* CONTENT */}
-                        <div className="flex flex-col justify-between flex-1 p-3" onClick={() => navigate(`/product/${product._id}`)}>
+                        <div className="flex flex-col justify-between flex-1 md:p-3 p-1 h-[40%] md:h-full" onClick={() => navigate(`/product/${product._id}`)}>
                             <div className="text-sm font-medium text-gray-800 line-clamp-2" >
                                 {product.name?.[lang]}
                             </div>
