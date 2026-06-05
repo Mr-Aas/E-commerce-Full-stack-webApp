@@ -72,7 +72,7 @@ function ItemsPage() {
         return (
           <>
             <section key={subcat} className="grocery bg-teal-50  rounded-2xl flex flex-col "  >
-              <div className="sectionNAME text-3xl font-medium m-3 bg-teal-400 px-10 rounded-lg border-2 border-teal-500  h-[45px] text-teal-800 flex justify-center items-center"> 
+              <div className="sectionNAME text-3xl font-medium m-3 bg-teal-200 px-10 rounded-lg border-2 border-teal-300  h-[35px] text-teal-600 flex justify-center items-center"> 
                 {subcat}
               </div>
               <div className="datacards overflow-hidden ">
