@@ -132,7 +132,7 @@ function Itemcard({ data }) {
 
                             <button
                                 onClick={() => handleAddToCart(product)}
-                                className=" bg-teal-500 text-white text-sm py-1.5 rounded-b-3xl hover:bg-teal-400 transition"
+                                className=" bg-teal-500 text-white text-sm py-1.5 rounded-b-xl hover:bg-teal-400 transition"
                             >
                                 Add to Cart
                             </button>
