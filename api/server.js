@@ -17,6 +17,9 @@ import orderRoutes from "./routes/orderRoutes.js";
 import rateLimit from "express-rate-limit";
 import itemRoutes from './routes/itemRoutes.js';
 import billRoutes from './routes/billRoutes.js';
+import path from 'path'
+import invoiceRoutes from "./routes/invoiceRoutes.js"
+
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -55,8 +58,10 @@ app.use(cors({
 app.use(helmet())
 app.use(express.json());
 app.use(limiter)
-
-
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "uploads"))
+)
 
 
 app.use(
@@ -78,6 +83,7 @@ initApp();
 
 
 
+app.use("/api/invoice", invoiceRoutes);
 app.use('/api/items', itemRoutes);
 app.use('/api/bills', billRoutes);
 app.use("/products", productRoutes);
