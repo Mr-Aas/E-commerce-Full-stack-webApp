@@ -31,6 +31,7 @@ const allowedOrigins = [
   "https://www.smartgrahak.in",
   "https://sarasaamaan.smartgrahak.in",
   "http://localhost:5173",
+  // "http://localhost:3000",
   "http://localhost:3000",
   "https://super-market-bill-calculator.vercel.app",
   "https://bill.smartgrahak.in",

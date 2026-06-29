@@ -1,165 +1,230 @@
 import express from 'express';
-import Product from '../models/Item.js';
+import Product from '../models/product.js';
 
 const router = express.Router();
 
-const toLegacyProductShape = (productDoc) => ({
-  _id: productDoc._id,
-  name: productDoc.name?.en || productDoc.name?.desi || productDoc.name?.hi || 'Unnamed Product',
-  names: productDoc.name,
-  category: productDoc.category,
-  subcategory: productDoc.subcategory,
-  subcategoryType: productDoc.subcategoryType,
-  unitType: productDoc.unitType,
-  pricePerUnit: productDoc.price,
-  price: productDoc.price,
-  stock: productDoc.stock,
-  isAvailable: productDoc.isAvailable,
-});
+/*
+|--------------------------------------------------------------------------
+| GET ALL PRODUCTS
+| Supports search using name and searchQuery
+|--------------------------------------------------------------------------
+|
+| Examples:
+| GET /api/items
+| GET /api/items?search=namak
+| GET /api/items?search=tata
+| GET /api/items?search=atta
+|
+*/
 
-const normalizeAdminPayloadToProduct = (payload, existingProduct = null) => {
-  const baseName =
-    payload?.name?.en ||
-    payload?.name ||
-    existingProduct?.name?.en ||
-    '';
-  const category = payload?.category || existingProduct?.category || '';
-  const subcategory = payload?.subcategory || existingProduct?.subcategory || category || 'General';
-  const subcategoryType =
-    payload?.subcategoryType || existingProduct?.subcategoryType || 'NonPerishable';
-  const priceValue =
-    payload?.price ?? payload?.pricePerUnit ?? existingProduct?.price ?? 0;
-
-  return {
-    name: {
-      en: (payload?.name?.en || payload?.name || existingProduct?.name?.en || '').trim(),
-      hi: (payload?.name?.hi || payload?.name || existingProduct?.name?.hi || baseName).trim(),
-      desi: (payload?.name?.desi || payload?.name || existingProduct?.name?.desi || baseName).trim(),
-    },
-    price: Number(priceValue),
-    unitType: payload?.unitType || existingProduct?.unitType,
-    category: category.trim(),
-    subcategory: subcategory.trim(),
-    subcategoryType,
-    brand: payload?.brand ?? existingProduct?.brand,
-    stock:
-      payload?.stock !== undefined
-        ? Number(payload.stock)
-        : (existingProduct?.stock ?? 0),
-    images: Array.isArray(payload?.images) ? payload.images : (existingProduct?.images || []),
-    description: payload?.description ?? existingProduct?.description,
-    isAvailable:
-      payload?.isAvailable !== undefined
-        ? Boolean(payload.isAvailable)
-        : (existingProduct?.isAvailable ?? true),
-    expiryDate: payload?.expiryDate || existingProduct?.expiryDate,
-  };
-};
-
-// GET all Products (with optional search query for dropdown autocomplete)
 router.get('/', async (req, res) => {
   try {
     const { search } = req.query;
+
     let query = {};
-    
-    if (search) {
+
+    if (search?.trim()) {
       query = {
         $or: [
-          { 'name.en': { $regex: search, $options: 'i' } },
-          { 'name.hi': { $regex: search, $options: 'i' } },
-          { 'name.desi': { $regex: search, $options: 'i' } },
-          { brand: { $regex: search, $options: 'i' } },
-          { description: { $regex: search, $options: 'i' } },
+          {
+            name: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
+          {
+            searchQuery: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
         ],
       };
     }
-    
-    const Products = await Product.find(query).sort({ 'name.en': 1 });
-    res.json(Products.map(toLegacyProductShape));
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
-// POST a new Product (Admin)
-router.post('/', async (req, res) => {
-  const { name, category, unitType, pricePerUnit, price } = req.body;
-  
-  if (!name || !category || !unitType || (pricePerUnit === undefined && price === undefined)) {
-    return res.status(400).json({ message: 'All fields are required' });
-  }
-  
-  try {
-    const normalized = normalizeAdminPayloadToProduct(req.body);
-    // Check if Product name already exists (english primary name)
-    const ProductExists = await Product.findOne({
-      'name.en': { $regex: `^${normalized.name.en.trim()}$`, $options: 'i' },
+    const products = await Product.find(query).sort({
+      name: 1,
     });
-    if (ProductExists) {
-      return res.status(400).json({ message: 'An Product with this name already exists' });
-    }
 
-    const newProduct = new Product(normalized);
-    
-    const savedProduct = await newProduct.save();
-    res.status(201).json(toLegacyProductShape(savedProduct));
+    res.json(products);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({
+      message: error.message,
+    });
   }
 });
 
-// PUT (update) an Product (Admin)
-router.put('/:id', async (req, res) => {
-  const { name, category, unitType, pricePerUnit } = req.body;
-  
+/*
+|--------------------------------------------------------------------------
+| GET SINGLE PRODUCT
+|--------------------------------------------------------------------------
+*/
+
+router.get('/:id', async (req, res) => {
   try {
-    const Product = await Product.findById(req.params.id);
-    if (!Product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
-    
-    if (name) {
-      // Check if name is already taken by another Product
-      const ProductExists = await Product.findOne({ 
-        'name.en': { $regex: `^${name.trim()}$`, $options: 'i' },
-        _id: { $ne: req.params.id }
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: 'Product not found',
       });
-      if (ProductExists) {
-        return res.status(400).json({ message: 'An Product with this name already exists' });
+    }
+
+    res.json(product);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+
+/*
+|--------------------------------------------------------------------------
+| CREATE PRODUCT
+|--------------------------------------------------------------------------
+*/
+
+router.post('/', async (req, res) => {
+  try {
+    const {
+      name,
+      pricePerUnit,
+      unitType,
+      stock,
+      searchQuery,
+    } = req.body;
+
+    if (!name || pricePerUnit === undefined || !unitType) {
+      return res.status(400).json({
+        message:
+          'Name, pricePerUnit and Unit Type are required',
+      });
+    }
+
+    const existingProduct = await Product.findOne({
+      name: {
+        $regex: `^${name.trim()}$`,
+        $options: 'i',
+      },
+    });
+
+    if (existingProduct) {
+      return res.status(400).json({
+        message:
+          'A product with this name already exists',
+      });
+    }
+
+    const product = new Product({
+      name: name.trim(),
+      pricePerUnit: Number(pricePerUnit),
+      unitType,
+      stock: Number(stock) || 0,
+      searchQuery: searchQuery || '',
+    });
+
+    const savedProduct = await product.save();
+
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+});
+
+/*
+|--------------------------------------------------------------------------
+| UPDATE PRODUCT
+|--------------------------------------------------------------------------
+*/
+
+router.put('/:id', async (req, res) => {
+  try {
+    const product = await Product.findById(
+      req.params.id
+    );
+
+    if (!product) {
+      return res.status(404).json({
+        message: 'Product not found',
+      });
+    }
+
+    if (req.body.name) {
+      const existingProduct =
+        await Product.findOne({
+          name: {
+            $regex: `^${req.body.name.trim()}$`,
+            $options: 'i',
+          },
+          _id: {
+            $ne: req.params.id,
+          },
+        });
+
+      if (existingProduct) {
+        return res.status(400).json({
+          message:
+            'A product with this name already exists',
+        });
       }
     }
 
-    const normalized = normalizeAdminPayloadToProduct(req.body, Product);
-    Product.name = normalized.name;
-    Product.category = normalized.category;
-    Product.subcategory = normalized.subcategory;
-    Product.subcategoryType = normalized.subcategoryType;
-    Product.unitType = normalized.unitType;
-    Product.price = normalized.price;
-    Product.brand = normalized.brand;
-    Product.stock = normalized.stock;
-    Product.images = normalized.images;
-    Product.description = normalized.description;
-    Product.isAvailable = normalized.isAvailable;
-    Product.expiryDate = normalized.expiryDate;
-    
-    const updatedProduct = await Product.save();
-    res.json(toLegacyProductShape(updatedProduct));
+    product.name =
+      req.body.name?.trim() ?? product.name;
+
+    product.pricePerUnit =
+      req.body.pricePerUnit ?? product.pricePerUnit;
+
+    product.unitType =
+      req.body.unitType ?? product.unitType;
+
+    product.stock =
+      req.body.stock ?? product.stock;
+
+    product.searchQuery =
+      req.body.searchQuery ??
+      product.searchQuery;
+
+    const updatedProduct =
+      await product.save();
+
+    res.json(updatedProduct);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({
+      message: error.message,
+    });
   }
 });
 
-// DELETE an Product (Admin)
+/*
+|--------------------------------------------------------------------------
+| DELETE PRODUCT
+|--------------------------------------------------------------------------
+*/
+
 router.delete('/:id', async (req, res) => {
   try {
-    const Product = await Product.findByIdAndDelete(req.params.id);
-    if (!Product) {
-      return res.status(404).json({ message: 'Product not found' });
+    const deletedProduct =
+      await Product.findByIdAndDelete(
+        req.params.id
+      );
+
+    if (!deletedProduct) {
+      return res.status(404).json({
+        message: 'Product not found',
+      });
     }
-    res.json({ message: 'Product deleted successfully' });
+
+    res.json({
+      message:
+        'Product deleted successfully',
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      message: error.message,
+    });
   }
 });
 

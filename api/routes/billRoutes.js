@@ -1,13 +1,13 @@
 import express from 'express';
 import Bill from '../models/Bill.js';
-import Item from '../models/Item.js';
+import Item from '../models/product.js';
 
 const router = express.Router();
 
 // POST /calculate - Receive client cart, verify pricing, save bill, and return verified bill
 router.post('/calculate', async (req, res) => {
   const { items } = req.body; // Array of { itemId, quantity }
-  
+
   if (!items || !Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ message: 'No items provided for calculation' });
   }
@@ -32,10 +32,10 @@ router.post('/calculate', async (req, res) => {
       let calculatedPrice = 0;
       if (dbItem.unitType === 'gram') {
         // Quantity is in grams, pricePerUnit is per kg (1000g)
-        calculatedPrice = (quantity / 1000) * dbItem.price;
+        calculatedPrice = (quantity / 1000) * dbItem.pricePerUnit;
       } else {
         // 'unit' or 'meter' - directly multiplied by quantity
-        calculatedPrice = quantity * dbItem.price;
+        calculatedPrice = quantity * dbItem.pricePerUnit;
       }
 
       // Round to 2 decimal places to prevent floating point inaccuracies
@@ -44,13 +44,10 @@ router.post('/calculate', async (req, res) => {
 
       verifiedItems.push({
         productId: dbItem._id,
-        name: dbItem.name?.en || dbItem.name?.desi || dbItem.name?.hi || 'Unnamed Product',
-        names: dbItem.name,
-        category: dbItem.category,
-        subcategory: dbItem.subcategory,
+        name: dbItem.name || 'Unnamed Product',
         quantity,
         unitType: dbItem.unitType,
-        pricePerUnit: dbItem.price,
+        pricePerUnit: dbItem.pricePerUnit,
         price: calculatedPrice,
       });
     }
@@ -86,7 +83,7 @@ router.get('/', async (req, res) => {
 router.get('/stats', async (req, res) => {
   try {
     const totalBills = await Bill.countDocuments();
-    
+
     // Aggregation for total revenue and average bill amount
     const revenueStats = await Bill.aggregate([
       {
