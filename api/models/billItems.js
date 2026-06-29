@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 //           querySearch:
 //             "gehu atta, gehun atta, aata, atta, wheat flour, flour, chakki atta, gehu ka atta"
 //         },
-const productSchema = new mongoose.Schema(
+const billItemsSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -36,10 +36,10 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-productSchema.index({
+billItemsSchema.index({
   name: 'text',
   querySearch: 'text',
 });
 
-const Product = mongoose.model('Items', productSchema, 'products');
-export default Product;
+const items = mongoose.model('Items', billItemsSchema);
+export default items;
