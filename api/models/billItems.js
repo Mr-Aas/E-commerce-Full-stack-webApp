@@ -21,7 +21,6 @@ const billItemsSchema = new mongoose.Schema(
     unitType: {
       type: String,
       required: true,
-      enum: ['gram', 'unit', 'meter'],
     },
     searchQuery: {
       type: String,
@@ -38,7 +37,7 @@ const billItemsSchema = new mongoose.Schema(
 
 billItemsSchema.index({
   name: 'text',
-  querySearch: 'text',
+  searchQuery: 'text',
 });
 
 const items = mongoose.model('Items', billItemsSchema);
