@@ -1,6 +1,6 @@
 import express from 'express';
 import Bill from '../models/Bill.js';
-import Item from '../models/product.js';
+import Item from '../models/billItems.js';
 
 const router = express.Router();
 
