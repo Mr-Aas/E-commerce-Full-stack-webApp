@@ -1,4 +1,6 @@
-export const uploadInvoice = (req, res) => {
+import supabase from "../config/supabase.js";
+
+export const uploadInvoice = async (req, res) => {
 
     try {
 
@@ -8,21 +10,50 @@ export const uploadInvoice = (req, res) => {
 
                 success: false,
 
-                message: "No file uploaded"
+                message: "No PDF uploaded",
 
             });
 
         }
 
-        const pdfUrl =
+        const fileName =
+            `${Date.now()}-${req.file.originalname}`;
 
-            `${req.protocol}://${req.get("host")}/uploads/invoices/${req.file.filename}`;
+        const { error } =
+            await supabase.storage
+                .from(process.env.SUPABASE_BUCKET)
+                .upload(fileName, req.file.buffer, {
 
-        res.json({
+                    contentType: "application/pdf",
+
+                    upsert: false,
+
+                });
+
+        if (error) {
+
+            console.log(error);
+
+            return res.status(500).json({
+
+                success: false,
+
+                message: error.message,
+
+            });
+
+        }
+
+        const { data } =
+            supabase.storage
+                .from(process.env.SUPABASE_BUCKET)
+                .getPublicUrl(fileName);
+
+        res.status(200).json({
 
             success: true,
 
-            pdfUrl
+            pdfUrl: data.publicUrl,
 
         });
 
@@ -36,7 +67,7 @@ export const uploadInvoice = (req, res) => {
 
             success: false,
 
-            message: "Upload failed"
+            message: "Upload failed",
 
         });
 
