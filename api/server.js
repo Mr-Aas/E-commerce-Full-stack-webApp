@@ -58,10 +58,10 @@ app.use(cors({
 app.use(helmet())
 app.use(express.json());
 app.use(limiter)
-app.use(
-  "/uploads",
-  express.static(path.join(process.cwd(), "uploads"))
-)
+// app.use(
+//   "/uploads",
+//   express.static(path.join(process.cwd(), "uploads"))
+// )
 
 
 app.use(
