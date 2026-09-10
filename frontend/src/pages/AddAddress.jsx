@@ -76,7 +76,7 @@
 //               <input
 //                 name="phone"
 //                 value={form.phone}
-//                 onChange={handleChange}
+                // onChange={handleChange}
 //                 className="w-full mt-1 p-3 border rounded-lg focus:ring-2 focus:ring-black"
 //               />
 //             </div>

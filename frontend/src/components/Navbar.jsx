@@ -64,7 +64,7 @@ function Navbar() {
                 {/* 🔹 DESKTOP MENU */}
                 <ul className="hidden lg:flex gap-6 items-center font-medium">
                     <li><Link to="/">{t("Home")}</Link></li>
-                    <li><Link to="/contact">{t("Contact")}</Link></li>
+                    <li><Link to="/contact">{t("Connect With Us")}</Link></li>
                     <li><Link to="/about">{t("About")}</Link></li>
                 </ul>
 
