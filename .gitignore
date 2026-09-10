@@ -12,6 +12,9 @@ build/
 # Environment files
 api/.env
 frontend/.env
+.env
+*/.env
+api/.env
 
 # Or ignore every .env file anywhere
 **/.env
