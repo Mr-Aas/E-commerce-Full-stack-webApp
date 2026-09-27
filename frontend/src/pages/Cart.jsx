@@ -38,45 +38,55 @@ const QuantityControl = ({ quantity, onIncrease, onDecrease, maxQty = 10 }) => (
   </div>
 );
 
-const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
-  <article
-    className="flex gap-4 sm:gap-5 bg-white border border-gray-100 shadow-sm rounded-2xl p-4 sm:p-5 hover:shadow-md transition-shadow duration-200"
-    aria-label={`Cart item: ${item.name?.en}`}
-  >
-    {/* Image */}
-    <div className="flex-shrink-0">
-      <img
-        src={item.image}
-        alt={item.name?.en}
-        className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-gray-100"
-        loading="lazy"
-        onError={(e) => {
-          e.target.src = "https://via.placeholder.com/96x96?text=No+Image";
-        }}
-      />
-    </div>
+const getItemName = (name) => {
+  if (!name) return "";
+  if (typeof name === "object") {
+    return name.en || name.hi || name.desi || Object.values(name)[0] || "";
+  }
+  return String(name);
+};
 
-    {/* Details */}
-    <div className="flex flex-col flex-1 min-w-0 justify-between">
-      {/* Top row */}
-      <div className="flex justify-between items-start gap-2">
-        <div className="min-w-0">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
-            {item.name?.en}
-          </h3>
-          <p className="text-sm text-gray-500 mt-0.5">
-            {`₹${item.price.toLocaleString("en-IN")} / ${item.unitType.toLocaleString("en-IN")}`}
-          </p>
-        </div>
-
-        <button
-          onClick={() => onRemove(item.productId)}
-          aria-label={`Remove ${item.name?.en} from cart`}
-          className="flex-shrink-0 text-sm text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded-md transition-colors"
-        >
-          Remove
-        </button>
+const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => {
+  const nameStr = getItemName(item.name);
+  return (
+    <article
+      className="flex gap-4 sm:gap-5 bg-white border border-gray-100 shadow-sm rounded-2xl p-4 sm:p-5 hover:shadow-md transition-shadow duration-200"
+      aria-label={`Cart item: ${nameStr}`}
+    >
+      {/* Image */}
+      <div className="flex-shrink-0">
+        <img
+          src={item.image}
+          alt={nameStr}
+          className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-xl border border-gray-100"
+          loading="lazy"
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/96x96?text=No+Image";
+          }}
+        />
       </div>
+
+      {/* Details */}
+      <div className="flex flex-col flex-1 min-w-0 justify-between">
+        {/* Top row */}
+        <div className="flex justify-between items-start gap-2">
+          <div className="min-w-0">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">
+              {nameStr}
+            </h3>
+            <p className="text-sm text-gray-500 mt-0.5">
+              {`₹${(item.price || 0).toLocaleString("en-IN")} / ${(item.unitType || "unit").toLocaleString("en-IN")}`}
+            </p>
+          </div>
+
+          <button
+            onClick={() => onRemove(item.productId)}
+            aria-label={`Remove ${nameStr} from cart`}
+            className="flex-shrink-0 text-sm text-red-500 hover:text-red-700 hover:bg-red-50 px-2 py-1 rounded-md transition-colors"
+          >
+            Remove
+          </button>
+        </div>
 
       {/* Bottom row */}
       <div className="flex items-center justify-between mt-3 flex-wrap gap-2">
@@ -93,7 +103,8 @@ const CartItem = React.memo(({ item, onRemove, onIncrease, onDecrease }) => (
       </div>
     </div>
   </article>
-));
+  );
+});
 
 CartItem.displayName = "CartItem";
 
