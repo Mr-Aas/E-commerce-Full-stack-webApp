@@ -23,7 +23,7 @@ function LanguageSelector() {
     }, []);
 
     return (
-        <div ref={ref} className="relative inline-block max-w-[70px]">
+        <div ref={ref} className="relative inline-block max-w-[170px]">
             <button
                 onClick={() => setOpen(!open)}
                 className="w-full flex 
