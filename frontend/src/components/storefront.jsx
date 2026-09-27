@@ -222,12 +222,12 @@ export function Storefront({ initialCategoryName, categoryOnly = false }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto w-full">
         <main className="pb-16 pt-2">
           {/* Hero Section */}
           {!categoryOnly && (
             <section className="px-5 pt-4 md:px-8">
-              <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-teal-900 via-teal-800 to-emerald-900 px-6 py-8 text-white md:min-h-72 md:px-12 md:py-12 shadow-xl">
+              <div className="relative overflow-hidden md:w-full  rounded-3xl md:rounded-lg bg-gradient-to-br from-teal-900 via-teal-600 to-emerald-900  px-6 py-8 text-white md:min-h-72 md:px-12 md:py-12 shadow-xl">
                 <div className="relative z-10 max-w-2xl">
                   <p className="text-xs font-semibold uppercase tracking-widest text-teal-300">
                     Smart Shopping · Fresh Daily
@@ -235,9 +235,7 @@ export function Storefront({ initialCategoryName, categoryOnly = false }) {
                   <h1 className="mt-3 font-display text-3xl font-extrabold leading-tight text-balance md:text-5xl">
                     Everyday Essentials, Arranged By Aisle.
                   </h1>
-                  <p className="mt-3 text-sm text-teal-100/80 md:text-base">
-                    Explore top quality groceries, fruits, vegetables, and household needs from your local trusted store.
-                  </p>
+                  
                   <div className="mt-6 flex flex-wrap items-center gap-3">
                     <Button
                       variant="ledgerHero"
@@ -265,7 +263,7 @@ export function Storefront({ initialCategoryName, categoryOnly = false }) {
           )}
 
           {/* Category Tabs */}
-          <nav aria-label="Shop sticky categories" className="mt-6 px-5 md:px-8 sticky top-18 z-100">
+          <nav aria-label="Shop sticky categories" className="mt-6 px-5 md:px-8 sticky top-18 z-30">
             <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none]">
               {categories.map((cat) => {
                 const catName = getLocalizedText(cat.name, lang);
@@ -291,7 +289,7 @@ export function Storefront({ initialCategoryName, categoryOnly = false }) {
           </nav>
 
           {/* Subcategory / Aisle Filter Chips */}
-          <div id="market-aisles" className="mt-4 sticky top-28 z-110 scroll-mt-20 px-5 md:px-8">
+          <div id="market-aisles" className="mt-4 sticky top-28 z-30 scroll-mt-20 px-5 md:px-8">
             <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none]">
               {aisles.map((aisleName) => {
                 const isActive = activeAisle === aisleName;
