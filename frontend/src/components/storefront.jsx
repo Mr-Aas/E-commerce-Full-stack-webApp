@@ -265,7 +265,7 @@ export function Storefront({ initialCategoryName, categoryOnly = false }) {
           )}
 
           {/* Category Tabs */}
-          <nav aria-label="Shop categories" className="mt-6 px-5 md:px-8">
+          <nav aria-label="Shop sticky categories" className="mt-6 px-5 md:px-8 sticky top-18 z-100">
             <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none]">
               {categories.map((cat) => {
                 const catName = getLocalizedText(cat.name, lang);
@@ -291,7 +291,7 @@ export function Storefront({ initialCategoryName, categoryOnly = false }) {
           </nav>
 
           {/* Subcategory / Aisle Filter Chips */}
-          <div id="market-aisles" className="mt-4 scroll-mt-20 px-5 md:px-8">
+          <div id="market-aisles" className="mt-4 sticky top-28 z-110 scroll-mt-20 px-5 md:px-8">
             <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none]">
               {aisles.map((aisleName) => {
                 const isActive = activeAisle === aisleName;
