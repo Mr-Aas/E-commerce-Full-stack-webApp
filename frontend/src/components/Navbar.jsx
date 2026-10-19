@@ -10,8 +10,10 @@ import logInsvg from "../../public/LoginSvg.svg";
 import LanguageSelector from "./LanguageSelector.jsx";
 import { useTranslation } from "react-i18next";
 import { removeFromCart, increaseQty, decreaseQty } from "../features/Cart/CartSlice.js";
+import { ShieldQuestionMark } from 'lucide-react';
 
 function Navbar() {
+  const [isVisible, setisVisible] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -70,6 +72,25 @@ function Navbar() {
               {t("About")}
             </Link>
           </li>
+          <li onMouseEnter={() => { setisVisible(true) }} onMouseLeave={() => setisVisible(false)}
+            className=""> <ShieldQuestionMark width={24} />
+        {isVisible && <div className="tooltip-box flex flex-col gap-2 absolute">
+                    <div>
+                      to explore the admin dashboard contact to <b>
+                     mraas0003@gmail.com
+                        </b>
+                       </div>
+                        <div><p className="text-xl font-bold">where admin can</p>
+                        <ul className="list-disc">
+                          <li>add item and click photo of the product within browser </li>
+                          <li>
+                            update and delete items</li>
+                            <li>
+                              manage users  and get insights </li>
+                              <li>
+                                orders and sales section </li></ul></div>
+                      </div>}
+            </li>
         </ul>
 
         {/* 🔹 RIGHT ICONS (DESKTOP) */}
@@ -85,9 +106,8 @@ function Navbar() {
             <ShoppingBag className="w-5 h-5 text-teal-600" />
             <span className="font-semibold">{t("Basket")}</span>
             <span
-              className={`min-w-[20px] h-[20px] px-1 flex items-center justify-center text-xs font-bold text-white bg-teal-600 rounded-full transition-transform duration-200 ${
-                animateCart ? "scale-125 animate-bounce" : "scale-100"
-              }`}
+              className={`min-w-[20px] h-[20px] px-1 flex items-center justify-center text-xs font-bold text-white bg-teal-600 rounded-full transition-transform duration-200 ${animateCart ? "scale-125 animate-bounce" : "scale-100"
+                }`}
             >
               {cartCount > 99 ? "99+" : cartCount}
             </span>
@@ -172,9 +192,8 @@ function Navbar() {
           >
             <ShoppingBag className="w-6 h-6 text-teal-600" />
             <span
-              className={`absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-bold text-white bg-teal-600 rounded-full transition-transform ${
-                animateCart ? "scale-125 animate-bounce" : ""
-              }`}
+              className={`absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center text-[10px] font-bold text-white bg-teal-600 rounded-full transition-transform ${animateCart ? "scale-125 animate-bounce" : ""
+                }`}
             >
               {cartCount}
             </span>
@@ -213,6 +232,28 @@ function Navbar() {
                 <Link to="/profile" onClick={() => setMenuOpen(false)}>
                   {t("Profile")}
                 </Link>
+             
+                  <div className=" flex gap-2" onMouseEnter={() => setisVisible(true)}
+                    onMouseLeave={() => setisVisible(false)}> <ShieldQuestionMark width={24} />(secret door) 
+                    </div>  
+
+                  {isVisible && <div className="tooltip-box flex flex-col gap-2">
+                    <div>
+                      to explore the admin dashboard contact to <b>
+                     mraas0003@gmail.com
+                        </b>
+                       </div>
+                        <div><p className="text-xl font-bold">where admin can</p>
+                        <ul className="list-disc">
+                          <li>add item and click photo of the product within browser </li>
+                          <li>
+                            update and delete items</li>
+                            <li>
+                              manage users  and get insights </li>
+                              <li>
+                                orders and sales section </li></ul></div>
+                      </div>}
+                
 
                 {User?.isAdmin && (
                   <Link to="/admin" onClick={() => setMenuOpen(false)} className="text-teal-600 font-bold">
